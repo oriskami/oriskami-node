@@ -2,11 +2,11 @@
 
 # Installation
 
-`git clone https://github.com/ubivar/ubivar-node.git`
+`npm install ubivar`
 
 # Documentation
 
-Documentation is available at https://ubivar.com/docs/nodejs
+Documentation is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs)
 
 # API Overview
 
@@ -14,10 +14,7 @@ Every resource is accessed via your `ubivar` instance:
 
 ```
 var Ubivar    = require("ubivar")
-  , clientId  = "your-client-id"
-  , secretKey = "your-secret-key"
-  , apiVersion= "your-api-version"
-  , ubivar    = new Ubivar(clientId, secretKey, apiVersion) 
+  , ubivar    = new Ubivar("your-token", "your-api-version") 
 ```
 
 Every resource accepts an optional callback as the last argument. 
@@ -38,37 +35,37 @@ ubivar.accounts.create( {
 
 # Available resources and methods
 
-+ Account
++ [Account](https://www.ubivar.com/docs/#account)
     + create(params)
     + retrieve(id)
     + update(id, params)
     + del(id)
     + list()
-+ Transaction
++ [Transaction](https://www.ubivar.com/docs/#transaction)
     + create(params)
     + retrieve(id)
     + update(id, params)
     + del(id)
     + list()
-+ Login
++ [Login](https://www.ubivar.com/docs/#login)
     + create(params)
     + retrieve(id)
     + update(id, params)
     + del(id)
     + list()
-+ Logout
++ [Logout](https://www.ubivar.com/docs/#logout)
     + create(params)
     + retrieve(id)
     + update(id, params)
     + del(id)
     + list()
-+ Item
++ [Item](https://www.ubivar.com/docs/#item)
     + create(params)
     + retrieve(id)
     + update(id, params)
     + del(id)
     + list()
-+ Label
++ [Label](https://www.ubivar.com/docs/#label)
     + create(params)
     + retrieve(id)
     + update(id, params)
