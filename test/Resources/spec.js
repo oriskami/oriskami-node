@@ -46,12 +46,14 @@ describe("Resources", function() {
 
   describe("Functional tests", function(){
     describe("Authentication", function(){
-      var testIt      = function(isToken, isAuthorized){
+      var testIt      = function(token, isAuthorized){
         var message   = "Should be " + (isAuthorized?"  ":"un") + "authorized "
-          , pe        = process.env
-          , token     = isToken ? pe.UBIVAR_TEST_TOKEN :(isToken !== false ? isToken : "unauthToken")
           , example   = require("../data/accounts")[0]
-        message       += (isToken ?"OK":(isToken !== false ? isToken :"KO")) + " token"
+        if(!!token){
+          message       += "'"+ token.slice(0,5) +"...'"
+        } else {
+          message     += "'" + token + "'"
+        }
 
         it(message, function(done){
           var ubivar  = require("../../lib")(token, "latest")
@@ -64,10 +66,10 @@ describe("Resources", function() {
         })
       }
 
-      testIt(false    , false)
-      testIt(null     , false)
-      testIt(undefined, false)
-      testIt(true     , true)
+      testIt(null         , false)
+      testIt(undefined    , false)
+      testIt("unauthToken", false)
+      testIt(process.env.UBIVAR_TEST_TOKEN, true)
     })
 
     _.each(resources.slice(0,7), function(resource){
