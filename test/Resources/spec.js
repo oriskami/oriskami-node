@@ -8,7 +8,7 @@ describe("Resources", function() {
   var rootProps = ["log","_api"]
     , subProps  = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
     , methods   = ["create", "retrieve", "update", "del", "list"]
-    , resources = _.difference(Object.keys(ubivar), rootProps)
+    , resources = _.difference(ubivar.get("resources"), ["me"]) 
 
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
@@ -45,10 +45,10 @@ describe("Resources", function() {
   })
 
   describe("Functional tests", function(){
-    describe("Authentication", function(){
+
+    describe("Authentication [/me]", function(){
       var testIt      = function(token, isAuthorized){
         var message   = "Should be " + (isAuthorized?"  ":"un") + "authorized "
-          , example   = require("../data/accounts")[0]
         if(!!token){
           message       += "'"+ token.slice(0,5) +"...'"
         } else {
@@ -57,7 +57,7 @@ describe("Resources", function() {
 
         it(message, function(done){
           var ubivar  = require("../../lib")(token, "latest")
-          ubivar.accounts.create(example, function(gotError, res){
+          ubivar.me.retrieve(function(gotError, res){
             if( isAuthorized &&  gotError) done((new Error(message)))
             if( isAuthorized && !gotError) done()
             if(!isAuthorized &&  gotError) done()
@@ -70,10 +70,54 @@ describe("Resources", function() {
       testIt(undefined    , false)
       testIt("unauthToken", false)
       testIt(process.env.UBIVAR_TEST_TOKEN, true)
+
+      it("Should update me", function(done){
+        var ubivar        = require("../../lib")(process.env.UBIVAR_TEST_TOKEN, "latest")
+        ubivar.me.retrieve(function(err, res){
+          var me          = res.data[0]
+            , vrand       = ""+Math.random()
+          me.session_id   = vrand 
+          ubivar.me.update(me, function(err, res){
+            if(!err && res.status === 200 && vrand === res.data[0].session_id){
+              done()
+            } else {
+              console.log("\n\nError:", err
+              , "\nResponse:"         , res
+              , "\nVrand:"            , vrand)
+              done(new Error("Should update me"))
+            }
+          })
+        })
+      })
+
+      it("Should fail to delete me", function(done){
+        var ubivar    = require("../../lib")(process.env.UBIVAR_TEST_TOKEN, "latest")
+        ubivar.me.del(function(err, res){
+          if(err){
+            done()
+          } else {
+            done(new Error("Should not return any deleted resource"))
+          }
+        })
+      })
+
+      it("Should list a single me", function(done){
+        var ubivar    = require("../../lib")(process.env.UBIVAR_TEST_TOKEN, "latest")
+        ubivar.me.list(function(err, res){
+          if(!err && res.status === 200 && res.data.length === 1){
+            done()
+          } else {
+            console.log("\n\nError:", err
+            , "\nResponse:"         , res)
+            done(new Error("Should list a single me"))
+          }
+        })
+      })
     })
 
-    _.each(resources.slice(0,7), function(resource){
-      describe(resource[0].toUpperCase() + resource.slice(1), function(){
+    _.each(resources, function(resource){
+      describe(resource[0].toUpperCase() + resource.slice(1)
+      , function(){
         var example   = require("../data/"+resource)
           , idResource
 

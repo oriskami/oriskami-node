@@ -9,7 +9,7 @@ describe("Ubivar", function() {
   var rootProps = ["log","_api"]
     , subProps  = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
     , methods   = ["create", "retrieve", "update", "del", "list"]
-    , resources = _.difference(Object.keys(ubivar), rootProps)
+    , resources = ubivar.get("resources") 
 
   this.timeout(20000)
 
