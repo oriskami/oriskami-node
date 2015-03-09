@@ -37,6 +37,9 @@ ubivar.accounts.create( {
 
 # Available resources and methods
 
++ [Me](https://www.ubivar.com/docs/#me)
+    + retrieve()
+    + update(params)
 + [Account](https://www.ubivar.com/docs/#account)
     + create(params)
     + retrieve(id)
