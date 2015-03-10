@@ -74,3 +74,27 @@ ubivar.accounts.create( {
     + [update(id, params)](https://www.ubivar.com/docs/nodejs#update_label)
     + [del(id)](https://www.ubivar.com/docs/nodejs#delete_label)
     + [list()](https://www.ubivar.com/docs/nodejs#list_labels)
+
+# Configuration
+
++ `ubivar.set("auth", "your-api-token")`
++ `ubivar.setTimeout(20000) // in ms`, node's default is `120000ms`
+
+# More information / wikis
+
++ [In-depth documentation](https://www.ubivar.com/docs/nodejs)
+
+# Development
+
+To run the tests, you will need a Ubivar test API key (from your [Ubivar dashboard](https://my.ubivar.com))
+
+```
+export UBIVAR_TEST_TOKEN="your-test-api-key"
+npm install -g mocha
+npm test
+```
+*Note: on Windows, use `SET` instead of `export` for setting the `UBIVAR_TEST_TOKEN` environment variable.*
+
+# Author
+
+Originally inspired from [stripe-node](https://github.com/stripe/stripe-node), authored by [Fabrice Colas](https://fabricecolas.me) ([fabrice.colas.@gmail.com](fabrice.colas@gmail.com)) and maintained by Ubivar. 
