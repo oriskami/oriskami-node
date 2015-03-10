@@ -1,4 +1,6 @@
-# Ubivar node.js bindings [![npm version](https://badge.fury.io/js/ubivar@2x.png)](http://badge.fury.io/js/ubivar) [![Build Status](https://travis-ci.org/ubivar/ubivar-node.png?branch=master)](https://travis-ci.org/ubivar/ubivar-node)  [![Inline docs](http://inch-ci.org/github/ubivar/ubivar-node.svg?branch=master)](http://inch-ci.org/github/ubivar/ubivar-node)
+# Ubivar node.js bindings 
+
+[![npm version](https://badge.fury.io/js/ubivar@2x.png)](http://badge.fury.io/js/ubivar) [![Build Status](https://travis-ci.org/ubivar/ubivar-node.png?branch=master)](https://travis-ci.org/ubivar/ubivar-node)  [![Inline docs](http://inch-ci.org/github/ubivar/ubivar-node.svg?branch=master)](http://inch-ci.org/github/ubivar/ubivar-node)
 
 # Installation
 
@@ -12,14 +14,14 @@ Documentation is available at [https://ubivar.com/docs/nodejs](https://ubivar.co
 
 Every resource is accessed via your `ubivar` instance: 
 
-```
+```js
 var Ubivar    = require("ubivar")
   , ubivar    = new Ubivar("your-token", "your-api-version") 
 ```
 
 Every resource accepts an optional callback as the last argument. 
 
-```
+```js
 ubivar.accounts.create( {
     "user_id"       : "test_123"
   , "session_id"    : "test_session_id_123"
