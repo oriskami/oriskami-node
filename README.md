@@ -6,13 +6,13 @@ e-payment for frauds on e-commerce websites.
 
 Ubivar's purpose is to route the e-payments received by e-commerce websites for
 rejection, manual verification or acceptance given their estimated risk.
-Ubivar integrates as an additional plugin in business workflows and returns
-the suggested routing for each transaction being processed.  Ubivar does not
-demand that all resources are sent but the more data more it has, the better
-its  scoring accuracy. The only two required resources to send to the API are
-the `transactions` and the  `labels` that serve to classify the `transactions` as
-good or bad. The API is simple: you provide Ubivar your request `token`, and
-Ubivar provides the hooks to send and receive the resources to the API.
+Ubivar integrates as an additional plugin in your business workflow and returns
+the suggested routing for each of the transactions that you process.  Ubivar
+does not demand that all resources are sent but the more the better scoring
+accuracy. The only two required resources are the `transactions` and the
+`labels` that classify the `transactions` as good or bad. The API is simple:
+you provide Ubivar your request `token`, and Ubivar provides the hooks to send
+and receive the resources to the API.
 
 # Install
 
