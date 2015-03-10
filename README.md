@@ -4,15 +4,15 @@
 Ubivar is an API that takes over the hassle of automatically screening
 e-payment for frauds on e-commerce websites. 
 
-Ubivar's purpose is to route e-commerce transactions (e.g. e-payments) given
-their estimated risk (e.g. fraud). By default, the three possible routing
-outcomes are a suggested rejection, a recommended manual verification, and a
-proposed acceptance of the transaction. Ubivar does not need all the business
-events (aka `resources`), however the more it has contextual information about
-the transactions, the better its accuracy. The two required resources are the
-`transactions` and the `labels` that categorize the `transactions` as, e.g.
-good or bad. The API is simple: you provide Ubivar your request `token` and
-the bindings provide the hooks to send and receive resources to the API.
+Ubivar's purpose is to route e-commerce transactions given their estimated
+risk. By default, the three possible routing outcomes are a suggested
+rejection, a recommended manual verification, and a proposed acceptance of the
+transaction. Ubivar does not need all the business events (aka `resources`),
+however the more it has contextual information about the transactions, the
+better its accuracy. The two required resources are the `transactions` and the
+`labels` that categorize the `transactions` like fraud, not fraud. The API is
+simple: you provide Ubivar your request `token` and the bindings provide the
+hooks to send and receive resources to the API.
 
 # Install
 
