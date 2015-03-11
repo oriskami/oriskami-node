@@ -109,4 +109,4 @@ npm test
 
 # Author
 
-Originally inspired from [stripe-node](https://github.com/stripe/stripe-node). Developed by [Fabrice Colas](https://fabricecolas.me) ([fabrice.colas.@gmail.com](mailto:fabrice.colas@gmail.com)). Maintained by Ubivar. 
+Originally inspired from [stripe-node](https://github.com/stripe/stripe-node). Developed by [Fabrice Colas](https://fabricecolas.me) ([fabrice.colas@gmail.com](mailto:fabrice.colas@gmail.com)). Maintained by Ubivar. 
