@@ -24,27 +24,22 @@ Documentation is available at [https://ubivar.com/docs/nodejs](https://ubivar.co
 
 # API Overview
 
-Every resource is accessed via your `ubivar` instance: 
+Every resource is accessed via your `ubivar` instance and accepts an optional
+callback as the last argument. The sample code below retrieves your account
+information (as json) and updates the primary phone with a random value. 
 
 ```js
 var Ubivar    = require("ubivar")
-  , ubivar    = new Ubivar("your-token", "your-api-version") 
-```
+  , ubivar    = new Ubivar("YOUR_API_ACCESS_TOKEN", "latest")
+  , rval      = Math.random()
 
-Every resource accepts an optional callback as the last argument. 
+ubivar.retrieve.me(function(err, res){
+  console.log(err, res)
 
-```js
-ubivar.accounts.create( {
-    "user_id"       : "test_123"
-  , "session_id"    : "test_session_id_123"
-  , "user_email"    : "test_email@email-123.com"
-  , "first_name"    : "test_yourfirstname_123"
-  , "last_name"     : "test_yourlastname_123"
-  , "primary_phone" : "+123456789-123"
-  }, function(err, resource){
-    err // null if no error
-    resource // the created resource (account)
+  ubivar.update.me({"primary_phone":rval}, function(err, res){
+    console.log(err, res)
   })
+})
 ```
 
 # Available resources and methods
