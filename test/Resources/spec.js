@@ -233,8 +233,10 @@ describe("Resources", function() {
           it("Should 'start_after' and 'end_before' when paginating", function(done){
             var nLimit = 1
             ubivar[resource].list({"end_before": ids[2], "start_after":ids[0]}, function(err, res){
-              if(err) return done(err)    
-              if(res.data.length !== nLimit) return done(new Error("Should return N="+nLimit))
+              if(err) return done(err)  
+              if(res.data.length !== nLimit){
+                console.log(res.data);return done(new Error("Should return N="+nLimit))
+              }
               var returnedIds   = _.pluck(res.data, "id")
               if(_.contains(returnedIds, ids[1])) return done()
               else return done(new Error("Should not return 'starting_after' id"))
