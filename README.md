@@ -74,13 +74,15 @@ ubivar.retrieve.me(function(err, res){
     + [retrieve(id)](https://www.ubivar.com/docs/nodejs#retrieve_item)
     + [update(id, params)](https://www.ubivar.com/docs/nodejs#update_item)
     + [del(id)](https://www.ubivar.com/docs/nodejs#delete_item)
-    + [list()](https://www.ubivar.com/docs/nodejs#list_items)
+    + [list(params)](https://www.ubivar.com/docs/nodejs#list_items)
 + [Label](https://www.ubivar.com/docs/nodejs#labels)
     + [create(params)](https://www.ubivar.com/docs/nodejs#create_label)
     + [retrieve(id)](https://www.ubivar.com/docs/nodejs#retrieve_label)
     + [update(id, params)](https://www.ubivar.com/docs/nodejs#update_label)
     + [del(id)](https://www.ubivar.com/docs/nodejs#delete_label)
-    + [list()](https://www.ubivar.com/docs/nodejs#list_labels)
+    + [list(params)](https://www.ubivar.com/docs/nodejs#list_labels)
++ [Fx](https://www.ubivar.com/docs/nodejs#fx)
+    + [list(params)](https://www.ubivar.com/docs/nodejs#list_fx)
 
 # Configuration
 
