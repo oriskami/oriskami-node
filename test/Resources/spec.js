@@ -3,12 +3,13 @@
 var _           = require("lodash")
   , expect      = require("chai").expect
   , ubivar      = require("../ubivar")
+  , token       = process.env.UBIVAR_TEST_TOKEN
 
 describe("Resources", function() {
   var rootProps = ["log","_api"]
     , subProps  = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
     , methods   = ["create", "retrieve", "update", "del", "list"]
-    , resources = _.difference(ubivar.get("resources"), ["me"]) 
+    , resources = _.difference(ubivar.get("resources"), ["me","fx"]) 
 
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
@@ -69,10 +70,10 @@ describe("Resources", function() {
       testIt(null         , false)
       testIt(undefined    , false)
       testIt("unauthToken", false)
-      testIt(process.env.UBIVAR_TEST_TOKEN, true)
+      testIt(token, true)
 
       it("Should update me", function(done){
-        var ubivar        = require("../../lib")(process.env.UBIVAR_TEST_TOKEN, "latest")
+        var ubivar        = require("../../lib")(token, "latest")
         ubivar.me.retrieve(function(err, res){
           var me          = res.data[0]
             , vrand       = ""+Math.random()
@@ -91,7 +92,7 @@ describe("Resources", function() {
       })
 
       it("Should fail to delete me", function(done){
-        var ubivar    = require("../../lib")(process.env.UBIVAR_TEST_TOKEN, "latest")
+        var ubivar    = require("../../lib")(token, "latest")
         ubivar.me.del(function(err, res){
           if(err){
             done()
@@ -102,7 +103,7 @@ describe("Resources", function() {
       })
 
       it("Should list a single me", function(done){
-        var ubivar    = require("../../lib")(process.env.UBIVAR_TEST_TOKEN, "latest")
+        var ubivar    = require("../../lib")(token, "latest")
         ubivar.me.list(function(err, res){
           if(!err && res.status === 200 && res.data.length === 1){
             done()
@@ -115,13 +116,85 @@ describe("Resources", function() {
       })
     })
 
+    describe("FX", function(){
+      it("Should retrieve FX", function(done){
+        ubivar.fx.retrieve(function(err, res){
+          if(err){
+            done(err)
+          } else if(!(res.status === 200 && res.data.length === 1)){
+            done(new Error("Did not return FX of the day "))
+          } else{
+            var fx  = res.data[0]
+            if(fx.cur_from !== "EUR"){
+              done(new Error("Returned 'cur_from' does not default to EUR"))
+            } else if(fx.cur_to !== "USD"){
+              done(new Error("Returned 'cur_to' does not default to USD"))
+            } else if((new Date()-new Date(fx.date))/(1000*60*60*24) > 1){
+              done(new Error("Latest FX should be less than one day old"))
+            } else if(!_.isNumber(fx.rate)) {
+              done(new Error("Did not return a number"))
+            } else {
+              done()
+            }
+          }
+        })
+      })
+
+      it("Should return exchange rate between non-default 'cur'", function(done){
+        var cur_from  = "CAD"
+          , cur_to    = "GBP"
+
+        ubivar.fx.list({"cur_from":cur_from, "cur_to":cur_to}, function(err, res){
+          if(err){
+            done(err)
+          } else if(!(res.status === 200 && res.data.length === 1)){
+            done(new Error("Did not return FX of the day for two custom currencies"))
+          } else {
+            var fx  = res.data[0]
+            if(fx.cur_from !== cur_from){
+              done(new Error("Did not return the custom 'cur_from'"))
+            } else if(fx.cur_to !== cur_to){
+              done(new Error("Did not return the custom 'cur_to'"))
+            } else if(!_.isNumber(fx.rate)) {
+              done(new Error("Did not return a number"))
+            } else {
+              done()
+            }
+          }
+        })
+      })
+
+      it("Should return fx rate for a specific date", function(done){
+        var date  = "2015-01-01"
+
+        ubivar.fx.list({"date":date}, function(err, res){
+          if(err){
+            done(err)
+          } else if(!(res.status === 200 && res.data.length === 1)){
+            done(new Error("Did not return FX of the day for two custom currencies"))
+          } else {
+            var fx  = res.data[0]
+            if((new Date(date)-new Date(fx.date))/(1000*60*60*24) > 1){
+              done(new Error("Did not return the custom 'date'"))
+            } else if(!_.isNumber(fx.rate)) {
+              done(new Error("Did not return a number"))
+            } else if(fx.rate !== 1.2141) {
+              console.log(res)
+              done(new Error("Did not return the correct EUR/USD FX rate"))
+            } else {
+              done()
+            }
+          }
+        })
+      })
+
+    })
+
     _.each(resources, function(resource){
       describe(resource[0].toUpperCase() + resource.slice(1)
       , function(){
         var example   = require("../data/"+resource)
           , idResource
-
-
 
         it("Should create and return a resource", function(done){
           ubivar[resource].create(example[0], function(err, res){
