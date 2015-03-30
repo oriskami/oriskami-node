@@ -28,21 +28,62 @@ Every resource is accessed via your `ubivar` instance and accepts an optional
 callback as the last argument. The sample code below retrieves your account
 information (as json) and updates the primary phone with a random value. 
 
+## Quick Start
+
+### A. Init 
 ```js
 var Ubivar    = require("ubivar")
   , ubivar    = new Ubivar("YOUR_API_ACCESS_TOKEN", "latest")
-  , rval      = Math.random()
+```
 
-ubivar.retrieve.me(function(err, res){
-  console.log(err, res)
+### B. Send an e-commerce transaction
+```js
+ubivar.transactions.create({
+  "user_id"     : "test_phahr3Eit3_123"           // the id of your client
+, "user_email"  : "test_phahr3Eit3@gmail-123.com" // the email of your client
+, "type"        : "sale"                          // the type of transaction
+, "status"      : "success"                       // whether the transaction was authorized
+, "order_id"    : "test_iiquoozeiroogi_123"       // the shopping cart id
+, "tx_id"       : "client_tx_id_123"              // the transaction id of this transaction
+, "amount"      : "43210"                         // the amount of the transaction in cents
+, "payment_method":{
+    "bin"       :"123456"                         // the bank identification number of the card
+  , "brand"     :"Mastercard"                     // the brand of the card
+  , "funding"   :"credit"                         // the type of card
+  , "country"   :"US"                             // the iso country code of the card
+  , "name"      :"M Man"                          // the name of the card holder
+  , "cvc_check":"pass"                            // whether the card passed the cvc check
+},"billing_address":{
+    "line1"     :"123 Market Street"              // the billing address
+  , "line2"     :"4th Floor"                       
+  , "city"      :"San Francisco"
+  , "state"     :"California"
+  , "zip"       :"94102"
+  , "country"   :"US"
+  }
+}, function(err, res){
 
-  ubivar.update.me({"primary_phone":rval}, function(err, res){
-    console.log(err, res)
-  })
+  if(err) return err 
+  // something unexpected occurred
+
+  txId          = res.data[0].id 
+  // keep track of the transaction id 
 })
 ```
 
-# Available resources and methods
+### C. Retrieve its status 
+```js
+ubivar.labels.retrieve(txId, function(err, res){
+
+  if(err) return err
+  // something unexpected occurred
+
+  status        = res.data[0].status
+  // the status of the transaction
+})
+```
+
+## All resources and methods
 
 + [Me](https://www.ubivar.com/docs/nodejs#me)
     + [retrieve()](https://www.ubivar.com/docs/nodejs#retrieve_your_information)
@@ -83,8 +124,24 @@ ubivar.retrieve.me(function(err, res){
     + [list(params)](https://www.ubivar.com/docs/nodejs#list_labels)
 + [Fx](https://www.ubivar.com/docs/nodejs#fx)
     + [list(params)](https://www.ubivar.com/docs/nodejs#list_fx)
+```js
+ubivar.fx.list({
+  "cur_from"  : "CAD"         // default to EUR
+, "cur_to"    : "GBP"         // default to USD
+, "date"      : "2015-01-01"  // default to today
+}, function(err, res){
+  // returns the CAD/GBP FX of the day
+})
+```
++ [Status](https://www.ubivar.com/docs/nodejs#status)
+    + [list(params)](https://www.ubivar.com/docs/nodejs#list_status)
+```js
+ubivar.status.list(function(err, res){
+  // returns uptime status of the web and API resources
+})
+```
 
-# Configuration
+## Configuration
 
 + `ubivar.set("auth", "your-api-token")`
 + `ubivar.setTimeout(20000) // in ms`, node's default is `120000ms`
