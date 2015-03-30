@@ -204,7 +204,6 @@ describe("Resources", function() {
           } else if(!res.data[0].url      ){ done(new Error("Should have a url"))
           } else if(!res.data[0].interval ){ done(new Error("Should have an interval"))
           } else if(!res.data[0].status   ){ done(new Error("Should have a status"))
-          } else if(!res.data[0].alltimeuptimeratio){ done(new Error("Should have an all time uptime ratio"))
           } else{
             done()
           }
