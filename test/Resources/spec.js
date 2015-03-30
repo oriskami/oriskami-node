@@ -1,19 +1,21 @@
 "use strict"
 
-var _           = require("lodash")
-  , expect      = require("chai").expect
-  , ubivar      = require("../ubivar")
-  , token       = process.env.UBIVAR_TEST_TOKEN
+var _                   = require("lodash")
+  , expect              = require("chai").expect
+  , ubivar              = require("../ubivar")
+  , token               = process.env.UBIVAR_TEST_TOKEN
 
 describe("Resources", function() {
-  var rootProps = ["log","_api"]
-    , subProps  = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
-    , methods   = ["create", "retrieve", "update", "del", "list"]
-    , resources = _.difference(ubivar.get("resources"), ["me","fx"]) 
+  var rootProps         = ["log","_api"]
+    , subProps          = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
+    , methods           = ["create", "retrieve", "update", "del", "list"]
+    , allResources      = ubivar.get("resources")
+    , specialResources  = ["me", "fx", "status"]
+    , genericResources  = _.difference(allResources, specialResources) 
 
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      _.each(resources, function(resource){
+      _.each(genericResources, function(resource){
         _.each(methods, function(method){
           expect(ubivar[resource]["path"]).to.exist
         })
@@ -21,7 +23,7 @@ describe("Resources", function() {
     })
 
     it("Should link to parent (ubivar)", function() {
-      _.each(resources, function(resource){
+      _.each(genericResources, function(resource){
         _.each(methods, function(method){
           expect(ubivar[resource]["ubivar"]).to.exist
         })
@@ -29,7 +31,7 @@ describe("Resources", function() {
     })
 
     it("Should have a logger", function() {
-      _.each(resources, function(resource){
+      _.each(genericResources, function(resource){
         _.each(methods, function(method){
           expect(ubivar[resource]["log"]).to.exist
         })
@@ -37,7 +39,7 @@ describe("Resources", function() {
     })
 
     it("Should have CRUD(L) methods", function() {
-      _.each(resources, function(resource){
+      _.each(genericResources, function(resource){
         _.each(methods, function(method){
           expect(ubivar[resource][method]).to.exist
         })
@@ -190,7 +192,27 @@ describe("Resources", function() {
 
     })
 
-    _.each(resources, function(resource){
+    describe("Status", function(){
+      it("Should list of valid set of uptime statuses", function(done){
+        ubivar.status.list(function(err, res){
+          if(err){
+            done(err)
+          } else if(res.data.length === 0 ){ done(new Error("Did not return results"))
+          } else if(!res.data[0].id       ){ done(new Error("Should have an id"))
+          } else if(!res.data[0].timestamp){ done(new Error("Should have a timestamp"))
+          } else if(!res.data[0].name     ){ done(new Error("Should have a name"))
+          } else if(!res.data[0].url      ){ done(new Error("Should have a url"))
+          } else if(!res.data[0].interval ){ done(new Error("Should have an interval"))
+          } else if(!res.data[0].status   ){ done(new Error("Should have a status"))
+          } else if(!res.data[0].alltimeuptimeratio){ done(new Error("Should have an all time uptime ratio"))
+          } else{
+            done()
+          }
+        })
+      })
+    })
+
+    _.each(genericResources, function(resource){
       describe(resource[0].toUpperCase() + resource.slice(1)
       , function(){
         var example   = require("../data/"+resource)
