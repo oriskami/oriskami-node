@@ -6,10 +6,16 @@ e-payment for frauds on e-commerce websites.
 
 Ubivar's purpose is to route e-commerce transactions given their estimated
 risk. By default, the three possible routing outcomes are rejection, manual
-verification, and acceptance. The two required resources are the `transactions`
-and the `labels` that categorize the `transactions` like fraud, not fraud. The
-API is simple: you provide Ubivar your request `token` and the bindings provide
-the hooks to send and receive resources to the API.
+verification, and acceptance. The two elementary resources are the `transactions`
+and the `labels`; `transactions` are online sales that are pushed to the payment
+gateway, and `labels` are the *a posteriori* truth about the fraud or non-fraud
+status of each `transaction`. 
+
+The API is simple: you provide Ubivar your request `token` and the bindings
+provide the hooks to send and receive resources to the API. When you send a
+`transaction`, Ubivar returns its routing status. Later, as you review manually
+the sales or you receive notifications of frauds from your acquiring bank, you
+use `label` to update the *truth* about the transactions.  
 
 ## Quick Start
 
