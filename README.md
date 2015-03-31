@@ -2,20 +2,19 @@
 [![npm version](https://badge.fury.io/js/ubivar.svg)](http://badge.fury.io/js/ubivar) [![Build Status](https://travis-ci.org/ubivar/ubivar-node.png?branch=master)](https://travis-ci.org/ubivar/ubivar-node)  [![Inline docs](http://inch-ci.org/github/ubivar/ubivar-node.svg?branch=master)](http://inch-ci.org/github/ubivar/ubivar-node)
  
 Ubivar is an API that takes over the hassle of automatically screening
-e-payment for frauds on e-commerce websites. 
+e-payment for frauds. 
 
-Ubivar's purpose is to route e-commerce transactions given their estimated
-risk. By default, the three possible routing outcomes are rejection, manual
-verification, and acceptance. The two elementary resources are the `transactions`
-and the `labels`; `transactions` are online sales that are pushed to the payment
-gateway, and `labels` are the *a posteriori* truth about the fraud or non-fraud
-status of each `transaction`. 
+Ubivar routes e-commerce transactions given their risk; by default the three
+routing outcomes are rejection, manual verification, and acceptance and the two
+elementary resources are the `transactions` and the `labels`.  `Transactions`
+are online sales pushed to your payment gateway, and `labels` define the *a
+posteriori* truth about each `transaction` (i.e. {`fraud`, `non-fraud`}). 
 
-The API is simple: you provide Ubivar your request `token` and the bindings
-provide the hooks to send and receive resources to the API. When you send a
-`transaction`, Ubivar returns its routing status. Later, as you review manually
-the sales or you receive notifications of frauds from your acquiring bank, you
-use `label` to update the *truth* about the transactions.  
+Using Ubivar simply requires an access `token`. Then the bindings provide the
+hooks to send and receive resources to the API. For each `transaction` that
+Ubivar receives, its calculates a routing. Later, as you review some of the
+`transactions` manually or as you receive fraud notifications, you use `label`
+to qualify the *truth* about each transaction. 
 
 ## Quick Start
 
