@@ -71,7 +71,10 @@ describe("Resources", function() {
         ubivar.me.retrieve(function(err, res){
           var me          = res.data[0]
             , vrand       = ""+Math.random()
+
           me.primary_phone= vrand 
+          this.timeout(3000)
+
           ubivar.me.update(me, function(err, res){
             if(!err && res.status === 200 && vrand === res.data[0]["primary_phone"]){
               done()
