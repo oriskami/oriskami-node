@@ -99,14 +99,14 @@ report the documentation matrix for the resources (rows), their actions
 ## Parameters
 
 | Filter        | Default | Example             | Description                   |
-| ------------- |:-------:|:-------------------:|:-----------------------------:|
+| ------------- |:-------:|:--------------------|:------------------------------|
 | `start_after` |         | `{"start_after":10}`| `id` after the one specified  |
 | `end_before`  |         | `{"end_before":10}` | `id` before the one specified |
 | `limit`       | `10`    | `{"limit":10}`      | At most `10` returned results |
 | `gt`          |         | `{"id":{"gt":10}}`  | `id` greater than 10          |
 | `gte`         |         | `{"id":{"gte":10}}` | `id` greater than or equal    |
 | `lt`          |         | `{"id":{"lt":10}}`  | `id` less than                |
-| `lte`         |         | `{"id":{"lte":10}}` | `id` less than or equal       |t
+| `lte`         |         | `{"id":{"lte":10}}` | `id` less than or equal       |
 
 # More 
 
