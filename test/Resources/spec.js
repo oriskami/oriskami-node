@@ -5,7 +5,7 @@ var _                   = require("lodash")
   , ubivar              = require("../ubivar")
   , token               = process.env.UBIVAR_TEST_TOKEN
 
-ubivar.setTimeout(5000)
+ubivar.set("timeout", 5000)
 
 describe("Resources", function() {
   var rootProps         = ["log","_api"]

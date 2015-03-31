@@ -113,7 +113,7 @@ below we list the resources (rows), the actions (columns) and the arguments
 ## Configuration
 
 + `ubivar.set("auth", "your-api-token")`
-+ `ubivar.setTimeout(20000) // in ms`, node's default is `120000ms`
++ `ubivar.set("timeout", 20000) // in ms`, node's default is `120000ms`
 
 ## Issues and feature requests 
 
