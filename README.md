@@ -76,12 +76,12 @@ ubivar.labels.retrieve(txId, function(err, res){
 })
 ```
 
-## All resources and methods
+## Resources, actions and arguments 
 
 Full documentation is available at
 [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs). Below we
 report the documentation matrix for the resources (rows), their actions
-(columns), and parameters (cells).
+(columns) and arguments (cells).
 
 | Resource      | Create | Retrieve | Update | Delete | List   |
 | ------------- |:------:|:--------:|:------:|:------:|:------:|
@@ -96,12 +96,17 @@ report the documentation matrix for the resources (rows), their actions
 | Bins          |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_bin">params</a>|
 | Status        |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_status">params</a>|
 
-## Filtering, pagination and ordering parameters
+## Parameters
 
-+ `limit`: limit the number of returned resutls, 10 by default `{"limit": 10}`
-+ {`start_after`,`end_before`}: returns the `id` after the one that is specified or, respectively, before; e.g. `{"start_after":10,"end_before":20}` will return the resources having an id in the range `10` to `20` (excl.) 
-+ `order`: specifies the ordering of the results, the default `{"order":"-id"}` returns the last inserted ids first 
-+ {`gt`,`gte`,`lt`,`lte`}: greater than, greater than or equal, less than, or less than or equal; e.g. `{"id":{"gte":10, "lt":20}}` should return all resources whose `id` is in the range `10` to `20`
+| Filter        | Default | Example             | Description                   |
+| ------------- |:-------:|:-------------------:|:-----------------------------:|
+| `start_after` |         | `{"start_after":10}`| `id` after the one specified  |
+| `end_before`  |         | `{"end_before":10}` | `id` before the one specified |
+| `limit`       | `10`    | `{"limit":10}`      | At most `10` returned results |
+| `gt`          |         | `{"id":{"gt":10}}`  | `id` greater than 10          |
+| `gte`         |         | `{"id":{"gte":10}}` | `id` greater than or equal    |
+| `lt`          |         | `{"id":{"lt":10}}`  | `id` less than                |
+| `lte`         |         | `{"id":{"lte":10}}` | `id` less than or equal       |t
 
 # More 
 
