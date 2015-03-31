@@ -13,9 +13,10 @@ the hooks to send and receive resources to the API.
 
 ## Quick Start
 
+### A. Install and initialize 
+
 `npm install ubivar`
 
-### A. Init 
 ```js
 var Ubivar    = require("ubivar")
   , ubivar    = new Ubivar("YOUR_API_ACCESS_TOKEN", "latest")
