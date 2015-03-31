@@ -14,21 +14,14 @@ better its accuracy. The two required resources are the `transactions` and the
 simple: you provide Ubivar your request `token` and the bindings provide the
 hooks to send and receive resources to the API.
 
-# Install
-
-`npm install ubivar`
-
-# Documentation
-
-Documentation is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs)
-
-# API Overview
+## Quick Start
 
 Every resource is accessed via your `ubivar` instance and accepts an optional
-callback as the last argument. The sample code below retrieves your account
-information (as json) and updates the primary phone with a random value. 
+callback as the last argument.  
 
-## Quick Start
+### 0. Install
+
+`npm install ubivar`
 
 ### A. Init 
 ```js
@@ -39,20 +32,20 @@ var Ubivar    = require("ubivar")
 ### B. Send an e-commerce transaction
 ```js
 ubivar.transactions.create({
-  "user_id"     : "test_phahr3Eit3_123"           // the id of your client
-, "user_email"  : "test_phahr3Eit3@gmail-123.com" // the email of your client
-, "type"        : "sale"                          // the type of transaction
-, "status"      : "success"                       // whether the transaction was authorized
+  "user_id"     : "test_phahr3Eit3_123"           // your client's id
+, "user_email"  : "test_phahr3Eit3@gmail-123.com" // your client email
+, "type"        : "sale"                          // the transaction type
+, "status"      : "success"                       // the transaction status 
 , "order_id"    : "test_iiquoozeiroogi_123"       // the shopping cart id
-, "tx_id"       : "client_tx_id_123"              // the transaction id of this transaction
-, "amount"      : "43210"                         // the amount of the transaction in cents
+, "tx_id"       : "client_tx_id_123"              // the transaction id 
+, "amount"      : "43210"                         // the amount in cents
 , "payment_method":{
-    "bin"       :"123456"                         // the bank identification number of the card
+    "bin"       :"123456"                         // the BIN of the card
   , "brand"     :"Mastercard"                     // the brand of the card
   , "funding"   :"credit"                         // the type of card
-  , "country"   :"US"                             // the iso country code of the card
-  , "name"      :"M Man"                          // the name of the card holder
-  , "cvc_check":"pass"                            // whether the card passed the cvc check
+  , "country"   :"US"                             // the card country code
+  , "name"      :"M Man"                          // the card holder's name
+  , "cvc_check" :"pass"                           // the cvc check result
 },"billing_address":{
     "line1"     :"123 Market Street"              // the billing address
   , "line2"     :"4th Floor"                       
@@ -84,6 +77,12 @@ ubivar.labels.retrieve(txId, function(err, res){
 ```
 
 ## All resources and methods
+
+Full documentation is available at
+[https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs). Below we
+report the documentation matrix for the resources (rows), their actions
+(columns), and parameters (cells).
+
 | Resource      | Create | Retrieve | Update | Delete | List   |
 | ------------- |:------:|:--------:|:------:|:------:|:------:|
 | Me            |        |<a href="https://ubivar.com/docs/nodejs#retrieve_your_information">_</a>  |<a href="https://ubivar.com/docs/nodejs#retrieve_your_information">param</a>|        |        |
@@ -97,16 +96,25 @@ ubivar.labels.retrieve(txId, function(err, res){
 | Bins          |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_bin">params</a>|
 | Status        |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_status">params</a>|
 
+## Filtering, pagination and ordering parameters
+
++ `limit`: limit the number of returned resutls, 10 by default `{"limit": 10}`
++ {`start_after`,`end_before`}: returns the `id` after the one that is specified or, respectively, before; e.g. `{"start_after":10,"end_before":20}` will return the resources having an id in the range `10` to `20` (excl.) 
++ `order`: specifies the ordering of the results, the default `{"order":"-id"}` returns the last inserted ids first 
++ {`gt`,`gte`,`lt`,`lte`}: greater than, greater than or equal, less than, or less than or equal; e.g. `{"id":{"gte":10, "lt":20}}` should return all resources whose `id` is in the range `10` to `20`
+
+# More 
+
 ## Configuration
 
 + `ubivar.set("auth", "your-api-token")`
 + `ubivar.setTimeout(20000) // in ms`, node's default is `120000ms`
 
-# More information / wikis
+## Issues and feature requests 
 
-+ [In-depth documentation](https://www.ubivar.com/docs/nodejs)
++ [Report issues and feature requests](https://github.com/ubivar/ubivar-node/issues)
 
-# Development
+## Development
 
 To run the tests, you will need a Ubivar test API key (from your [Ubivar dashboard](https://my.ubivar.com))
 
