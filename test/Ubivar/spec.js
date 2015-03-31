@@ -6,7 +6,7 @@ var _         = require("lodash")
 
 describe("Ubivar", function() {
 
-  var rootProps = ["log","_api"]
+  var rootProps = ["_api"]
     , subProps  = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
     , methods   = ["create", "retrieve", "update", "del", "list"]
     , resources = ubivar.get("resources") 

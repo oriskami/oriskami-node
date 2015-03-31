@@ -10,7 +10,7 @@ describe("Resources", function() {
     , subProps          = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
     , methods           = ["create", "retrieve", "update", "del", "list"]
     , allResources      = ubivar.get("resources")
-    , specialResources  = ["me", "fx", "status"]
+    , specialResources  = ["me", "fx", "bins", "status"]
     , genericResources  = _.difference(allResources, specialResources) 
 
   describe("Properties", function(){
@@ -26,14 +26,6 @@ describe("Resources", function() {
       _.each(genericResources, function(resource){
         _.each(methods, function(method){
           expect(ubivar[resource]["ubivar"]).to.exist
-        })
-      })
-    })
-
-    it("Should have a logger", function() {
-      _.each(genericResources, function(resource){
-        _.each(methods, function(method){
-          expect(ubivar[resource]["log"]).to.exist
         })
       })
     })
@@ -131,7 +123,7 @@ describe("Resources", function() {
               done(new Error("Returned 'cur_from' does not default to EUR"))
             } else if(fx.cur_to !== "USD"){
               done(new Error("Returned 'cur_to' does not default to USD"))
-            } else if((new Date()-new Date(fx.date))/(1000*60*60*24) > 1){
+            } else if((new Date()-new Date(fx.date))/(1000*60*60*24) > 2){
               done(new Error("Latest FX should be less than one day old"))
             } else if(!_.isNumber(fx.rate)) {
               done(new Error("Did not return a number"))
@@ -195,18 +187,104 @@ describe("Resources", function() {
     describe("Status", function(){
       it("Should list of valid set of uptime statuses", function(done){
         ubivar.status.list(function(err, res){
+          var result  = !err && res.data.length > 0 ? res.data[0] : null
+            , fields  = ["id", "timestamp", "url", "status"]
+
           if(err){
-            done(err)
-          } else if(res.data.length === 0 ){ done(new Error("Did not return results"))
-          } else if(!res.data[0].id       ){ done(new Error("Should have an id"))
-          } else if(!res.data[0].timestamp){ done(new Error("Should have a timestamp"))
-          } else if(!res.data[0].name     ){ done(new Error("Should have a name"))
-          } else if(!res.data[0].url      ){ done(new Error("Should have a url"))
-          } else if(!res.data[0].interval ){ done(new Error("Should have an interval"))
-          } else if(!res.data[0].status   ){ done(new Error("Should have a status"))
-          } else{
-            done()
-          }
+            return done(err)
+          } else if(res.data.length === 0){ 
+            return done(new Error("Did not return results" ))
+          } 
+          _.each(fields, function(field){
+            if(!_.has(result, field)){
+              return done(new Error("Should have a '" + field + "'"))
+            }
+          })
+          done() 
+        })
+      })
+
+      it("Should filter status based on timestamp", function(done){
+        var begin = "2015-03-30 23:00:00"
+          , end   = "2015-03-30 24:00:00"
+        ubivar.status.list({"timestamp":{ "gte":begin , "lte":end}}, function(err, res){
+
+          var results = !err && res.data.length > 0 ? res.data : null
+
+          if(err){
+            return done(err)
+          } else if(res.data.length === 0){ 
+            return done(new Error("Did not return results" ))
+          } 
+
+          begin   = new Date(begin)
+          end     = new Date(end)
+          _.each(results, function(result){
+            var time  = new Date(result.timestamp)
+            if((time-begin)<0 || (end-time)<0){
+              return done(new Error("Should return statuses within ["+begin,",",end+"]: ", time))
+            }
+          })
+
+          done() 
+        })
+      })
+    })
+
+    describe("Bank Identification Number", function(){
+      it("Should list a valid set of BINs", function(done){
+        ubivar.bins.list(function(err, res){
+          var result  = !err && res.data.length > 0 ? res.data[0] : null
+            , fields  = ["id","brand","country_code","country_name","bank","card_type","card_category"]
+
+          if(err){ return done(err)
+          } else if(res.data.length === 0){ 
+            return done(new Error("Did not return results" ))
+          } 
+          _.each(fields, function(field){
+            if(!_.has(result, field)){
+              return done(new Error("Should have a '" + field + "'"))
+            }
+          })
+          done() 
+        })
+      })
+
+      it("Should 'start_after' and 'end_before'", function(done){
+        var begin     = 400400
+          , end       = 400500
+        ubivar.bins.list({"start_after":begin, "end_before":end}, function(err, res){
+          var results = !err && res.data.length > 0 ? res.data : null
+          
+          if(err){ return done(err)
+          } else if(res.data.length === 0){ 
+            return done(new Error("Did not return results" ))
+          } 
+          _.each(results, function(result){
+            if(result.id <= begin || result.id >= end){
+              return done(new Error("Not a BIN with ["+begin+","+end+"]: " + result.id))
+            }
+          })
+
+          done() 
+        })
+      })
+
+      it("Should select only 'visa' brands", function(done){
+        ubivar.bins.list({"brand":"visa"}, function(err, res){
+          var results = !err && res.data.length > 0 ? res.data : null
+          
+          if(err){ return done(err)
+          } else if(res.data.length === 0){ 
+            return done(new Error("Did not return results" ))
+          } 
+          _.each(results, function(result){
+            if(result.brand.toLowerCase().indexOf("visa") < 0){
+              return done(new Error("Not a 'visa' brand: " + result.brand))
+            }
+          })
+
+          done() 
         })
       })
     })

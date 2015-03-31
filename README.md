@@ -124,22 +124,10 @@ ubivar.labels.retrieve(txId, function(err, res){
     + [list(params)](https://www.ubivar.com/docs/nodejs#list_labels)
 + [Fx](https://www.ubivar.com/docs/nodejs#fx)
     + [list(params)](https://www.ubivar.com/docs/nodejs#list_fx)
-```js
-ubivar.fx.list({
-  "cur_from"  : "CAD"         // default to EUR
-, "cur_to"    : "GBP"         // default to USD
-, "date"      : "2015-01-01"  // default to today
-}, function(err, res){
-  // returns the CAD/GBP FX of the day
-})
-```
++ [BINs](https://www.ubivar.com/docs/nodejs#bin)
+    + [list(params)](https://www.ubivar.com/docs/nodejs#list_bin)
 + [Status](https://www.ubivar.com/docs/nodejs#status)
     + [list(params)](https://www.ubivar.com/docs/nodejs#list_status)
-```js
-ubivar.status.list(function(err, res){
-  // returns uptime status of the web and API resources
-})
-```
 
 ## Configuration
 
