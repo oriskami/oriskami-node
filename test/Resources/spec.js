@@ -68,23 +68,17 @@ describe("Resources", function() {
 
       it("Should update me", function(done){
         var ubivar        = require("../../lib")(token, "latest")
-        ubivar.me.retrieve(function(err, res){
-          var me          = res.data[0]
-            , vrand       = ""+Math.random()
+          , vrand         = ""+Math.random()
 
-          me.primary_phone= vrand 
-          this.timeout(3000)
+        ubivar.me.update({"primary_phone": vrand}, function(err, res){
+          if(!err && res.status === 200 && vrand === res.data[0]["primary_phone"]){
+            return done()
+          } 
 
-          ubivar.me.update(me, function(err, res){
-            if(!err && res.status === 200 && vrand === res.data[0]["primary_phone"]){
-              done()
-            } else {
-              console.log("\n\nError:", err
-              , "\nResponse:"         , res
-              , "\nVrand:"            , vrand)
-              done(new Error("Should update me"))
-            }
-          })
+          console.log("\n\nError:", err
+          , "\nResponse:"         , res
+          , "\nVrand:"            , vrand)
+          done(new Error("Should update me"))
         })
       })
 
