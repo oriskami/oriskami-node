@@ -89,7 +89,7 @@ is available at
 | Bins          |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_bin">params</a>|
 | Status        |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_status">params</a>|
 
-## Parameters
+## Filter parameters
 
 | Filter        | Default | Example             | Description                   |
 | ------------- |:-------:|:--------------------|:------------------------------|
@@ -100,8 +100,6 @@ is available at
 | `gte`         |         | `{"id":{"gte":10}}` | `id` greater than or equal    |
 | `lt`          |         | `{"id":{"lt":10}}`  | `id` less than                |
 | `lte`         |         | `{"id":{"lte":10}}` | `id` less than or equal       |
-
-# More 
 
 ## Configuration
 
@@ -123,6 +121,6 @@ npm test
 ```
 *Note: on Windows, use `SET` instead of `export` for setting the `UBIVAR_TEST_TOKEN` environment variable.*
 
-# Author
+## Author
 
 Originally inspired from [stripe-node](https://github.com/stripe/stripe-node). Developed by [Fabrice Colas](https://fabricecolas.me) ([fabrice.colas@gmail.com](mailto:fabrice.colas@gmail.com)). Maintained by Ubivar. 
