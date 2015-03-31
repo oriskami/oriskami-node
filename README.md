@@ -78,10 +78,10 @@ ubivar.labels.retrieve(txId, function(err, res){
 
 ## Resources, actions and arguments 
 
-Full documentation is available at
-[https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs). Below we
-report the documentation matrix for the resources (rows), their actions
-(columns) and arguments (cells).
+The full documentation is available at
+[https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs). In the matrix
+below we list the resources (rows), the actions (columns) and the arguments
+(cells).
 
 | Resource      | Create | Retrieve | Update | Delete | List   |
 | ------------- |:------:|:--------:|:------:|:------:|:------:|
