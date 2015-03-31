@@ -93,6 +93,7 @@ is available at
 | Fx            |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_fx">params</a>|
 | Bins          |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_bin">params</a>|
 | Status        |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_status">params</a>|
+| Geoip         |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_geoip">`{"ip":ip}`</a>|
 
 ## Filter parameters
 

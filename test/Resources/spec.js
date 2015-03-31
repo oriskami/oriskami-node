@@ -12,7 +12,7 @@ describe("Resources", function() {
     , subProps          = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
     , methods           = ["create", "retrieve", "update", "del", "list"]
     , allResources      = ubivar.get("resources")
-    , specialResources  = ["me", "fx", "bins", "status"]
+    , specialResources  = ["me", "fx", "bins", "geoip", "status"]
     , genericResources  = _.difference(allResources, specialResources) 
 
   describe("Properties", function(){
@@ -180,7 +180,6 @@ describe("Resources", function() {
           }
         })
       })
-
     })
 
     describe("Status", function(){
@@ -287,6 +286,30 @@ describe("Resources", function() {
         })
       })
     })
+
+    describe("Geoip", function(){
+      it("Should return a valid geoip resource", function(done){
+        ubivar.geoip.list({"ip":"207.97.227.239"}, function(err, res){
+          var result  = !err && res.data.length > 0 ? res.data[0] : null
+            , fields  = ["ip","start_ip","end_ip","country","region","city","latitude","longitude"]
+
+          console.log(err, res)
+
+          if(err){ return done(err)
+          } else if(res.data.length === 0){ 
+            return done(new Error("Did not return results" ))
+          } 
+
+          _.each(fields, function(field){
+            if(!_.has(result, field)){
+              return done(new Error("Should have a '" + field + "'"))
+            }
+          })
+          done() 
+        })
+      })
+    })
+
 
     _.each(genericResources, function(resource){
       describe(resource[0].toUpperCase() + resource.slice(1)
