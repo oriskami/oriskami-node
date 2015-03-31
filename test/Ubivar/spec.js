@@ -31,10 +31,6 @@ describe("Ubivar", function() {
       expect(nResources > 0).to.be.true
     })
     describe("Timeout", function(){
-      it("Should default to the one of node", function(){
-        expect(ubivar.get('timeout')).to.equal(require('http').createServer().timeout)
-      })
-
       it("Should allow to change default value", function(){
         ubivar.set("timeout", 900);
         expect(ubivar.get('timeout')).to.equal(900)
