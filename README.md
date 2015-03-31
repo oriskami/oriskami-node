@@ -4,7 +4,7 @@
 Ubivar is an API that takes over the hassle of automatically screening
 e-payment for frauds. 
 
-Ubivar routes e-commerce transactions given their risk; by default the three
+Ubivar routes e-commerce transactions given their risk. By default the three
 routing outcomes are rejection, manual verification, and acceptance and the two
 elementary resources are the `transactions` and the `labels`.  `Transactions`
 are online sales pushed to your payment gateway and `labels` define the *a

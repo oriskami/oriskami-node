@@ -5,7 +5,7 @@ var _                   = require("lodash")
   , ubivar              = require("../ubivar")
   , token               = process.env.UBIVAR_TEST_TOKEN
 
-ubivar.set("timeout", 5000)
+ubivar.set("timeout", 20000)
 
 describe("Resources", function() {
   var rootProps         = ["log","_api"]
@@ -48,10 +48,9 @@ describe("Resources", function() {
         var message   = "Should be " + (isAuthorized?"  ":"un") + "authorized "
         message       += !!token ? ("'"+token.slice(0,5)+"...'") : ("'"+token+"'")
 
-        xit(message, function(done){
+        it(message, function(done){
           var ubivar  = require("../../lib")(token, "latest")
-
-          ubivar.set("timeout", 5000)
+          ubivar.set("timeout", 20000)
 
           ubivar.me.retrieve(function(gotError, res){
             if( isAuthorized &&  gotError) done((new Error(message)))
@@ -89,7 +88,7 @@ describe("Resources", function() {
           if(err){
             done()
           } else {
-            done(new Error("Should not return any deleted resource"))
+            done(new Error("Should fail to delete 'me'!"))
           }
         })
       })
