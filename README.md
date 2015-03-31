@@ -27,7 +27,7 @@ var Ubivar    = require("ubivar")
   , ubivar    = new Ubivar("YOUR_API_ACCESS_TOKEN", "latest")
 ```
 
-### B. Send an e-commerce transaction
+### B. Send transactions
 ```js
 ubivar.transactions.create({
   "user_id"     : "test_phahr3Eit3_123"           // your client's id
@@ -62,7 +62,7 @@ ubivar.transactions.create({
 })
 ```
 
-### C. Retrieve its status 
+### C. Retrieve routing and label 
 ```js
 ubivar.labels.retrieve(txId, function(err, res){
 
@@ -74,7 +74,7 @@ ubivar.labels.retrieve(txId, function(err, res){
 })
 ```
 
-## Resources, actions and arguments 
+## Resources, actions, and arguments 
 Every resource is accessed via your `ubivar` instance and accepts an optional
 callback as the last argument. In the matrix below we list the resources
 (rows), the actions (columns) and the arguments (cells). The full documentation
