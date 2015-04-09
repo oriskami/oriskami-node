@@ -81,19 +81,19 @@ callback as the last argument. In the matrix below we list the resources
 is available at
 [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs). 
 
-| Resource      | Create | Retrieve | Update | Delete | List   |
-| ------------- |:------:|:--------:|:------:|:------:|:------:|
-| Me            |        |<a href="https://ubivar.com/docs/nodejs#retrieve_your_information">_</a>  |<a href="https://ubivar.com/docs/nodejs#retrieve_your_information">param</a>|        |        |
-| Accounts      |<a href="https://ubivar.com/docs/nodejs#create_an_account">object</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_an_account">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_an_account">id, params</a>|<a href="https://ubivar.com/docs/nodejs#delete_an_account">id</a>|<a href="https://ubivar.com/docs/nodejs#list_accounts">params</a>|
-| Transactions  |<a href="https://ubivar.com/docs/nodejs#create_a_transaction">object</a>| <a href="https://ubivar.com/docs/nodejs#retrieve_a_transaction">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_a_transaction">id, params</a>|<a href="https://ubivar.com/docs/nodejs#delete_a_transaction">id</a>|<a href="https://ubivar.com/docs/nodejs#list_transactions">params</a>|
-| Login         |<a href="https://ubivar.com/docs/nodejs#create_login_event">object</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_login_event">id</a>  |        |<a href="https://ubivar.com/docs/nodejs#delete_login_event">id</a>|<a href="https://ubivar.com/docs/nodejs#list_login_events">params</a>|
-| Logout        |<a href="https://ubivar.com/docs/nodejs#create_logout_event">object</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_logout_event">id</a>  |        |<a href="https://ubivar.com/docs/nodejs#delete_logout_event">id</a>|<a href="https://ubivar.com/docs/nodejs#list_logout_events">params</a>|
-| Items         |<a href="https://ubivar.com/docs/nodejs#create_item">object</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_item">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_item">id, params</a>|<a href="https://ubivar.com/docs/nodejs#delete_item">id</a>|<a href="https://ubivar.com/docs/nodejs#list_items">params</a>|
-| Labels        |<a href="https://ubivar.com/docs/nodejs#create_label">object</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_label">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_label">id, params</a>|<a href="https://ubivar.com/docs/nodejs#delete_label">id</a>|<a href="https://ubivar.com/docs/nodejs#list_labels">params</a>|
-| Fx            |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_fx">params</a>|
-| Bins          |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_bin">params</a>|
-| Status        |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_status">params</a>|
-| Geoip         |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_geoip">`{"ip":ip}`</a>|
+| Resource      | Create | Retrieve | Update | Delete | List   | Summary | 
+| ------------- |:------:|:--------:|:------:|:------:|:------:|:-------:|
+| Me            |        |<a href="https://ubivar.com/docs/nodejs#retrieve_your_information">_</a>  |<a href="https://ubivar.com/docs/nodejs#retrieve_your_information">param</a>|        |        | |
+| Accounts      |<a href="https://ubivar.com/docs/nodejs#create_an_account">object</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_an_account">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_an_account">id, params</a>|<a href="https://ubivar.com/docs/nodejs#delete_an_account">id</a>|<a href="https://ubivar.com/docs/nodejs#list_accounts">params</a>| |
+| Transactions  |<a href="https://ubivar.com/docs/nodejs#create_a_transaction">object</a>| <a href="https://ubivar.com/docs/nodejs#retrieve_a_transaction">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_a_transaction">id, params</a>|<a href="https://ubivar.com/docs/nodejs#delete_a_transaction">id</a>|<a href="https://ubivar.com/docs/nodejs#list_transactions">params</a>| |
+| Login         |<a href="https://ubivar.com/docs/nodejs#create_login_event">object</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_login_event">id</a>  |        |<a href="https://ubivar.com/docs/nodejs#delete_login_event">id</a>|<a href="https://ubivar.com/docs/nodejs#list_login_events">params</a>| | 
+| Logout        |<a href="https://ubivar.com/docs/nodejs#create_logout_event">object</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_logout_event">id</a>  |        |<a href="https://ubivar.com/docs/nodejs#delete_logout_event">id</a>|<a href="https://ubivar.com/docs/nodejs#list_logout_events">params</a>| | 
+| Items         |<a href="https://ubivar.com/docs/nodejs#create_item">object</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_item">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_item">id, params</a>|<a href="https://ubivar.com/docs/nodejs#delete_item">id</a>|<a href="https://ubivar.com/docs/nodejs#list_items">params</a>| | 
+| Labels        |<a href="https://ubivar.com/docs/nodejs#create_label">object</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_label">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_label">id, params</a>|<a href="https://ubivar.com/docs/nodejs#delete_label">id</a>|<a href="https://ubivar.com/docs/nodejs#list_labels">params</a>| | 
+| Fx            |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_fx">params</a>| | 
+| Bins          |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_bin">params</a>| | 
+| Status        |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_status">params</a>| <a href="https://ubivar.com/docs/nodejs#summary_status">params</a>|
+| Geoip         |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_geoip">`{"ip":ip}`</a>| |
 
 ## Filter parameters
 
