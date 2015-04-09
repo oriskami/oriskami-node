@@ -1,11 +1,11 @@
 # Ubivar node.js bindings 
 [![npm version](https://badge.fury.io/js/ubivar.svg)](http://badge.fury.io/js/ubivar) [![Build Status](https://travis-ci.org/ubivar/ubivar-node.png?branch=master)](https://travis-ci.org/ubivar/ubivar-node)   [![Inline docs](http://inch-ci.org/github/ubivar/ubivar-node.svg?branch=master)](http://inch-ci.org/github/ubivar/ubivar-node)
  
-Ubivar is an API that takes over the hassle of automatically screening
-e-payment for frauds. 
+Ubivar is an API that takes over the hassle of screening e-payment for
+frauds. 
 
 Ubivar routes e-commerce transactions given their risk. By default the three
-routing outcomes are rejection, manual verification, and acceptance and the two
+routing outcomes are rejection, manual verification and acceptance. And the two
 elementary resources are the `transactions` and the `labels`.  `Transactions`
 are online sales pushed to your payment gateway and `labels` define the *a
 posteriori* truth about each `transaction`, i.e. {`fraud`, `non-fraud`}. 
