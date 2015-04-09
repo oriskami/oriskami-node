@@ -7,7 +7,7 @@ module.exports = function(resource){
 
   var rootProps         = ["log","_api"]
     , subProps          = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
-    , methods           = ["create", "retrieve", "update", "del", "list"]
+    , methods           = ["create", "retrieve", "update", "del", "list", "summary"]
     
   describe(resource[0].toUpperCase() + resource.slice(1), function(){
     describe("Properties", function(){

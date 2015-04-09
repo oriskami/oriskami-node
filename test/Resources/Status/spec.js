@@ -9,7 +9,7 @@ describe("Status", function(){
 
     ubivar.status.list(function(err, res){
       var result  = !err && res.data.length > 0 ? res.data[0] : null
-        , fields  = ["id", "timestamp", "url", "status"]
+        , fields  = ["id", "url", "timestamp", "status"]
 
       if(err){
         console.log(err)
@@ -55,6 +55,29 @@ describe("Status", function(){
       })
 
       done() 
+    })
+  })
+
+  it("Should summary the status", function(done){
+    ubivar.status.summary(function(err, res){
+      if(err){
+        console.log(err)
+        return done(err)
+      } else if(res.data.length === 0){
+        return done(new Error("Did not return results" ))
+      }
+
+      var aRow        = res.data[0]
+        , fieldsExp   = ["url", "timestamp_last"]
+        , fieldsObs   = _.keys(aRow)
+
+      _.each(fieldsExp, function(field){
+        if(!_.contains(fieldsObs, field)){
+          return done(new Error("Should return field '"+field+"'"))
+        }
+      })
+
+      done()
     })
   })
 })

@@ -8,7 +8,7 @@ describe("Ubivar", function() {
 
   var rootProps = ["_api"]
     , subProps  = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
-    , methods   = ["create", "retrieve", "update", "del", "list"]
+    , methods   = ["create", "retrieve", "update", "del", "list", "summary"]
     , resources = ubivar.get("resources") 
 
   this.timeout(20000)
@@ -30,6 +30,7 @@ describe("Ubivar", function() {
       var nResources = resources.length - rootProps.length  
       expect(nResources > 0).to.be.true
     })
+
     describe("Timeout", function(){
       it("Should allow to change default value", function(){
         ubivar.set("timeout", 900);
@@ -60,5 +61,4 @@ describe("Ubivar", function() {
       })
     })
   })
-
 })
