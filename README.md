@@ -81,8 +81,8 @@ callback as the last argument. In the matrix below we list the resources
 is available at
 [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs). 
 
-| Resource      | Create | Retrieve | Update | Delete | List   | Summary | 
-| ------------- |:------:|:--------:|:------:|:------:|:------:|:-------:|
+| Resource      | Create | Retrieve | Update | Delete | List   | Summary | Status |  
+| ------------- |:------:|:--------:|:------:|:------:|:------:|:-------:|:------:|
 | Me            |        |<a href="https://ubivar.com/docs/nodejs#retrieve_your_information">_</a>  |<a href="https://ubivar.com/docs/nodejs#retrieve_your_information">param</a>|        |        | | <img src="https://status.ubivar.com/ubivar-node/resources/me"/>|
 | Accounts      |<a href="https://ubivar.com/docs/nodejs#create_an_account">object</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_an_account">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_an_account">id, params</a>|<a href="https://ubivar.com/docs/nodejs#delete_an_account">id</a>|<a href="https://ubivar.com/docs/nodejs#list_accounts">params</a>| | <img src="https://status.ubivar.com/ubivar-node/resources/accounts"/>|
 | Transactions  |<a href="https://ubivar.com/docs/nodejs#create_a_transaction">object</a>| <a href="https://ubivar.com/docs/nodejs#retrieve_a_transaction">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_a_transaction">id, params</a>|<a href="https://ubivar.com/docs/nodejs#delete_a_transaction">id</a>|<a href="https://ubivar.com/docs/nodejs#list_transactions">params</a>| | <img src="https://status.ubivar.com/ubivar-node/resources/transactions"/>| 
