@@ -4,10 +4,10 @@ var _             = require("lodash")
   , expect        = require("chai").expect
   , ubivar        = require("../../ubivar")
 
-describe("Status", function(){
-  it("Should list of valid set of uptime statuses", function(done){
+describe("CI", function(){
+  it("Should list of valid set of CI", function(done){
 
-    ubivar.status.list(function(err, res){
+    ubivar.ci.list(function(err, res){
       var result  = !err && res.data.length > 0 ? res.data[0] : null
         , fields  = ["id", "url", "timestamp", "status"]
 
@@ -29,11 +29,15 @@ describe("Status", function(){
     })
   })
 
-  it("Should filter status based on timestamp", function(done){
-    var begin = "2015-03-30 23:00:00"
-      , end   = "2015-03-30 24:00:00"
+  it("Should filter CI based on timestamp", function(done){
+    var begin   = "2015-04-09 13:00:00"
+      , end     = "2015-04-09 14:00:00"
 
-    ubivar.status.list({"timestamp":{ "gte":begin , "lte":end}}, function(err, res){
+    ubivar.ci.list({"timestamp":{ 
+        "gte"   : begin
+      , "lte"   : end
+      }
+    }, function(err, res){
 
       var results = !err && res.data.length > 0 ? res.data : null
 
@@ -45,12 +49,17 @@ describe("Status", function(){
         return done(new Error("Did not return results" ))
       } 
 
-      begin   = new Date(begin)
-      end     = new Date(end)
+      begin           = new Date(begin)
+      end             = new Date(end)
+
       _.each(results, function(result){
-        var time  = new Date(result.timestamp)
-        if((time-begin)<0 || (end-time)<0){
-          return done(new Error("Should return statuses within ["+begin,",",end+"]: ", time))
+        var time      = new Date(result.timestamp)
+          , now       = new Date()
+          , tzOffset  = now.getTimezoneOffset()*60000
+
+        if((time+tzOffset-begin)<0 || (end+tzOffset-time)<0){
+          console.log("\n"+begin, "\n"+end, "\n"+time, time-begin, end-time)
+          return done(new Error("Should return CI within ["+begin,",",end+"]: ", time))
         }
       })
 
@@ -58,8 +67,8 @@ describe("Status", function(){
     })
   })
 
-  it("Should summary the status", function(done){
-    ubivar.status.summary(function(err, res){
+  it("Should summary the CI", function(done){
+    ubivar.ci.summary(function(err, res){
       if(err){
         console.log(err)
         return done(err)
