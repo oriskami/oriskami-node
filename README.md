@@ -92,7 +92,8 @@ is available at
 | Labels        |<a href="https://ubivar.com/docs/nodejs#create_label">object</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_label">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_label">id, params</a>|<a href="https://ubivar.com/docs/nodejs#delete_label">id</a>|<a href="https://ubivar.com/docs/nodejs#list_labels">params</a>| | 
 | Fx            |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_fx">params</a>| | 
 | Bins          |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_bin">params</a>| | 
-| Status        |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_status">params</a>| <a href="https://ubivar.com/docs/nodejs#summary_status">params</a>|
+| Uptime |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_uptime">params</a>| <a href="https://ubivar.com/docs/nodejs#summary_uptime">params</a>|
+| CI        |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_ci">params</a>| <a href="https://ubivar.com/docs/nodejs#summary_ci">params</a>|
 | Geoip         |        |          |        |        |<a href="https://ubivar.com/docs/nodejs#list_geoip">`{"ip":ip}`</a>| |
 
 ## Filter parameters
