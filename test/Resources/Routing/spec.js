@@ -29,18 +29,25 @@ describe("Routing", function(){
 
   describe("Pagination", function(){
     it("Should return routing greater than (gt) a given timestamp", function(done){
-      ubivar.routing.list({
-        "insert_timestamp":{"gte":"2015-04-19 19:28:45.263772"
-      , "lte":"2015-04-19 19:28:45.374523"}
-      }, function(err, res){
+      ubivar.transactions.list({"limit":2, "order":"id"}, function(err, res){
         if(err){ 
           console.log(err, res)
           return done(err)
-        } else if(res.data.length !== 2){ 
-          return done(new Error("Did not return the right number of results" ))
-        } 
+        }
 
-        done()
+        var tx_id_min = res.data[0].id
+          , tx_id_max = res.data[1].id
+
+        ubivar.routing.list({"id":{"gte":tx_id_min, "lte":tx_id_max}}, function(err, res){
+          if(err){ 
+            console.log(err, res)
+            return done(err)
+          } else if(res.data.length !== 2){ 
+            return done(new Error("Did not return the right number of results" ))
+          } 
+
+          done()
+        })
       })
     })
   })
