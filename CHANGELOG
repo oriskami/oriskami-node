@@ -1,3 +1,6 @@
+0.1.3-beta16 April 19th, 2015
+ - Add resource routing to keep track of routing status of transactions
+
 0.1.3-beta15 April 10th, 2015
  - Remove status API endpoint and replace it by {uptime, ci} that provide
  uptime status of http endpoints and continuous integration status of the API

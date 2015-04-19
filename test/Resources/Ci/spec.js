@@ -12,7 +12,7 @@ describe("CI", function(){
         , fields  = ["id", "url", "timestamp", "status"]
 
       if(err){
-        console.log(err)
+        console.log(err, res)
         return done(err)
 
       } else if(res.data.length === 0){ 
@@ -42,7 +42,7 @@ describe("CI", function(){
       var results = !err && res.data.length > 0 ? res.data : null
 
       if(err){
-        console.log(err)
+        console.log(err, res)
         return done(err)
 
       } else if(res.data.length === 0){ 
@@ -70,7 +70,7 @@ describe("CI", function(){
   it("Should summary the CI", function(done){
     ubivar.ci.summary(function(err, res){
       if(err){
-        console.log(err)
+        console.log(err, res)
         return done(err)
       } else if(res.data.length === 0){
         return done(new Error("Did not return results" ))
