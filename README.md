@@ -164,7 +164,7 @@ npm test
 ```
 *Note: on Windows, use `SET` instead of `export` for setting the `UBIVAR_TEST_TOKEN` environment variable.*
 
-+ [Issues and feature requests](https://github.com/ubivar/ubivar-node/issues)
+### [Issues and feature requests](https://github.com/ubivar/ubivar-node/issues)
 
 ## Author
 
