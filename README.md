@@ -5,14 +5,14 @@ Ubivar is an API that takes over the hassle of screening e-payment for
 frauds. 
 
 Ubivar routes e-commerce transactions given their risk. By default the three
-routing outcomes are rejection, manual verification and acceptance. And the two
+`routing` outcomes are rejection, manual verification and acceptance. And the two
 elementary resources are the `transactions` and the `labels`.  `Transactions`
 are online sales pushed to your payment gateway and `labels` define the *a
 posteriori* truth about each `transaction`, i.e. {`fraud`, `non-fraud`}. 
 
 Using Ubivar simply requires an access `token`. Then the bindings provide the
 hooks to send and receive resources to the API. For each `transaction` that
-Ubivar receives, it calculates a routing. Later, as you review manually some of
+Ubivar receives, it calculates a `routing`. Later, as you review manually some of
 the `transactions` or as you receive fraud notifications, you `label` 
 those `transactions` as `fraud`. 
 
