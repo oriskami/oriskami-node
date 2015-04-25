@@ -18,40 +18,47 @@ those `transactions` as `fraud`.
 
 ## Quick Start
 
-### A. Install and initialize 
+Install the nodejs binding of `ubivar` from npm.
 
 `npm install ubivar`
 
+Initialize the binding with your API access token:
+
 ```js
 var Ubivar    = require("ubivar")
-  , ubivar    = new Ubivar("YOUR_API_ACCESS_TOKEN", "latest")
+  , ubivar    = new Ubivar("YOUR_API_ACCESS_TOKEN")
 ```
 
-### B. Send transactions
+### A. Send transactions
 ```js
 ubivar.transactions.create({
   "user_id"     : "test_phahr3Eit3_123"           // your client's id
 , "user_email"  : "test_phahr3Eit3@gmail-123.com" // your client email
+, "gender"      : "M"                             // your client's gender
+, "first_name"  : "John"                          // your client's first name
+, "last_name"   : "Doe"                           // your client's last name
 , "type"        : "sale"                          // the transaction type
 , "status"      : "success"                       // the transaction status 
 , "order_id"    : "test_iiquoozeiroogi_123"       // the shopping cart id
 , "tx_id"       : "client_tx_id_123"              // the transaction id 
+, "tx_timestamp": "2015-04-13 13:36:41"           // the timestamp of this transaction
 , "amount"      : "43210"                         // the amount in cents
 , "payment_method":{
-    "bin"       :"123456"                         // the BIN of the card
-  , "brand"     :"Mastercard"                     // the brand of the card
-  , "funding"   :"credit"                         // the type of card
-  , "country"   :"US"                             // the card country code
-  , "name"      :"M Man"                          // the card holder's name
-  , "cvc_check" :"pass"                           // the cvc check result
+    "bin"       : "123456"                        // the BIN of the card
+  , "brand"     : "Mastercard"                    // the brand of the card
+  , "funding"   : "credit"                        // the type of card
+  , "country"   : "US"                            // the card country code
+  , "name"      : "M John Doe"                    // the card holder's name
+  , "cvc_check" : "pass"                          // the cvc check result
 },"billing_address":{
-    "line1"     :"123 Market Street"              // the billing address
-  , "line2"     :"4th Floor"                       
-  , "city"      :"San Francisco"
-  , "state"     :"California"
-  , "zip"       :"94102"
-  , "country"   :"US"
-  }
+    "line1"     : "123 Market Street"             // the billing address
+  , "line2"     : "4th Floor"                       
+  , "city"      : "San Francisco"
+  , "state"     : "California"
+  , "zip"       : "94102"
+  , "country"   : "US"
+},"ip_address"  : "1.2.3.4"                       // your client ip address
+, "user_agent"  : "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"                        // your client's user agent
 }, function(err, res){
 
   if(err) return err 
@@ -62,15 +69,29 @@ ubivar.transactions.create({
 })
 ```
 
-### C. Retrieve routing and label 
+### B. Retrieve routing 
+
 ```js
-ubivar.labels.retrieve(txId, function(err, res){
+ubivar.routing.retrieve(txId, function(err, res){
 
   if(err) return err
   // something unexpected occurred
 
   status        = res.data[0].status
-  // the status of the transaction
+  // the routing, e.g. {pending, green, orange, red}
+})
+```
+
+### C. Label as `fraud`
+
+```js
+ubivar.labels.retrieve(txId, {"status": "is_fraud"}, function(err, res){
+
+  if(err) return err
+  // something unexpected occurred
+
+  status        = res.data[0].status
+  // the label of the transaction
 })
 ```
 
@@ -78,8 +99,7 @@ ubivar.labels.retrieve(txId, function(err, res){
 Every resource is accessed via your `ubivar` instance and accepts an optional
 callback as the last argument. In the matrix below we list the resources
 (rows), the actions (columns) and the arguments (cells). The full documentation
-is available at
-[https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs). 
+is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs). 
 
 | Resource      | C | R | U | D | L | Summary | Test Specs |
 | ------------- |:-:|:-:|:-:|:-:|:----:|:-------:|:----------:|
@@ -115,6 +135,7 @@ is available at
 
 + `ubivar.set("auth", "your-api-token")`
 + `ubivar.set("timeout", 20000) // in ms`, node's default is `120000ms`
++ `ubivar.extend("geoip")`: extend `ubivar` with a new resource whose accessibility depends on your access rights.
 
 ## Issues and feature requests 
 
