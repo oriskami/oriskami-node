@@ -1,3 +1,7 @@
+0.1.3-beta17 April 25th, 2015
+ - Implement an extend mechanism to add dynamically new resources to the connector 
+ - Set of resources is removed from the default.
+
 0.1.3-beta16 April 19th, 2015
  - Add resource routing to keep track of routing status of transactions
 
