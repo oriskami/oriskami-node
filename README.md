@@ -82,7 +82,7 @@ ubivar.routing.retrieve(txId, function(err, res){
 })
 ```
 
-### C. Label as `fraud`
+### C. Label as fraud
 
 ```js
 ubivar.labels.retrieve(txId, {"status": "is_fraud"}, function(err, res){
@@ -133,13 +133,25 @@ is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs)
 
 ## Configuration
 
-+ `ubivar.set("auth", "your-api-token")`
-+ `ubivar.set("timeout", 20000) // in ms`, node's default is `120000ms`
-+ `ubivar.extend("geoip")`: extend `ubivar` with a new resource whose accessibility depends on your access rights.
 
-## Issues and feature requests 
+Extend `this` `ubivar` instance with a new resource whose accessibility is
+controlled by access rights.
+```js
+var Ubivar    = require("ubivar")
+  , ubivar    = new Ubivar("YOUR_API_ACCESS_TOKEN")
 
-+ [Report issues and feature requests](https://github.com/ubivar/ubivar-node/issues)
+ubivar.extend("geoip") // extend with 
+```
+
+Change API access token dynamically: 
+```js
+ubivar.set("auth", "your-api-token")
+```
+
+Define timeout of the binding:
+```js
+ubivar.set("timeout", 20000) // in ms`, node's default is `120000ms`
+```
 
 ## Development
 
@@ -151,6 +163,8 @@ npm install -g mocha
 npm test
 ```
 *Note: on Windows, use `SET` instead of `export` for setting the `UBIVAR_TEST_TOKEN` environment variable.*
+
++ [Issues and feature requests](https://github.com/ubivar/ubivar-node/issues)
 
 ## Author
 
