@@ -1,8 +1,8 @@
-0.1.[5-8]-beta April 28, 2015
+0.1.[5-9]-beta April 28, 2015
  - Handle and propagate error when the socket hangs up
  - Handle and propagate error on sockets and responses
  - Add callback argument to handler of socket errors 
- - Fix missing: self = this
+ - Fix missing: self = this, and require of Error
 
 0.1.3-beta17 April 25th, 2015
  - Implement an extend mechanism to add dynamically new resources to the connector 
