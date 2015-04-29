@@ -1,4 +1,4 @@
-0.1.[5-9]-beta April 28, 2015
+0.1.[5-10]-beta April 28, 2015
  - Handle and propagate error when the socket hangs up
  - Handle and propagate error on sockets and responses
  - Add callback argument to handler of socket errors 
