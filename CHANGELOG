@@ -1,5 +1,6 @@
-0.1.11-beta July 20, 2015
- - Add resources ReviewQueues and ReviewerBindings, and update README.md 
+0.1.[11-12]-beta July 20, 2015
+ - Add resources ReviewQueues and ReviewerBindings, and update README.md. 
+ - Add resource Reviewers and update README.md.
 
 0.1.[5-10]-beta April 28, 2015
  - Handle and propagate error when the socket hangs up
