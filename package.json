@@ -1,9 +1,11 @@
 {
   "name": "ubivar",
-  "version": "0.1.10-beta",
+  "version": "0.1.10",
   "description": "API wrapper to Ubivar",
   "main": "lib/index.js",
-  "scripts": { "test": "mocha" },
+  "scripts": {
+    "test": "mocha"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ubivar/ubivar-node.git"
