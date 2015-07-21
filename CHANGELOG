@@ -1,5 +1,9 @@
-0.1.[11-12]-beta July 20, 2015
- - Add resources ReviewQueues and ReviewerBindings, and update README.md. 
+0.1.14-beta July 21, 2015
+ - Add test specs for new generic resources Addresses, ReviewQueues and 
+ ReviewerQueueBindings, and add more debugging information to generic specs 
+
+0.1.[11-13]-beta July 20, 2015
+ - Add resources ReviewQueues and ReviewerQueueBindings, and update README.md. 
  - Add resource Reviewers and update README.md.
 
 0.1.[5-10]-beta April 28, 2015
