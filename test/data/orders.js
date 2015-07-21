@@ -10,7 +10,7 @@ module.exports = [{
   , "country":"US"
   , "name":"M Man"
   , "cvc_check":"pass"
-},"metadata":{
+},"meta":{
   "channel":"mobile_123"
 }}, {
   "user_id":"test_phahr3Eit3_234"
@@ -24,6 +24,6 @@ module.exports = [{
   , "country":"US"
   , "name":"M Man"
   , "cvc_check":"pass"
-},"metadata":{
+},"meta":{
   "channel":"mobile_234"
 }}]

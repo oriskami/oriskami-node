@@ -39,6 +39,7 @@ module.exports = function(resource){
             idResource = res.data[0].id
             done()
           } else {
+            console.log(err, res)
             done((new Error("Did not return an id")))
           }
         })
@@ -55,6 +56,7 @@ module.exports = function(resource){
             idResource = res.data[0].id
             done()
           } else {
+            console.log(err, res)
             done((new Error("Did not return an id")))
           }
         })
@@ -65,6 +67,7 @@ module.exports = function(resource){
           if(res.status === 200 && res.data.length === 1){
             done()
           } else {
+            console.log(err, res)
             done((new Error("Did not return the resource with id = "+idResource)))
           }
         })
@@ -85,9 +88,11 @@ module.exports = function(resource){
             if(deepEqual){
               done()
             } else {
+              console.log(err, sentData, newData)
               done(new Error("Updated resource is not deep equal to submitted resource"))
             }
           } else {
+            console.log(err, res)
             done(new Error("Non-200 status code, or data length !== 1 when updating"))
           }
         })
@@ -98,6 +103,7 @@ module.exports = function(resource){
           if(res.status === 200 && res.data.length === 1){
             done()
           } else {
+            console.log(err, res)
             done((new Error("Did not return the deleted resource with id = "+idResource)))
           }
         })
@@ -111,13 +117,22 @@ module.exports = function(resource){
         var examples   = require("../../data/"+resource)
         this.timeout(5000)
         ubivar[resource].create(examples[0], function(err, res){
-          if(err) return done(err)
+          if(err) {
+            console.log(err)
+            return done(err)
+          }
           ids.push(res.data[0].id)
           ubivar[resource].create(examples[0], function(err, res){
-            if(err) return done(err)
+            if(err) {
+              console.log(err)
+              return done(err)
+            }
             ids.push(res.data[0].id)
             ubivar[resource].create(examples[0], function(err, res){
-              if(err) return done(err)
+              if(err) {
+                console.log(err)
+                return done(err)
+              }
               ids.push(res.data[0].id)
               done()
             })
@@ -128,26 +143,44 @@ module.exports = function(resource){
       it("Should limit retrieved resources to N=1", function(done){
         var nLimit = 1
         ubivar[resource].list({limit:nLimit}, function(err, res){
-          if(err) done(err) 
-          else if(res.data.length === nLimit) done()
-          else done(new Error("Should 'limit' list to N="+nLimit+" resources")) 
+          if(err) {
+            console.log(err, res)
+            done(err) 
+          } else if(res.data.length === nLimit) {
+            done()
+          } else {
+            console.log(res)
+            done(new Error("Should 'limit' list to N="+nLimit+" resources")) 
+          }
         })
       })
 
       it("Should limit retrieved resources to N=2", function(done){
         var nLimit = 2
         ubivar[resource].list({limit:nLimit}, function(err, res){
-          if(err) done(err) 
-          else if(res.data.length === nLimit) done()
-          else done(new Error("Should 'limit' list to N="+nLimit+" resources")) 
+          if(err) {
+            console.log(err)
+            done(err) 
+          } else if(res.data.length === nLimit) {
+            done()
+          } else {
+            console.log(res)
+            done(new Error("Should 'limit' list to N="+nLimit+" resources")) 
+          }
         })
       })
 
       it("Should 'start_after' when paginating", function(done){
         var nLimit = 2
         ubivar[resource].list({"start_after": ids[0], "limit":nLimit}, function(err, res){
-          if(err) return done(err)    
-          if(res.data.length !== nLimit) return done(new Error("Should return N="+nLimit))
+          if(err){
+            console.log(err)
+            return done(err)    
+          }
+          if(res.data.length !== nLimit){
+            console.log(res)
+            return done(new Error("Should return N="+nLimit))
+          }
           var returnedIds   = _.pluck(res.data, "id")
           if(_.contains(returnedIds, ids[0])){ 
             return done(new Error("Should not return 'starting_after' id"))
