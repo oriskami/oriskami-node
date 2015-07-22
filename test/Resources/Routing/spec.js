@@ -4,7 +4,7 @@ var _             = require("lodash")
   , expect        = require("chai").expect
   , ubivar        = require("../../ubivar")
 
-xdescribe("Routing", function(){
+describe("Routing", function(){
   it("Should return a valid routing resource", function(done){
     ubivar.routing.list({"limit":"1"}, function(err, res){
       var result  = !err && res.data.length > 0 ? res.data[0] : null
