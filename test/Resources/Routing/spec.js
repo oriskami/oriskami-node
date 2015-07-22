@@ -8,7 +8,7 @@ describe("Routing", function(){
   it("Should return a valid routing resource", function(done){
     ubivar.routing.list({"limit":"1"}, function(err, res){
       var result  = !err && res.data.length > 0 ? res.data[0] : null
-        , fields  = ["tx_id","status","insert_timestamp","routing_timestamp","update_timestamp"]
+        , fields  = ["status","insert_timestamp","routing_timestamp","update_timestamp"]
 
       if(err){ 
         console.log(err, res)
