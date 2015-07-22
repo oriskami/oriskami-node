@@ -28,7 +28,7 @@ describe("Routing", function(){
   })
 
   describe("Pagination", function(){
-    it("Should return routing greater than (gt) a given timestamp", function(done){
+    it("Should return routing greater than (gt) a given id", function(done){
       ubivar.transactions.list({"limit":2, "order":"id"}, function(err, res){
         if(err){ 
           console.log(err, res)
@@ -43,6 +43,7 @@ describe("Routing", function(){
             console.log(err, res)
             return done(err)
           } else if(res.data.length !== 2){ 
+            console.log(err, res)
             return done(new Error("Did not return the right number of results" ))
           } 
 
