@@ -28,22 +28,28 @@ describe("Routing", function(){
   })
 
   describe("Pagination", function(){
-    it("Should return routing greater than (gt) a given id", function(done){
-      ubivar.transactions.list({"limit":2, "order":"id"}, function(err, res){
+    it("Should return routing greater than gte and lte than two ids", function(done){
+      ubivar.transactions.list({"limit":2, "order":"-id"}, function(err, res0){
         if(err){ 
-          console.log(err, res)
+          console.log(err, res0)
           return done(err)
         }
 
-        var tx_id_min = res.data[0].id
-          , tx_id_max = res.data[1].id
+        var tx_id_min = res0.data[1].id
+          , tx_id_max = res0.data[0].id
+          , params    = {
+            "id"          : {
+              "gte"       : tx_id_min
+            , "lte"       : tx_id_max
+            }
+          }
 
-        ubivar.routing.list({"id":{"gte":tx_id_min, "lte":tx_id_max}}, function(err, res){
+        ubivar.routing.list(params, function(err, res){
           if(err){ 
-            console.log(err, res)
+            console.log(err, res0, res)
             return done(err)
           } else if(res.data.length !== 2){ 
-            console.log(err, res)
+            console.log(err, res0, res)
             return done(new Error("Did not return the right number of results" ))
           } 
 
