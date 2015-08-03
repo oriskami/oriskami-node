@@ -1,3 +1,6 @@
+0.1.15-beta August 3rd, 2015
+ - Add support for versioning of API; fix sent headers and test suite.
+
 0.1.14-beta July 21, 2015
  - Add test specs for new generic resources Addresses, ReviewQueues and 
  ReviewerQueueBindings, and add more debugging information to generic specs 

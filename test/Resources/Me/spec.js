@@ -4,7 +4,10 @@ var _             = require("lodash")
   , expect        = require("chai").expect
   , ubivar        = require("../../ubivar")
   , Ubivar        = require("../../../lib")
+  , version       = ubivar._api.request.version
   , token         = process.env.UBIVAR_TEST_TOKEN
+
+console.log("\n\n\nVERSION", version, "\n\n\n")
 
 describe("Me", function(){
   var testIt      = function(token, isAuthorized){
@@ -12,7 +15,7 @@ describe("Me", function(){
     message       += !!token ? ("'"+token.slice(0,5)+"...'") : ("'"+token+"'")
 
     it(message, function(done){
-      var ubivar  = new Ubivar(token, "latest")
+      var ubivar  = Ubivar(token, version)
       ubivar.set("timeout", 20000)
 
       ubivar.me.retrieve(function(gotError, res){
@@ -30,7 +33,7 @@ describe("Me", function(){
   testIt(token, true)
 
   it("Should update me", function(done){
-    var ubivar        = new Ubivar(token, "latest")
+    var ubivar        = new Ubivar(token, version)
       , vrand         = ""+Math.random()
 
     ubivar.me.update({"primary_phone": vrand}, function(err, res){
@@ -46,7 +49,7 @@ describe("Me", function(){
   })
 
   it("Should fail to delete me", function(done){
-    var ubivar    = new Ubivar(token, "latest")
+    var ubivar    = new Ubivar(token, version)
     ubivar.me.del(function(err, res){
       if(err){
         done()
@@ -57,7 +60,7 @@ describe("Me", function(){
   })
 
   it("Should list a single me", function(done){
-    var ubivar    = new Ubivar(token, "latest")
+    var ubivar    = new Ubivar(token, version)
     ubivar.me.list(function(err, res){
       if(!err && res.status === 200 && res.data.length === 1){
         done()

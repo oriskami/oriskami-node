@@ -4,12 +4,13 @@ var _             = require("lodash")
   , expect        = require("chai").expect
   , ubivar        = require("../../ubivar")
   , Ubivar        = require("../../../lib")
+  , version       = ubivar._api.request.version
   , token         = process.env.UBIVAR_TEST_TOKEN
 
 describe("Reviewers", function(){
 
   it("Should list reviewers", function(done){
-    var ubivar        = new Ubivar(token, "latest")
+    var ubivar        = new Ubivar(token, version)
       , vrand         = ""+Math.random()
 
     ubivar.reviewers.list(function(err, res){
@@ -25,7 +26,7 @@ describe("Reviewers", function(){
   })
 
   it("Should fail to delete a reviewerId", function(done){
-    var ubivar    = new Ubivar(token, "latest")
+    var ubivar    = new Ubivar(token, version)
     ubivar.reviewers.list(function(err, res){
       var oneReviewerId = res.data[0]['id'];
       ubivar.reviewers.del(oneReviewerId, function(err, res){
@@ -39,7 +40,7 @@ describe("Reviewers", function(){
   })
 
   it("Should fail to update a reviewerId", function(done){
-    var ubivar    = new Ubivar(token, "latest")
+    var ubivar    = new Ubivar(token, version)
     ubivar.reviewers.list(function(err, res){
       var oneReviewerId = res.data[0]['id'];
       ubivar.reviewers.update(oneReviewerId, {"meta":Math.random()}, function(err, res){

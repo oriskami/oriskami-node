@@ -1,3 +1,3 @@
 module.exports = require("../lib")(
   process.env.UBIVAR_TEST_TOKEN
-, "latest")
+, "0.6.0-beta")
