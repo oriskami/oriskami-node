@@ -58,18 +58,4 @@ describe("Me", function(){
       }
     })
   })
-
-  it("Should list a single me", function(done){
-    var ubivar    = new Ubivar(token, version)
-    ubivar.me.list(function(err, res){
-      if(!err && res.status === 200 && res.data.length === 1){
-        done()
-
-      } else {
-        console.log("\n\nError:", err
-        , "\nResponse:"         , res)
-        done(new Error("Should list a single me"))
-      }
-    })
-  })
 })
