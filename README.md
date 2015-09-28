@@ -65,7 +65,7 @@ is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs)
 | Resource      | C | R | U | D | L | Test Specs |
 | ------------- |:-:|:-:|:-:|:-:|:----:|:-------:|:----------:|
 | Me            |        |<a href="https://ubivar.com/docs/nodejs#retrieve_your_information">_</a>  |<a href="https://ubivar.com/docs/nodejs#retrieve_your_information">`{}`</a>|        |        | [![](https://status.ubivar.com/ubivar-node/resources/me.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Me/spec.js) |
-| Event |<a href="https://ubivar.com/docs/nodejs#create_events">`{}`</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_events">id</a>  |        |<a href="https://ubivar.com/docs/nodejs#delete_events">id</a>|<a href="https://ubivar.com/docs/nodejs#list_events">`{}`</a>| [![](https://status.ubivar.com/ubivar-node/resources/events.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Login/spec.js)| 
+| Events |<a href="https://ubivar.com/docs/nodejs#create_event">`{}`</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_event">id</a>  | <a href="https://ubivar.com/docs/nodejs#update_event">`{}`</a>       |<a href="https://ubivar.com/docs/nodejs#delete_event">id</a>|<a href="https://ubivar.com/docs/nodejs#list_events">`{}`</a>| [![](https://status.ubivar.com/ubivar-node/resources/events.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Events/spec.js)| 
 
 + *C*: Create
 + *R*: Retrieve
