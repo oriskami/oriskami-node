@@ -29,69 +29,30 @@ var Ubivar    = require("ubivar")
   , ubivar    = new Ubivar("YOUR_API_ACCESS_TOKEN")
 ```
 
-### A. Send transactions
+### Send analytics event 
 ```js
 ubivar.transactions.create({
-  "user_id"     : "test_phahr3Eit3_123"           // your client's id
-, "user_email"  : "test_phahr3Eit3@gmail-123.com" // your client email
-, "gender"      : "M"                             // your client's gender
-, "first_name"  : "John"                          // your client's first name
-, "last_name"   : "Doe"                           // your client's last name
-, "type"        : "sale"                          // the transaction type
-, "status"      : "success"                       // the transaction status 
-, "order_id"    : "test_iiquoozeiroogi_123"       // the shopping cart id
-, "tx_id"       : "client_tx_id_123"              // the transaction id 
-, "tx_timestamp": "2015-04-13 13:36:41"           // the timestamp of this transaction
-, "amount"      : "43210"                         // the amount in cents
-, "payment_method":{
-    "bin"       : "123456"                        // the BIN of the card
-  , "brand"     : "Mastercard"                    // the brand of the card
-  , "funding"   : "credit"                        // the type of card
-  , "country"   : "US"                            // the card country code
-  , "name"      : "M John Doe"                    // the card holder's name
-  , "cvc_check" : "pass"                          // the cvc check result
-},"billing_address":{
-    "line1"     : "123 Market Street"             // the billing address
-  , "line2"     : "4th Floor"                       
-  , "city"      : "San Francisco"
-  , "state"     : "California"
-  , "zip"       : "94102"
-  , "country"   : "US"
-},"ip_address"  : "1.2.3.4"                       // your client ip address
-, "user_agent"  : "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"                        // your client's user agent
-}, function(err, res){
+  "parameters"  : {
+    "first_name": "John"
+  , "last_name" : "Doe"  
+}}, function(err, res){
 
   if(err) return err 
   // something unexpected occurred
 
   txId          = res.data[0].id 
-  // keep track of the transaction id 
+  // keep track of the id 
 })
 ```
 
-### B. Retrieve routing 
-
 ```js
-ubivar.routing.retrieve(txId, function(err, res){
+ubivar.labels.retrieve(txId, function(err, res){
 
   if(err) return err
   // something unexpected occurred
 
-  status        = res.data[0].status
-  // the routing, e.g. {pending, green, orange, red}
-})
-```
-
-### C. Label as fraud
-
-```js
-ubivar.labels.retrieve(txId, {"status": "is_fraud"}, function(err, res){
-
-  if(err) return err
-  // something unexpected occurred
-
-  status        = res.data[0].status
-  // the label of the transaction
+  data  = res.data[0]
+  // the data of the event
 })
 ```
 
@@ -104,14 +65,7 @@ is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs)
 | Resource      | C | R | U | D | L | Test Specs |
 | ------------- |:-:|:-:|:-:|:-:|:----:|:-------:|:----------:|
 | Me            |        |<a href="https://ubivar.com/docs/nodejs#retrieve_your_information">_</a>  |<a href="https://ubivar.com/docs/nodejs#retrieve_your_information">`{}`</a>|        |        | [![](https://status.ubivar.com/ubivar-node/resources/me.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Me/spec.js) |
-| Accounts      |<a href="https://ubivar.com/docs/nodejs#create_an_account">`{}`</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_an_account">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_an_account">`{}`</a>|<a href="https://ubivar.com/docs/nodejs#delete_an_account">id</a>|<a href="https://ubivar.com/docs/nodejs#list_accounts">`{}`</a>| [![](https://status.ubivar.com/ubivar-node/resources/accounts.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Accounts/spec.js)|
-| Login         |<a href="https://ubivar.com/docs/nodejs#create_login_event">`{}`</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_login_event">id</a>  |        |<a href="https://ubivar.com/docs/nodejs#delete_login_event">id</a>|<a href="https://ubivar.com/docs/nodejs#list_login_events">`{}`</a>| [![](https://status.ubivar.com/ubivar-node/resources/login.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Login/spec.js)| 
-| Logout        |<a href="https://ubivar.com/docs/nodejs#create_logout_event">`{}`</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_logout_event">id</a>  |        |<a href="https://ubivar.com/docs/nodejs#delete_logout_event">id</a>|<a href="https://ubivar.com/docs/nodejs#list_logout_events">`{}`</a>|   [![](https://status.ubivar.com/ubivar-node/resources/logout.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Logout/spec.js)| 
-| Items         |<a href="https://ubivar.com/docs/nodejs#create_item">`{}`</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_item">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_item">`{}`</a>|<a href="https://ubivar.com/docs/nodejs#delete_item">id</a>|<a href="https://ubivar.com/docs/nodejs#list_items">`{}`</a>|  [![](https://status.ubivar.com/ubivar-node/resources/items.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Items/spec.js)| 
-| Orders  |<a href="https://ubivar.com/docs/nodejs#create_a_transaction">`{}`</a>| <a href="https://ubivar.com/docs/nodejs#retrieve_a_transaction">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_a_transaction">`{}`</a>|<a href="https://ubivar.com/docs/nodejs#delete_a_transaction">id</a>|<a href="https://ubivar.com/docs/nodejs#list_orders">`{}`</a>| [![](https://status.ubivar.com/ubivar-node/resources/orders.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Orders/spec.js)| 
-| Transactions  |<a href="https://ubivar.com/docs/nodejs#create_a_transaction">`{}`</a>| <a href="https://ubivar.com/docs/nodejs#retrieve_a_transaction">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_a_transaction">`{}`</a>|<a href="https://ubivar.com/docs/nodejs#delete_a_transaction">id</a>|<a href="https://ubivar.com/docs/nodejs#list_transactions">`{}`</a>| [![](https://status.ubivar.com/ubivar-node/resources/transactions.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Transactions/spec.js)| 
-| Routing | | <a href="https://ubivar.com/docs/nodejs#retrieve_a_routing">id</a>  | | |<a href="https://ubivar.com/docs/nodejs#list_routing">`{}`</a>| [![](https://status.ubivar.com/ubivar-node/resources/routing.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Routing/spec.js)| 
-| Labels        |<a href="https://ubivar.com/docs/nodejs#create_label">`{}`</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_label">id</a>  |<a href="https://ubivar.com/docs/nodejs#update_label">`{}`</a>|<a href="https://ubivar.com/docs/nodejs#delete_label">id</a>|<a href="https://ubivar.com/docs/nodejs#list_labels">`{}`</a>| [![](https://status.ubivar.com/ubivar-node/resources/labels.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Labels/spec.js) | 
+| Event |<a href="https://ubivar.com/docs/nodejs#create_events">`{}`</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_events">id</a>  |        |<a href="https://ubivar.com/docs/nodejs#delete_events">id</a>|<a href="https://ubivar.com/docs/nodejs#list_events">`{}`</a>| [![](https://status.ubivar.com/ubivar-node/resources/events.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Login/spec.js)| 
 
 + *C*: Create
 + *R*: Retrieve
