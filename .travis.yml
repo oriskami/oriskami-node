@@ -1,6 +1,6 @@
 branches:
   only:
-    - v0.8.0-beta
+    - master
 language: node_js
 node_js:
 - "0.10"
