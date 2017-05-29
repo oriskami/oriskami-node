@@ -102,9 +102,11 @@ callback as the last argument. In the matrix below we list the resources
 is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs). 
 
 | Resource                | C | R | U | D | L    | Test Specs |
-| ----------------------- |:-:|:-:|:-:|:-:|:----:|:-------:|
+| ----------------------- |:-:|:-:|:-:|:-:|:-----:|:-------:|
 | Me                      |   | [x](https://ubivar.com/docs/nodejs#retrieve_your_information) | [`{}`](https://ubivar.com/docs/nodejs#retrieve_your_information) |  | | |
+| *DATA*                  |   |   |   |   |       |   | 
 | Events                  | [`{}`](https://ubivar.com/docs/nodejs#create_event)| [123](https://ubivar.com/docs/nodejs#retrieve_event) | [`{}`](https://ubivar.com/docs/nodejs#update_event) | [123](https://ubivar.com/docs/nodejs#delete_event) | [`{}`](https://ubivar.com/docs/nodejs#list_events) | | 
+| *FILTERING MECHANISMS*  |   |   |   |   |       |   | 
 | Whitelists              | [`{}`](https://ubivar.com/docs/nodejs#create_whitelist)| [123](https://ubivar.com/docs/nodejs#retrieve_whitelist) | [`{}`](https://ubivar.com/docs/nodejs#update_whitelist) | [123](https://ubivar.com/docs/nodejs#delete_whitelist) | [`{}`](https://ubivar.com/docs/nodejs#list_whitelists) | | 
 | Blacklists              |   | [123](https://ubivar.com/docs/nodejs#retrieve_blacklist) | [`{}`](https://ubivar.com/docs/nodejs#update_blacklist) |  | [`{}`](https://ubivar.com/docs/nodejs#list_blacklists) | | 
 | Custom rules            | [`{}`](https://ubivar.com/docs/nodejs#create_rules_custom)| [123](https://ubivar.com/docs/nodejs#retrieve_rules_custom) | [`{}`](https://ubivar.com/docs/nodejs#update_rules_custom) | [123](https://ubivar.com/docs/nodejs#delete_rules_custom) | [`{}`](https://ubivar.com/docs/nodejs#list_rules_customs) | | 
@@ -112,6 +114,7 @@ is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs)
 | AI rules                |   | [123](https://ubivar.com/docs/nodejs#retrieve_rules_ai) | [`{}`](https://ubivar.com/docs/nodejs#update_rules_ai) |  | [`{}`](https://ubivar.com/docs/nodejs#list_rules_ais) | | 
 | Dedicated scoring       | [`{}`](https://ubivar.com/docs/nodejs#create_dedicated_scorings)| [123](https://ubivar.com/docs/nodejs#retrieve_dedicated_scorings) | [`{}`](https://ubivar.com/docs/nodejs#update_dedicated_scorings) | [123](https://ubivar.com/docs/nodejs#delete_dedicated_scorings) | [`{}`](https://ubivar.com/docs/nodejs#list_dedicated_scoringss) | | 
 | Mutualized scoring      |   | [123](https://ubivar.com/docs/nodejs#retrieve_mutualized_scorings) | [`{}`](https://ubivar.com/docs/nodejs#update_mutualized_scorings) |  | [`{}`](https://ubivar.com/docs/nodejs#list_mutualized_scoringss) | | 
+| *NOTIFICATION MECHANISMS*  |   |   |   |   |       |   | 
 | Email notification      | [`{}`](https://ubivar.com/docs/nodejs#create_email)| [123](https://ubivar.com/docs/nodejs#retrieve_email) | [`{}`](https://ubivar.com/docs/nodejs#update_email) | [123](https://ubivar.com/docs/nodejs#delete_email) | [`{}`](https://ubivar.com/docs/nodejs#list_emails) | | 
 | Sms notification        | [`{}`](https://ubivar.com/docs/nodejs#create_sms)| [123](https://ubivar.com/docs/nodejs#retrieve_sms) | [`{}`](https://ubivar.com/docs/nodejs#update_sms) | [123](https://ubivar.com/docs/nodejs#delete_sms) | [`{}`](https://ubivar.com/docs/nodejs#list_smss) | | 
 | Webhook notification    | [`{}`](https://ubivar.com/docs/nodejs#create_webhook)| [123](https://ubivar.com/docs/nodejs#retrieve_webhook) | [`{}`](https://ubivar.com/docs/nodejs#update_webhook) | [123](https://ubivar.com/docs/nodejs#delete_webhook) | [`{}`](https://ubivar.com/docs/nodejs#list_webhooks) | | 
