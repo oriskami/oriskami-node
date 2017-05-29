@@ -1,8 +1,12 @@
 # Ubivar node.js bindings 
-[![npm version](https://badge.fury.io/js/ubivar.svg)](http://badge.fury.io/js/ubivar) [![Build Status](https://travis-ci.org/ubivar/ubivar-node.png?branch=master)](https://travis-ci.org/ubivar/ubivar-node)   [![Inline docs](http://inch-ci.org/github/ubivar/ubivar-node.svg?branch=master)](http://inch-ci.org/github/ubivar/ubivar-node)
+[![npm version](https://badge.fury.io/js/ubivar.svg)](http://badge.fury.io/js/ubivar)
+[![Build Status](https://travis-ci.org/ubivar/ubivar-node.png?branch=master)](https://travis-ci.org/ubivar/ubivar-node)
+[![Inline docs](http://inch-ci.org/github/ubivar/ubivar-node.svg?branch=master)](http://inch-ci.org/github/ubivar/ubivar-node)
  
-Ubivar prevents the risk of  non-payment *at the root* and *on autopilot* for
-businesses. 
+
+The Ubivar Node.js library provides access to the Ubivar API from applications
+written in the Node.js language. It includes a pre-defined set of classes for
+API resources.
 
 ## Quick Start
 
@@ -17,30 +21,77 @@ var Ubivar    = require("ubivar")
   , ubivar    = new Ubivar("YOUR_API_ACCESS_TOKEN")
 ```
 
-### Send analytics event 
+### Send event 
 ```js
-ubivar.transactions.create({
-  "parameters"  : {
-    "first_name": "John"
-  , "last_name" : "Doe"  
-}}, function(err, res){
-
-  if(err) return err 
-  // something unexpected occurred
-
-  txId          = res.data[0].id 
-  // keep track of the id 
+ubivar.events.create({
+  "parameters"  :{
+    "id": 16646,
+    "email": "abc@gmail.com",
+    "names": "M Abc",
+    "account_creation_time": "2017-05-17 21:50:00",
+    "account_id": "10000",
+    "account_n_fulfilled": "1",
+    "account_total_since_created": "49.40",
+    "account_total_cur": "EUR",
+    "invoice_time": "2017-05-17 21:55:00",
+    "invoice_address_country": "France",
+    "invoice_address_place": "75008 Paris",
+    "invoice_address_street1": "1 Av. des Champs-Élysées",
+    "invoice_name": "M ABC",
+    "invoice_phone1": "0123456789",
+    "invoice_phone2": null,
+    "transport_date": "2017-05-18 08:00:00",
+    "transport_type": "Delivery",
+    "transport_mode": "TNT",
+    "transport_weight": "9.000",
+    "transport_unit": "kg",
+    "transport_cur": "EUR",
+    "delivery_address_country": "France",
+    "delivery_address_place": "75008 Paris",
+    "delivery_address_street1": "1 Av. des Champs-Élysées",
+    "delivery_name": "M ABC",
+    "delivery_phone1": "0123450689",
+    "customer_ip_address": "1.2.3.4",
+    "pmeth_origin": "FRA",
+    "pmeth_validity": "0121",
+    "pmeth_brand": "MC",
+    "pmeth_bin": "510000",
+    "pmeth_3ds": "-1",
+    "cart_products": [ " Product ref #12345 " ],
+    "cart_details": [
+      {
+      "name": "Product ref #12345",
+      "pu": "10.00",
+      "n": "1",
+      "reimbursed": " 0",
+      "available": "1",
+      "amount": "10.00",
+      "cur": "EUR"
+    }
+    ],
+    "cart_n": "15000",
+    "order_payment_accepted": "2017-05-17 22:00:00",
+    "amount_pmeth": "ABC Payment Service Provider",
+    "amount_discounts": 0.00,
+    "amount_products": 20.00,
+    "amount_transport": 10.00,
+    "amount_total": 30.00,
+    "amount_cur": "EUR"
+  }
+, function(err, res){
+  if(err){ 
+    console.log(err)
+    return err 
+  }
 })
 ```
 
 ```js
-ubivar.labels.retrieve(txId, function(err, res){
-
-  if(err) return err
-  // something unexpected occurred
-
-  data  = res.data[0]
-  // the data of the event
+ubivar.events.retrieve("16646", function(err, res){
+  if(err){ 
+    console.log(err)
+    return err
+  }
 })
 ```
 
@@ -52,8 +103,8 @@ is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs)
 
 | Resource      | C | R | U | D | L | Test Specs |
 | ------------- |:-:|:-:|:-:|:-:|:----:|:-------:|:----------:|
-| Me            |        |<a href="https://ubivar.com/docs/nodejs#retrieve_your_information">_</a>  |<a href="https://ubivar.com/docs/nodejs#retrieve_your_information">`{}`</a>|        |        | [![](https://status.ubivar.com/ubivar-node/resources/me.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Me/spec.js) |
-| Events |<a href="https://ubivar.com/docs/nodejs#create_event">`{}`</a>|<a href="https://ubivar.com/docs/nodejs#retrieve_event">id</a>  | <a href="https://ubivar.com/docs/nodejs#update_event">`{}`</a>       |<a href="https://ubivar.com/docs/nodejs#delete_event">id</a>|<a href="https://ubivar.com/docs/nodejs#list_events">`{}`</a>| [![](https://status.ubivar.com/ubivar-node/resources/events.svg)](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Events/spec.js)| 
+| Me            |   | [x](https://ubivar.com/docs/nodejs#retrieve_your_information) | [`{}`](https://ubivar.com/docs/nodejs#retrieve_your_information) |  | | |
+| Events        | [`{}`](https://ubivar.com/docs/nodejs#create_event)| [123](https://ubivar.com/docs/nodejs#retrieve_event) | [`{}`](https://ubivar.com/docs/nodejs#update_event) | [123](https://ubivar.com/docs/nodejs#delete_event) | [`{}`](https://ubivar.com/docs/nodejs#list_events) | | 
 
 + *C*: Create
 + *R*: Retrieve

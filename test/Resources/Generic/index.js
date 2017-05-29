@@ -40,7 +40,7 @@ module.exports = function(resource){
             done()
           } else {
             console.log(err, res)
-            done((new Error("Did not return an id")))
+            done(new Error("Did not return an id"))
           }
         })
       })
