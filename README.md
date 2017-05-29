@@ -101,8 +101,8 @@ callback as the last argument. In the matrix below we list the resources
 (rows), the actions (columns) and the arguments (cells). The full documentation
 is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs). 
 
-| Resource      | C | R | U | D | L | Test Specs |
-| ------------- |:-:|:-:|:-:|:-:|:----:|:-------:|:----------:|
+| Resource      | C | R | U | D | L    | Test Specs |
+| ------------- |:-:|:-:|:-:|:-:|:----:|:-------:|
 | Me            |   | [x](https://ubivar.com/docs/nodejs#retrieve_your_information) | [`{}`](https://ubivar.com/docs/nodejs#retrieve_your_information) |  | | |
 | Events        | [`{}`](https://ubivar.com/docs/nodejs#create_event)| [123](https://ubivar.com/docs/nodejs#retrieve_event) | [`{}`](https://ubivar.com/docs/nodejs#update_event) | [123](https://ubivar.com/docs/nodejs#delete_event) | [`{}`](https://ubivar.com/docs/nodejs#list_events) | | 
 
