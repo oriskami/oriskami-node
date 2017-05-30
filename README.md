@@ -101,29 +101,34 @@ callback as the last argument. In the matrix below we list the resources
 (rows), the actions (columns) and the arguments (cells). The full documentation
 is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs). 
 
+
 |               | Resource                | C | R | U | D | L     | Test Specs |
 |--------------:| ----------------------- |:-:|:-:|:-:|:-:|:-----:|:-------:|
-| **Data**      | Events                  | [`{}`](https://ubivar.com/docs/nodejs#create_event)| [123](https://ubivar.com/docs/nodejs#retrieve_event) | [`{}`](https://ubivar.com/docs/nodejs#update_event) | [123](https://ubivar.com/docs/nodejs#delete_event) | [`{}`](https://ubivar.com/docs/nodejs#list_events) | | 
-|               | Labels                  | [`{}`](https://ubivar.com/docs/nodejs#create_label)| [123](https://ubivar.com/docs/nodejs#retrieve_label) | [`{}`](https://ubivar.com/docs/nodejs#update_label) | [123](https://ubivar.com/docs/nodejs#delete_label) | [`{}`](https://ubivar.com/docs/nodejs#list_labels) | | 
-|               | Features                |   | [123](https://ubivar.com/docs/nodejs#retrieve_feature) |  |  | [`{}`](https://ubivar.com/docs/nodejs#list_features) | | 
-|               | Last id                 |   |  |  |  | [`{}`](https://ubivar.com/docs/nodejs#list_last_id) | | 
-| **Filtering** | Whitelists              | [`{}`](https://ubivar.com/docs/nodejs#create_whitelist)| [123](https://ubivar.com/docs/nodejs#retrieve_whitelist) | [`{}`](https://ubivar.com/docs/nodejs#update_whitelist) | [123](https://ubivar.com/docs/nodejs#delete_whitelist) | [`{}`](https://ubivar.com/docs/nodejs#list_whitelists) | | 
-|               | Blacklists              |   | [123](https://ubivar.com/docs/nodejs#retrieve_blacklist) | [`{}`](https://ubivar.com/docs/nodejs#update_blacklist) |  | [`{}`](https://ubivar.com/docs/nodejs#list_blacklists) | | 
-|               | Custom rules            | [`{}`](https://ubivar.com/docs/nodejs#create_custom_rule)| [123](https://ubivar.com/docs/nodejs#retrieve_custom_rule) | [`{}`](https://ubivar.com/docs/nodejs#update_custom_rule) | [123](https://ubivar.com/docs/nodejs#delete_custom_rule) | [`{}`](https://ubivar.com/docs/nodejs#list_custom_rules) | | 
-|               | Base rules              |   | [123](https://ubivar.com/docs/nodejs#retrieve_base_rule) | [`{}`](https://ubivar.com/docs/nodejs#update_base_rule) |  | [`{}`](https://ubivar.com/docs/nodejs#list_base_rules) | | 
-|               | AI rules                |   | [123](https://ubivar.com/docs/nodejs#retrieve_ai_rule) | [`{}`](https://ubivar.com/docs/nodejs#update_ai_rule) |  | [`{}`](https://ubivar.com/docs/nodejs#list_ai_rules) | | 
-|               | Dedicated scoring       | [`{}`](https://ubivar.com/docs/nodejs#create_dedicated_scorings)| [123](https://ubivar.com/docs/nodejs#retrieve_dedicated_scorings) | [`{}`](https://ubivar.com/docs/nodejs#update_dedicated_scorings) | [123](https://ubivar.com/docs/nodejs#delete_dedicated_scorings) | [`{}`](https://ubivar.com/docs/nodejs#list_dedicated_scorings) | | 
-| **Notifications** | Email | [`{}`](https://ubivar.com/docs/nodejs#create_email)| [123](https://ubivar.com/docs/nodejs#retrieve_email) | [`{}`](https://ubivar.com/docs/nodejs#update_email) | [123](https://ubivar.com/docs/nodejs#delete_email) | [`{}`](https://ubivar.com/docs/nodejs#list_emails) | | 
-|                   | Sms   | [`{}`](https://ubivar.com/docs/nodejs#create_sms)| [123](https://ubivar.com/docs/nodejs#retrieve_sms) | [`{}`](https://ubivar.com/docs/nodejs#update_sms) | [123](https://ubivar.com/docs/nodejs#delete_sms) | [`{}`](https://ubivar.com/docs/nodejs#list_sms) | | 
-|                   | Webhook | [`{}`](https://ubivar.com/docs/nodejs#create_webhook)| [123](https://ubivar.com/docs/nodejs#retrieve_webhook) | [`{}`](https://ubivar.com/docs/nodejs#update_webhook) | [123](https://ubivar.com/docs/nodejs#delete_webhook) | [`{}`](https://ubivar.com/docs/nodejs#list_webhooks) | | 
-|                   | E-commerce |   | [123](https://ubivar.com/docs/nodejs#retrieve_e-commerce) | [`{}`](https://ubivar.com/docs/nodejs#update_e-commerce) |  |  | | 
-|                   | Slack | [`{}`](https://ubivar.com/docs/nodejs#create_slack)| [123](https://ubivar.com/docs/nodejs#retrieve_slack) | [`{}`](https://ubivar.com/docs/nodejs#update_slack) | [123](https://ubivar.com/docs/nodejs#delete_slack) | [`{}`](https://ubivar.com/docs/nodejs#list_slacks) | | 
+| **Event data**| Events                  | [`{}`](https://ubivar.com/docs/nodejs#create_event)| [`123`](https://ubivar.com/docs/nodejs#retrieve_event) | [`123, {}`](https://ubivar.com/docs/nodejs#update_event) | [`123`](https://ubivar.com/docs/nodejs#delete_event) | [`{}`](https://ubivar.com/docs/nodejs#list_events) | | 
+|               | EventNotifications      |  | [`123`](https://ubivar.com/docs/nodejs#retrieve_eventnotification) |  |  | [`{}`](https://ubivar.com/docs/nodejs#list_eventnotifications) | | 
+|               | EventLastId             |  | [`123`](https://ubivar.com/docs/nodejs#retrieve_eventlastid) |  |  | [`{}`](https://ubivar.com/docs/nodejs#list_eventlastids) | | 
+|               | EventFeatures           |  | [`123`](https://ubivar.com/docs/nodejs#retrieve_eventfeature) |  |  | [`{}`](https://ubivar.com/docs/nodejs#list_eventfeatures) | | 
+|               | EventLabels             | [`{}`](https://ubivar.com/docs/nodejs#create_eventlabel)| [`123`](https://ubivar.com/docs/nodejs#retrieve_eventlabel) | [`123, {}`](https://ubivar.com/docs/nodejs#update_eventlabel) | [`123`](https://ubivar.com/docs/nodejs#delete_eventlabel) | [`{}`](https://ubivar.com/docs/nodejs#list_eventlabels) | | 
+|               | EventQueues             | [`{}`](https://ubivar.com/docs/nodejs#create_eventqueue)| [`123`](https://ubivar.com/docs/nodejs#retrieve_eventqueue) | [`123, {}`](https://ubivar.com/docs/nodejs#update_eventqueue) | [`123`](https://ubivar.com/docs/nodejs#delete_eventqueue) | [`{}`](https://ubivar.com/docs/nodejs#list_eventqueues) | | 
+|               | EventReviews            | [`{}`](https://ubivar.com/docs/nodejs#create_eventreview)| [`123`](https://ubivar.com/docs/nodejs#retrieve_eventreview) | [`123, {}`](https://ubivar.com/docs/nodejs#update_eventreview) | [`123`](https://ubivar.com/docs/nodejs#delete_eventreview) | [`{}`](https://ubivar.com/docs/nodejs#list_eventreviews) | | 
+| **Filters** | FilterWhitelists        | [`{}`](https://ubivar.com/docs/nodejs#create_filterwhitelist)| [`123`](https://ubivar.com/docs/nodejs#retrieve_filterwhitelist) | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterwhitelist) | [`123`](https://ubivar.com/docs/nodejs#delete_filterwhitelist) | [`{}`](https://ubivar.com/docs/nodejs#list_filterwhitelists) | | 
+|               | FilterBlacklists        |   | [`123`](https://ubivar.com/docs/nodejs#retrieve_filterblacklist) | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterblacklist) |  | [`{}`](https://ubivar.com/docs/nodejs#list_filterblacklists) | | 
+|               | FilterRulesCustoms      | [`{}`](https://ubivar.com/docs/nodejs#create_filterrulescustom)| [`123`](https://ubivar.com/docs/nodejs#retrieve_filterrulescustom) | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterrulescustom) | [`123`](https://ubivar.com/docs/nodejs#delete_filterrulescustom) | [`{}`](https://ubivar.com/docs/nodejs#list_filterrulescustoms) | | 
+|               | FilterRulesBase         |   | [`123`](https://ubivar.com/docs/nodejs#retrieve_filterrulesbase) | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterrulesbase) |  | [`{}`](https://ubivar.com/docs/nodejs#list_filterrulesbases) | | 
+|               | FilterRulesAI           |   | [`123`](https://ubivar.com/docs/nodejs#retrieve_filterrulesai) | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterrulesai) |  | [`{}`](https://ubivar.com/docs/nodejs#list_filterrulesais) | | 
+|               | FilterScoringsDedicated |   | [`123`](https://ubivar.com/docs/nodejs#retrieve_filterscoringsdedicated) | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterscoringsdedicated) |  | [`{}`](https://ubivar.com/docs/nodejs#list_filterscoringsdedicated) | | 
+| **Notifications** | NotifierEmails      | [`{}`](https://ubivar.com/docs/nodejs#create_notifieremails)| [`123`](https://ubivar.com/docs/nodejs#retrieve_notifieremails) | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifieremails) | [`123`](https://ubivar.com/docs/nodejs#delete_notifieremails) | [`{}`](https://ubivar.com/docs/nodejs#list_notifieremails) | | 
+|               | NotifierSms             | [`{}`](https://ubivar.com/docs/nodejs#create_notifiersms)| [`123`](https://ubivar.com/docs/nodejs#retrieve_notifiersms) | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifiersms) | [`123`](https://ubivar.com/docs/nodejs#delete_notifiersms) | [`{}`](https://ubivar.com/docs/nodejs#list_notifiersms) | | 
+|               | NotifierWebhook         | [`{}`](https://ubivar.com/docs/nodejs#create_notifierwebhooks)| [`123`](https://ubivar.com/docs/nodejs#retrieve_notifierwebhooks) | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifierwebhooks) | [`123`](https://ubivar.com/docs/nodejs#delete_notifierwebhooks) | [`{}`](https://ubivar.com/docs/nodejs#list_notifierwebhooks) | | 
+|               | NotifierECommerce       |   | [`123`](https://ubivar.com/docs/nodejs#retrieve_notifierecommerce) | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifierecommerce) |  |  | | 
+
 
 + *C*: Create
 + *R*: Retrieve
 + *U*: Update
 + *D*: Delete
 + *L*: List
++ `123`: resource id 
 + `{}`: JSON with query parameters
 
 ## Filter parameters
