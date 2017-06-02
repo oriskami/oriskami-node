@@ -3,5 +3,5 @@ branches:
     - master
 language: node_js
 node_js:
-- "0.12"
+- "0.12.3"
 sudo: false
