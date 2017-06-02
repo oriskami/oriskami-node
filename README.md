@@ -104,7 +104,8 @@ is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs)
 
 |               | Resource                | C | R | U | D | L     | Test Specs |
 |--------------:| ----------------------- |:-:|:-:|:-:|:-:|:-----:|:-------:|
-| **Event data**| Events                  | [`{}`](https://ubivar.com/docs/nodejs#create_event)| [`123`](https://ubivar.com/docs/nodejs#retrieve_event) | [`123, {}`](https://ubivar.com/docs/nodejs#update_event) | [`123`](https://ubivar.com/docs/nodejs#delete_event) | [`{}`](https://ubivar.com/docs/nodejs#list_events) | | 
+| **Settings**  | Auth, Credentials       |   |   |   |   |       | [See on github]() | 
+| **Data**      | Event                   | [`{}`](https://ubivar.com/docs/nodejs#create_event)| [`123`](https://ubivar.com/docs/nodejs#retrieve_event) | [`123, {}`](https://ubivar.com/docs/nodejs#update_event) | [`123`](https://ubivar.com/docs/nodejs#delete_event) | [`{}`](https://ubivar.com/docs/nodejs#list_events) | | 
 |               | EventNotification      |  | [`123`](https://ubivar.com/docs/nodejs#retrieve_eventnotification) |  |  | [`{}`](https://ubivar.com/docs/nodejs#list_eventnotification) | | 
 |               | EventLastId             |  |  |  |  | [`{}`](https://ubivar.com/docs/nodejs#list_eventlastid) | | 
 |               | EventLabel             | | [`123`](https://ubivar.com/docs/nodejs#retrieve_eventlabel) | [`123, {}`](https://ubivar.com/docs/nodejs#update_eventlabel) | [`123`](https://ubivar.com/docs/nodejs#delete_eventlabel) | [`{}`](https://ubivar.com/docs/nodejs#list_eventlabel) | | 
