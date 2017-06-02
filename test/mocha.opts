@@ -1,4 +1,3 @@
 --bail
 --recursive
 -R spec
--w
