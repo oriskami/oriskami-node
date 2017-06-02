@@ -151,7 +151,7 @@ controlled by access rights.
 var Ubivar    = require("ubivar")
   , ubivar    = new Ubivar("YOUR_API_ACCESS_TOKEN")
 
-ubivar.extend("geoip") // extend with 
+ubivar.extend("resourceName", "resourcePath") // extend with 
 ```
 
 Change API access token dynamically: 
@@ -180,4 +180,5 @@ npm test
 ## Author
 
 
-Originally inspired from [stripe-node](https://github.com/stripe/stripe-node). Developed and maintained by [Fabrice Colas](https://fabricecolas.me) ([fabrice.colas@gmail.com](mailto:fabrice.colas@gmail.com)) for [Ubivar](https://ubivar.com). 
+- Inspired from [stripe-node](https://github.com/stripe/stripe-node). 
+- Developed and maintained by Fabrice Colas for [Ubivar](https://ubivar.com). 
