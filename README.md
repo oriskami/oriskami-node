@@ -120,7 +120,7 @@ is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs)
 |               | NotifierSms             | [`{}`](https://ubivar.com/docs/nodejs#create_notifiersms)| [`123`](https://ubivar.com/docs/nodejs#retrieve_notifiersms) | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifiersms) | [`123`](https://ubivar.com/docs/nodejs#delete_notifiersms) | [`{}`](https://ubivar.com/docs/nodejs#list_notifiersms) | | 
 |               | NotifierSlack             | [`{}`](https://ubivar.com/docs/nodejs#create_notifierslack)| [`123`](https://ubivar.com/docs/nodejs#retrieve_notifierslack) | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifierslack) | [`123`](https://ubivar.com/docs/nodejs#delete_notifierslack) | [`{}`](https://ubivar.com/docs/nodejs#list_notifierslack) | | 
 |               | NotifierWebhook         | [`{}`](https://ubivar.com/docs/nodejs#create_notifierwebhook)| [`123`](https://ubivar.com/docs/nodejs#retrieve_notifierwebhook) | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifierwebhook) | [`123`](https://ubivar.com/docs/nodejs#delete_notifierwebhook) | [`{}`](https://ubivar.com/docs/nodejs#list_notifierwebhook) | | 
-|               | NotifierECommerce       |   | [`123`](https://ubivar.com/docs/nodejs#retrieve_notifierecommerce) | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifierecommerce) |  |  | | 
+|               | NotifierECommerce       |   |  | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifierecommerce) |  | [`123`](https://ubivar.com/docs/nodejs#list_notifierecommerce) | | 
 
 
 + *C*: Create
