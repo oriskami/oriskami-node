@@ -26,6 +26,18 @@ describe("Notifiers", function(){
 
 
   describe("Methods", function(){
+    it("Should list", function(done){
+      ubivar["Notifiers"].list(function(err, res){
+        if(err) {
+          console.log(err, res)
+          done(err) 
+        } else {
+          done()
+        }
+      })
+    })
+
+
     it("Should update", function(done){
       ubivar.set("timeout", 20000)
       var ruleId = "0"
