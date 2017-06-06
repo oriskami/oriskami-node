@@ -1,3 +1,7 @@
+1.2.0 June 07, 2017
+ - Add new resources: Flows 
+ - Add functional tests for these resources
+
 1.1.0 June 07, 2017
  - Add new resources: Filters, Notifiers
  - Add functional tests for these resources
