@@ -18,7 +18,7 @@ Initialize the binding with your API access token:
 
 ```js
 var Ubivar    = require("ubivar")
-  , ubivar    = new Ubivar("YOUR_API_ACCESS_TOKEN")
+  , ubivar    = new Ubivar("YOUR_API_ACCESS_TOKEN", "API_VERSION")
 ```
 
 ### Send event 
@@ -117,7 +117,7 @@ is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs)
 |               | FilterBlacklist        |   |  | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterblacklist) |  | [`{}`](https://ubivar.com/docs/nodejs#list_filterblacklist) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/FilterBlacklist/spec.js)| 
 |               | FilterRulesCustom      | [`{}`](https://ubivar.com/docs/nodejs#create_filterrulescustom)|  |  [`123, {}`](https://ubivar.com/docs/nodejs#update_filterrulescustom)| [`123`](https://ubivar.com/docs/nodejs#delete_filterrulescustom) | [`{}`](https://ubivar.com/docs/nodejs#list_filterrulescustom) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/FilterRulesCustom/spec.js)| 
 |               | FilterRulesBase         |   |  | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterrulesbase) |  | [`{}`](https://ubivar.com/docs/nodejs#list_filterrulesbase) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/FilterRulesBase/spec.js)| 
-|               | FilterRulesAI           |   |  | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterrulesai) |  | [`{}`](https://ubivar.com/docs/nodejs#list_filterrulesai) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/FilterRulesAI/spec.js)| 
+|               | FilterRulesAI           |   |  | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterrulesai) | [`123`](https://ubivar.com/docs/nodejs#delete_filterrulesai) | [`{}`](https://ubivar.com/docs/nodejs#list_filterrulesai) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/FilterRulesAI/spec.js)| 
 |               | FilterScoringsDedicated |   |  | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterscoringsdedicated) |  | [`{}`](https://ubivar.com/docs/nodejs#list_filterscoringsdedicated) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/FilterScoringsDedicated/spec.js)| 
 | **Notifiers**   | Notifiers | | | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifiers) |  | [`{}`](https://ubivar.com/docs/nodejs#list_notifiers) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Notifiers/spec.js)| 
 |                 | NotifierEmail      | [`{}`](https://ubivar.com/docs/nodejs#create_notifieremail)|  | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifieremail) | [`123`](https://ubivar.com/docs/nodejs#delete_notifieremail) | [`{}`](https://ubivar.com/docs/nodejs#list_notifieremail) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/NotifierEmail/spec.js)| 
