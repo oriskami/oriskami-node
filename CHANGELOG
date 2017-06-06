@@ -1,3 +1,18 @@
+1.1.0 June 07, 2017
+ - Add new resources: Filters, Notifiers
+ - Add functional tests for these resources
+
+1.0.0 June 06, 2017
+ - Add resources: EventNotification, EventLastId, EventLabel, EventQueue,
+ EventReview, FilterWhitelist, FilterBlacklist, FilterRulesCustom,
+ FilterRulesBase, FilterRulesAI, FilterScoringsDedicated, NotifierEmail,
+ NotifierSms, NotifierSlack, NotifierWebhook, NotifierECommerce
+ - Add functional tests for each resource
+ - Update documentation
+ - Fix bug when making requests whose header attributes had a '\n' 
+
+0.8.1-beta September 28, 2015
+
 0.1.15-beta August 3rd, 2015
  - Add support for versioning of API; fix sent headers and test suite.
 
