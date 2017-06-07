@@ -1,12 +1,15 @@
-1.2.0 June 07, 2017
+1.3.0 June 07, 2017
+ - Add query-encoded flow_id for retrieve 
+
+1.2.0 June 06, 2017
  - Add new resources: Flows 
  - Add functional tests for these resources
 
-1.1.0 June 07, 2017
+1.1.0 June 06, 2017
  - Add new resources: Filters, Notifiers
  - Add functional tests for these resources
 
-1.0.0 June 06, 2017
+1.0.0 June 05, 2017
  - Add resources: EventNotification, EventLastId, EventLabel, EventQueue,
  EventReview, FilterWhitelist, FilterBlacklist, FilterRulesCustom,
  FilterRulesBase, FilterRulesAI, FilterScoringsDedicated, NotifierEmail,
