@@ -1,3 +1,6 @@
+1.4.1 June 07, 2017
+ - Uri encode ids for retrieve and del resource actions
+
 1.4.0 June 07, 2017
  - Add resource FlowBackup
 
