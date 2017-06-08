@@ -1,6 +1,6 @@
 {
   "name"        : "ubivar",
-  "version"     : "1.5.0",
+  "version"     : "1.6.0",
   "description" : "API wrapper to Ubivar",
   "main"        : "lib/index.js",
   "scripts"     : {

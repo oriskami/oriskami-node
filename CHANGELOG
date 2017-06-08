@@ -1,8 +1,12 @@
-1.5.0 June 07, 2017
+1.6.0 June 08, 2017
+ - Add new resource: Router
+ - Add functional tests for this resource
+
+1.5.0 June 08, 2017
  - Add new resource: Parameters 
  - Add functional tests for this resource
 
-1.4.2 June 07, 2017
+1.4.2 June 08, 2017
  - Add test spec (FlowBackup), update README.md (Flows, FlowBackup)
 
 1.4.1 June 07, 2017
