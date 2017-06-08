@@ -3,7 +3,7 @@ var _                 = require("lodash")
   , ubivar            = require("../../ubivar")
   , methods           = ["update"]
 
-describe.skip("FlowBackup", function(){
+describe("FlowBackup", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
       expect(ubivar["FlowBackup"]["path"]).to.exist
@@ -27,6 +27,12 @@ describe.skip("FlowBackup", function(){
 
   describe("Methods", function(){
 
+    it.skip("Should create a flow backup", function(todo){ todo() })
+
+    it.skip("Should retrieve (restore) a flow backup", function(todo){ todo() })
+
+    it.skip("Should delete a flow backup", function(todo){ todo() })
+
     it("Should list", function(done){
       ubivar["FlowBackup"].list(function(err, res){
         if(err) {
@@ -34,31 +40,6 @@ describe.skip("FlowBackup", function(){
           done(err) 
         } else {
           done()
-        }
-      })
-    })
-
-
-    it("Should update", function(done){
-      ubivar.set("timeout", 20000)
-      var ruleId = "0"
-      ubivar["FlowBackup"].update(ruleId
-      , {"is_active": "true"}
-      , function(err, res){
-        if(err){ 
-          console.log(err, res)
-          done(new Error("Did not update")) 
-        }
-
-        var rule = res.data[ruleId]
-        if(rule.is_active === "true"){
-          // roll back
-          ubivar["FlowBackup"].update(ruleId
-          , {"is_active": "false"}
-          , done)
-        } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
         }
       })
     })

@@ -1,3 +1,6 @@
+1.4.2 June 07, 2017
+ - Add test spec (FlowBackup), update README.md (Flows, FlowBackup)
+
 1.4.1 June 07, 2017
  - Uri encode ids for retrieve and del resource actions
 
