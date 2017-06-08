@@ -1,7 +1,7 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
   , ubivar            = require("../../ubivar")
-  , methods           = ["update"]
+  , methods           = ["create","update","del","list"]
 
 describe("Flow", function(){
   describe("Properties", function(){
@@ -27,17 +27,7 @@ describe("Flow", function(){
 
   describe("Methods", function(){
 
-    it("Should list", function(done){
-      ubivar["Flow"].list(function(err, res){
-        if(err) {
-          console.log(err, res)
-          done(err) 
-        } else {
-          done()
-        }
-      })
-    })
-
+    it.skip("Should create", function(todo){ todo() })
 
     it("Should update", function(done){
       ubivar.set("timeout", 20000)
@@ -62,5 +52,19 @@ describe("Flow", function(){
         }
       })
     })
+
+    it.skip("Should delete", function(todo){ todo() })
+
+    it("Should list", function(done){
+      ubivar["Flow"].list(function(err, res){
+        if(err) {
+          console.log(err, res)
+          done(err) 
+        } else {
+          done()
+        }
+      })
+    })
+
   })
 })

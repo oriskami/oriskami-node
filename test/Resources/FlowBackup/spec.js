@@ -1,7 +1,7 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
   , ubivar            = require("../../ubivar")
-  , methods           = ["update"]
+  , methods           = ["create","retrieve","del","list"]
 
 describe("FlowBackup", function(){
   describe("Properties", function(){
