@@ -153,9 +153,6 @@ is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs)
 Extend `this` `ubivar` instance with a new resource whose accessibility is
 controlled by access rights.
 ```js
-var Ubivar    = require("ubivar")
-  , ubivar    = new Ubivar("YOUR_API_ACCESS_TOKEN")
-
 ubivar.extend("resourceName", "resourcePath") // extend with 
 ```
 

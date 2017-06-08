@@ -47,10 +47,9 @@ describe("FlowBackup", function(){
           })
         })
       })
-    })
+    }).timeout(10000)
 
     it("Should retrieve (restore) a flow backup", function(done){ 
-      ubivar.set("timeout", 60000)
       var now = (new Date()).toISOString()
       ubivar["FilterWhitelist"].create({"description": now}, function(err, res){
         if(err){ return done(new Error("Did not update the flow")) }
@@ -79,7 +78,7 @@ describe("FlowBackup", function(){
           })
         })
       })
-    })
+    }).timeout(10000)
 
     it("Should list", function(done){
       ubivar["FlowBackup"].list(function(err, res){

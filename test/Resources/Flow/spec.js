@@ -47,7 +47,7 @@ describe("Flow", function(){
           })
         })
       })
-    })
+    }).timeout(10000)
 
     it("Should update", function(done){
       ubivar.set("timeout", 20000)
