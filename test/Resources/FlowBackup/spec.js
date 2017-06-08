@@ -27,7 +27,15 @@ describe("FlowBackup", function(){
 
   describe("Methods", function(){
 
-    it.skip("Should create a flow backup", function(todo){ todo() })
+    it("Should create a flow backup", function(done){ 
+      ubivar["FlowBackup"].create(function(err, res){
+        if(err){ done(new Error("Did not create")) }
+
+        var flows     = res.data
+        console.log(flows)
+        done()
+      })
+    })
 
     it.skip("Should retrieve (restore) a flow backup", function(todo){ todo() })
 
