@@ -27,7 +27,27 @@ describe("Flow", function(){
 
   describe("Methods", function(){
 
-    it.skip("Should create", function(todo){ todo() })
+    it("Should create and delete Flow", function(done){ 
+      ubivar["Flow"].list(function(err, res){
+        if(err){ return done(new Error("Did not list")) }
+        var nFlows0 = res.data.length
+        ubivar["Flow"].create({}, function(err, res){
+          if(err){ return done(new Error("Did not create")) }
+
+          var nFlows1 = res.data.length
+          if(nFlows1 <= nFlows0){return done(new Error("Did not expand the set of Flows"))} 
+
+          ubivar["Flow"].del(nFlows1 - 1, function(err, res){
+            if(err){ return done(new Error("Did not delete")) }
+
+            var nFlows2 = res.data.length 
+            if(nFlows2 !== nFlows0){return done(new Error("Did not delete the created flow"))} 
+
+            done()
+          })
+        })
+      })
+    })
 
     it("Should update", function(done){
       ubivar.set("timeout", 20000)
@@ -35,10 +55,7 @@ describe("Flow", function(){
       ubivar["Flow"].update(ruleId
       , {"is_active": "true"}
       , function(err, res){
-        if(err){ 
-          console.log(err, res)
-          done(new Error("Did not update")) 
-        }
+        if(err){ return done(new Error("Did not update")) }
 
         var rule = res.data[ruleId]
         if(rule.is_active === "true"){
@@ -52,8 +69,6 @@ describe("Flow", function(){
         }
       })
     })
-
-    it.skip("Should delete", function(todo){ todo() })
 
     it("Should list", function(done){
       ubivar["Flow"].list(function(err, res){
