@@ -85,11 +85,20 @@ describe("EventQueue", function(){
 
     it("Should list", function(done){
       ubivar["EventQueue"].list(function(err, res){
-        if(!err && res.data.length === 3 && _.contains(_.keys(res.data[0]), "queues")) {
-          done()
-        } else {
+        if(err){
+          console.log(err, res)
+          done(new Error("Should have no error")) 
+        } else if(res.data.length !== 1){
           console.log(res)
-          done(new Error("Should have only one returned element")) 
+          done(new Error("Should return only one element for this dataset")) 
+        } else if(!_.contains(_.keys(res.data[0]), "queue")){
+          console.log(res)
+          done(new Error("Should have an attribute named 'queue' in 'data'")) 
+        } else if(!_.contains(_.keys(res), "summary")){
+          console.log(res)
+          done(new Error("Should have an attribute named 'summary'")) 
+        } else {
+          done()
         }
       })
     })
