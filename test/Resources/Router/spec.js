@@ -35,19 +35,5 @@ describe("Router", function(){
         }
       })
     })
-
-    it("Should list", function(done){
-      ubivar["Router"].list(function(err, res){
-        if(err) {
-          console.log(err, res)
-          done(new Error("Did not list")) 
-        } else if(!err && res.data.length === 1) {
-          done()
-        } else {
-          console.log(res)
-          done(new Error("Should have only one returned element")) 
-        }
-      })
-    })
   })
 })

@@ -46,29 +46,37 @@ describe("EventReview", function(){
     })
 
     it("Should create", function(done){
+      var now       = (new Date()).toISOString().slice(0,16)
       ubivar["EventReview"].update(idResource
-      , {"message": "a review", "reviewer_id": "123"}
+      , {"message": now, "reviewer_id": "123"}
       , function(err, res){
-        if(err){ done(new Error("Did not create")) }
-
-        var review  = res.data[0].reviews.reverse()[0]
-        if(!err && res.data.length === 1 && review.reviewer_id === "123" && review.message === "a review"){
-          done()
-        } else {
+        if(err){ 
           console.log(err, res)
-          done(new Error("Did not create"))
+          done(new Error("Did not create (err)")) 
+        } else if(res.data.length <= 0){
+          console.log(res)
+          done(new Error("Did not create (empty result)")) 
+        } else  {
+          var reviews = res.data.reverse()
+          if(reviews[0].review.message !== now){
+            console.log(json)
+            done(new Error("Did not create (now !=)"))
+          } else {
+            done()
+          }
         }
       })
     })
 
     it("Should update", function(done){
+      var reviewId  = 0
       ubivar["EventReview"].update(idResource
-      , {"review_id": 0, "reviewer_id": "124"}
+      , {"review_id": reviewId, "reviewer_id": "124"}
       , function(err, res){
         if(err){ done(new Error("Did not create")) }
 
-        var reviews = res.data[0].reviews
-        if(!err && res.data.length === 1 && reviews[0].reviewer_id === "124"){
+        var reviews = res.data
+        if(!err && reviews[reviewId].review.reviewer_id === "124"){
           done()
         } else {
           console.log(err, res)
@@ -78,13 +86,18 @@ describe("EventReview", function(){
     })
 
     it("Should update", function(done){
+      var reviewId  = 0
       ubivar["EventReview"].update(idResource
-      , {"review_id": 0, "reviewer_id": "123"}
+      , {"review_id": reviewId, "reviewer_id": "123"}
       , function(err, res){
-        if(err){ done(new Error("Did not create")) }
+        if(err){ 
+          console.log(err, res)
+          done(new Error("Did not create")) 
+        }
 
-        var reviews = res.data[0].reviews
-        if(!err && res.data.length === 1 && reviews[0].reviewer_id === "123"){
+        var reviews = res.data
+        
+        if(!err && reviews[reviewId].review.reviewer_id === "123"){
           done()
         } else {
           console.log(err, res)
@@ -94,23 +107,21 @@ describe("EventReview", function(){
     })
 
     it("Should delete", function(done){
-      ubivar["EventReview"].del(idResource
-      , {"review_id": 0}
-      , function(err, res){
-        if(err){ done(new Error("Did not create")) }
-
-        var reviews = res.data[0].reviews
-        if(!err && res.data.length === 1){
-          ubivar["EventReview"].update(idResource
-          , {"reviewer_id": "123", "message": "a review"}
-          , function(err, res){
-            if(err){return done(new Error("Failed to re-create after delete"))}
-            done()
-          })
-        } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
-        }
+      ubivar["EventReview"].retrieve(idResource, function(err, res){
+        var nReviews = res.data.length
+        ubivar["EventReview"].del(idResource
+        , {"review_id": 0}
+        , function(err, res){
+          if(err){ 
+            console.log(err, res)
+            return done(new Error("Did not delete")) 
+          } else if(res.data.length === nReviews - 1){
+            return done()
+          } else {
+            console.log(res.data.length, nReviews)
+            done(new Error("Did not delete"))
+          }
+        })
       })
     })
 

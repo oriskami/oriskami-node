@@ -26,7 +26,6 @@ describe("RouterFlow", function(){
 
 
   describe("Methods", function(){
-
     it("Should create and delete RouterFlow", function(done){ 
       ubivar["RouterFlow"].list(function(err, res){
         if(err){ return done(new Error("Did not list")) }
@@ -55,10 +54,12 @@ describe("RouterFlow", function(){
       ubivar["RouterFlow"].update(ruleId
       , {"is_active": "true"}
       , function(err, res){
-        if(err){ return done(new Error("Did not update")) }
+        if(err){ 
+          return done(new Error("Did not update")) 
+        }
 
-        var rule = res.data[ruleId]
-        if(rule.is_active === "true"){
+        var flow = res.data
+        if(flow.is_active === "true"){
           // roll back
           ubivar["RouterFlow"].update(ruleId
           , {"is_active": "false"}
