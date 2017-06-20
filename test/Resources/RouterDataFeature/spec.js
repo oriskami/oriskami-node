@@ -26,7 +26,7 @@ describe("RouterDataFeature", function(){
 
 
   describe("Methods", function(){
-    it.skip("Should list", function(done){
+    it("Should list", function(done){
       ubivar["RouterDataFeature"].list(function(err, res){
         if(err) {
           console.log(err, res)
