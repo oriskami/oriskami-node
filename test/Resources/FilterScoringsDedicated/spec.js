@@ -1,12 +1,7 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
   , ubivar            = require("../../ubivar")
-  , examples          = require("../../data/Event")
-  , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
-  , ids               = _.map(examples, function(x){return x.id})
-  , rootProps         = ["log","_api"]
-  , subProps          = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
-  , methods           = ["retrieve", "update", "del", "list"]
+  , methods           = ["create", "retrieve", "update", "del", "list"]
 
 describe("FilterScoringsDedicated", function(){
   describe("Properties", function(){
@@ -29,29 +24,43 @@ describe("FilterScoringsDedicated", function(){
     })
   })
 
-
   describe("Methods", function(){
     it("Should list", function(done){
       ubivar["FilterScoringsDedicated"].list(done)
     })
 
-    it("Should update", function(done){
-      ubivar.set("timeout", 20000)
-      var ruleId = "0"
-      ubivar["FilterScoringsDedicated"].update(ruleId
-      , {"is_active": "true"}
-      , function(err, res){
-        if(err){ done(new Error("Did not create")) }
+    it("Should create", function(done){
+      ubivar["FilterScoringsDedicated"].create({
+        "query_target"      : "sample:100" 
+      , "query_base"        : "fr" 
+      , "features"          : "all" 
+      }, done)
+    })
 
-        var rule = res.data[ruleId]
-        if(rule.is_active === "true"){
-          // roll back
-          ubivar["FilterScoringsDedicated"].update(ruleId
-          , {"is_active": "false"}
-          , done)
+    it("Should retrieve", function(done){
+      ubivar["FilterScoringsDedicated"].retrieve(0, done)
+    })
+
+    it("Should update status", function(done){
+      ubivar["FilterScoringsDedicated"].create({
+        "is_active": "false"
+      }, function(err, res){
+        if(!err && res.data && res.data.is_active === "false"){
+          ubivar["FilterScoringsDedicated"].create({
+            "is_active": "true"
+          }, function(err, res){
+            if(!err && res.data && res.data.is_active === "true"){
+              done()
+            } else if(!err){
+              done(new Error("Failed to roll back 'is_active'"))
+            } else {
+              done(err)
+            }
+          })
+        } else if(!err){
+          done(new Error("Failed to set 'is_active'"))
         } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
+          done(err)
         }
       })
     })

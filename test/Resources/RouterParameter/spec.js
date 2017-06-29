@@ -43,7 +43,7 @@ describe("RouterParameter", function(){
       ubivar.set("timeout", 20000)
       var ruleId = "0"
       ubivar["RouterParameter"].update(ruleId
-      , {"th0": {"amount": 100, "cur": "EUR"}}
+      , {"f_cogs": "0.25"}
       , function(err, res){
         if(err){ 
           console.log(err, res)
@@ -51,10 +51,10 @@ describe("RouterParameter", function(){
         }
 
         var rule = res.data[ruleId]
-        if(rule.th0.amount === 100){
+        if(rule.f_cogs === "0.25"){
           // roll back
           ubivar["RouterParameter"].update(ruleId
-          , {"th0": {"amount": 200, "cur": "EUR"}}
+          , {"f_cogs": "0.50"} 
           , done)
         } else {
           console.log(err, res)
