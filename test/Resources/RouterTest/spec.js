@@ -3,7 +3,7 @@ var _                 = require("lodash")
   , ubivar            = require("../../ubivar")
   , methods           = ["retrieve", "list"]
 
-describe("RouterTest", function(){
+describe.skip("RouterTest", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
       expect(ubivar["RouterTest"]["path"]).to.exist
@@ -25,11 +25,50 @@ describe("RouterTest", function(){
   })
 
   describe("Methods", function(){
+    it("Should update", function(done){
+      var now1        = (new Date()).toISOString().slice(0,16) + "_abc"
+        , now2        = (new Date()).toISOString().slice(0,16) + "_def"
+        , ssize       = parseInt(Math.random() * 1000)
+      ubivar["RouterTest"].update(0, {
+        "query_target": now1
+      , "query_base"  : now2
+      , "from"        : "filter_rules_base"
+      , "to"          : "notifier_emails"
+      , "sample_size" : ssize
+      , "use_cache"   : "true"
+      }, function(err, res){
+        if(err) {
+          console.log(err, res)
+          done(err) 
+        } else if(now1 !== res.data.query_target) {
+          done(new Error("Failed to update (query_target)"))
+        } else if(now2 !== res.data.query_base) {
+          done(new Error("Failed to update (query_base)"))
+        } else if(ssize !== res.data.sample_size) {
+          done(new Error("Failed to update (sample_size)"))
+        } else {
+          done()
+        }
+      })
+    })
+
+    it("Should create", function(done){
+      var disregarded = {}
+      ubivar["RouterTest"].create(disregarded, function(err, res){
+        if(err){
+          console.log(err, res)
+          done(err)
+        } else {
+          done()
+        }
+      })
+    })
+
     it("Should list", function(done){
       ubivar["RouterTest"].list(function(err, res){
         if(err) {
           console.log(err, res)
-          done(new Error("Did not list")) 
+          done(err) 
         } else {
           done()
         }

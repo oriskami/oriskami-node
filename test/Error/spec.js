@@ -31,5 +31,35 @@ describe("Error", function(){
       var err     = Error.UbivarError.generate({"type": "api_error"})
       expect(err).to.be.instanceOf(Error.UbivarAPIError)
     })
+
+    it("Should have Unauthorized (401) error", function(){
+      var err     = Error.UbivarError.generate({"type": "unauthorized_error"})
+      expect(err).to.be.instanceOf(Error.UbivarUnauthorizedError)
+    })
+
+    it("Should have PaymentRequired (402) error", function(){
+      var err     = Error.UbivarError.generate({"type": "payment_required_error"})
+      expect(err).to.be.instanceOf(Error.UbivarPaymentRequiredError)
+    })
+
+    it("Should have MethodNotAllowed (405) error", function(){
+      var err     = Error.UbivarError.generate({"type": "method_not_allowed_error"})
+      expect(err).to.be.instanceOf(Error.UbivarMethodNotAllowedError)
+    })
+
+    it("Should have TooManyRequests (429) error", function(){
+      var err     = Error.UbivarError.generate({"type": "too_many_requests_error"})
+      expect(err).to.be.instanceOf(Error.UbivarTooManyRequestsError)
+    })
+
+    it("Should have InternalServerError (500) error", function(){
+      var err     = Error.UbivarError.generate({"type": "internal_server_error"})
+      expect(err).to.be.instanceOf(Error.UbivarInternalServerError)
+    })
+
+    it("Should have BadGatewayError (502) error", function(){
+      var err     = Error.UbivarError.generate({"type": "bad_gateway_error"})
+      expect(err).to.be.instanceOf(Error.UbivarBadGatewayError)
+    })
   })
 })

@@ -1,3 +1,8 @@
+1.11.0 July 19, 2017
+ - Add error subtypes for status codes 402, 405, 429 (PaymentRequired,
+ MethodNotAllowed, and TooManyRequests), and 500, 502 (InternalServer,
+ and BadGateway) 
+
 1.10.0 July 02, 2017
  - Add EventPast 
  - Add functional tests
