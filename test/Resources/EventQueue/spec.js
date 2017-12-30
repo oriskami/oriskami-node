@@ -1,6 +1,6 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
   , ids               = _.map(examples, function(x){return x.id})
@@ -11,17 +11,17 @@ var _                 = require("lodash")
 describe("EventQueue", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["EventQueue"]["path"]).to.exist
+      expect(oriskami["EventQueue"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["EventQueue"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["EventQueue"]["oriskami"]).to.exist
     })
 
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(ubivar["EventQueue"][method])){
+        if(!_.isFunction(oriskami["EventQueue"][method])){
           return done(new Error("Should have "+METHOD+" methods"))
         }
         done()
@@ -34,7 +34,7 @@ describe("EventQueue", function(){
       , idResource  = json.id
 
     it("Should retrieve", function(done){
-      ubivar["EventQueue"].retrieve(idResource, function(err, res){
+      oriskami["EventQueue"].retrieve(idResource, function(err, res){
         var isStatusOk = res.statusCode >= 200 && res.statusCode <= 204
         if(!err && res.data.length >= 0){
           done()
@@ -46,7 +46,7 @@ describe("EventQueue", function(){
     })
 
     it("Should update to 'false'", function(done){
-      ubivar["EventQueue"].update(idResource
+      oriskami["EventQueue"].update(idResource
       , {"id": idResource, "active": "rules_custom"}
       , function(err, res){
         if(!err && res.data.length === 1 && res.data[0].queues.active === "rules_custom"){
@@ -59,7 +59,7 @@ describe("EventQueue", function(){
     })
 
     it("Should update to 'true'", function(done){
-      ubivar["EventQueue"].update(idResource
+      oriskami["EventQueue"].update(idResource
       , {"id": idResource, "active": "rules_base"}
       , function(err, res){
         if(!err && res.data.length === 1 && res.data[0].queues.active === "rules_base"){
@@ -72,7 +72,7 @@ describe("EventQueue", function(){
     })
 
     it("Should delete", function(done){
-      ubivar["EventQueue"].del(idResource
+      oriskami["EventQueue"].del(idResource
       , function(err, res){
         if(!err && res.data.length === 1 && res.data[0].queues.active === undefined){
           done()
@@ -84,7 +84,7 @@ describe("EventQueue", function(){
     })
 
     it("Should list", function(done){
-      ubivar["EventQueue"].list(function(err, res){
+      oriskami["EventQueue"].list(function(err, res){
         if(err){
           console.log(err, res)
           done(new Error("Should have no error")) 

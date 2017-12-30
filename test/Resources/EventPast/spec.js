@@ -1,6 +1,6 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
   , ids               = _.map(examples, function(x){return x.id})
@@ -9,16 +9,16 @@ var _                 = require("lodash")
 describe("Event", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["EventPast"]["path"]).to.exist
+      expect(oriskami["EventPast"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["EventPast"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["EventPast"]["oriskami"]).to.exist
     })
 
     it("Should have CRUD(L) methods", function() {
       _.each(methods, function(method){
-        expect(ubivar["EventPast"][method]).to.exist
+        expect(oriskami["EventPast"][method]).to.exist
       })
     })
   })
@@ -27,7 +27,7 @@ describe("Event", function(){
     var json        = jsons[0] 
       , idResource
     it("Should create and return a single resource", function(done){
-      ubivar["EventPast"].create(json, function(err, res){
+      oriskami["EventPast"].create(json, function(err, res){
         if(err){
           console.log(err, res)
           done(err)
@@ -44,7 +44,7 @@ describe("Event", function(){
     it("Should create and return several resources", function(done){
       var nExamples     = examples.length 
 
-      ubivar["EventPast"].create(jsons, function(err, res){
+      oriskami["EventPast"].create(jsons, function(err, res){
         if(err){
           console.log(err, res)
           done(err)

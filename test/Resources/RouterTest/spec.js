@@ -1,22 +1,22 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , methods           = ["retrieve", "list"]
 
 describe.skip("RouterTest", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["RouterTest"]["path"]).to.exist
+      expect(oriskami["RouterTest"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["RouterTest"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["RouterTest"]["oriskami"]).to.exist
     })
 
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(ubivar["RouterTest"][method])){
+        if(!_.isFunction(oriskami["RouterTest"][method])){
           return done(new Error("Should have "+METHOD+" methods"))
         }
         done()
@@ -29,7 +29,7 @@ describe.skip("RouterTest", function(){
       var now1        = (new Date()).toISOString().slice(0,16) + "_abc"
         , now2        = (new Date()).toISOString().slice(0,16) + "_def"
         , ssize       = parseInt(Math.random() * 1000)
-      ubivar["RouterTest"].update(0, {
+      oriskami["RouterTest"].update(0, {
         "query_target": now1
       , "query_base"  : now2
       , "from"        : "filter_rules_base"
@@ -54,7 +54,7 @@ describe.skip("RouterTest", function(){
 
     it("Should create", function(done){
       var disregarded = {}
-      ubivar["RouterTest"].create(disregarded, function(err, res){
+      oriskami["RouterTest"].create(disregarded, function(err, res){
         if(err){
           console.log(err, res)
           done(err)
@@ -65,7 +65,7 @@ describe.skip("RouterTest", function(){
     })
 
     it("Should list", function(done){
-      ubivar["RouterTest"].list(function(err, res){
+      oriskami["RouterTest"].list(function(err, res){
         if(err) {
           console.log(err, res)
           done(err) 

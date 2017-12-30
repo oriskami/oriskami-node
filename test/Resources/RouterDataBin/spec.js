@@ -1,22 +1,22 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , methods           = ["list", "update"]
 
 describe("RouterDataBin", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["RouterDataBin"]["path"]).to.exist
+      expect(oriskami["RouterDataBin"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["RouterDataBin"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["RouterDataBin"]["oriskami"]).to.exist
     })
 
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(ubivar["RouterDataBin"][method])){
+        if(!_.isFunction(oriskami["RouterDataBin"][method])){
           return done(new Error("Should have "+METHOD+" methods"))
         }
         done()
@@ -26,7 +26,7 @@ describe("RouterDataBin", function(){
 
   describe("Methods", function(){
     it("Should list", function(done){
-      ubivar["RouterDataBin"].list(function(err, res){
+      oriskami["RouterDataBin"].list(function(err, res){
         if(err) {
           console.log(err, res)
           done(err) 
@@ -37,9 +37,9 @@ describe("RouterDataBin", function(){
     })
 
     it("Should update", function(done){
-      ubivar.set("timeout", 20000)
+      oriskami.set("timeout", 20000)
       var ruleId = "0"
-      ubivar["RouterDataBin"].update(ruleId
+      oriskami["RouterDataBin"].update(ruleId
       , {"is_active": "true"}
       , function(err, res){
         if(err){ 
@@ -50,7 +50,7 @@ describe("RouterDataBin", function(){
         var rule = res.data
         if(rule.is_active === "true"){
           // roll back
-          ubivar["RouterDataBin"].update(ruleId
+          oriskami["RouterDataBin"].update(ruleId
           , {"is_active": "false"}
           , done)
         } else {

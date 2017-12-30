@@ -23,43 +23,43 @@ describe("Error", function(){
 
   describe("Types", function(){
     it("Should have invalid request error", function(){
-      var err     = Error.UbivarError.generate({"type": "invalid_request_error"})
-      expect(err).to.be.instanceOf(Error.UbivarInvalidRequestError)
+      var err     = Error.OriskamiError.generate({"type": "invalid_request_error"})
+      expect(err).to.be.instanceOf(Error.OriskamiInvalidRequestError)
     })
 
     it("Should have API error", function(){
-      var err     = Error.UbivarError.generate({"type": "api_error"})
-      expect(err).to.be.instanceOf(Error.UbivarAPIError)
+      var err     = Error.OriskamiError.generate({"type": "api_error"})
+      expect(err).to.be.instanceOf(Error.OriskamiAPIError)
     })
 
     it("Should have Unauthorized (401) error", function(){
-      var err     = Error.UbivarError.generate({"type": "unauthorized_error"})
-      expect(err).to.be.instanceOf(Error.UbivarUnauthorizedError)
+      var err     = Error.OriskamiError.generate({"type": "unauthorized_error"})
+      expect(err).to.be.instanceOf(Error.OriskamiUnauthorizedError)
     })
 
     it("Should have PaymentRequired (402) error", function(){
-      var err     = Error.UbivarError.generate({"type": "payment_required_error"})
-      expect(err).to.be.instanceOf(Error.UbivarPaymentRequiredError)
+      var err     = Error.OriskamiError.generate({"type": "payment_required_error"})
+      expect(err).to.be.instanceOf(Error.OriskamiPaymentRequiredError)
     })
 
     it("Should have MethodNotAllowed (405) error", function(){
-      var err     = Error.UbivarError.generate({"type": "method_not_allowed_error"})
-      expect(err).to.be.instanceOf(Error.UbivarMethodNotAllowedError)
+      var err     = Error.OriskamiError.generate({"type": "method_not_allowed_error"})
+      expect(err).to.be.instanceOf(Error.OriskamiMethodNotAllowedError)
     })
 
     it("Should have TooManyRequests (429) error", function(){
-      var err     = Error.UbivarError.generate({"type": "too_many_requests_error"})
-      expect(err).to.be.instanceOf(Error.UbivarTooManyRequestsError)
+      var err     = Error.OriskamiError.generate({"type": "too_many_requests_error"})
+      expect(err).to.be.instanceOf(Error.OriskamiTooManyRequestsError)
     })
 
     it("Should have InternalServerError (500) error", function(){
-      var err     = Error.UbivarError.generate({"type": "internal_server_error"})
-      expect(err).to.be.instanceOf(Error.UbivarInternalServerError)
+      var err     = Error.OriskamiError.generate({"type": "internal_server_error"})
+      expect(err).to.be.instanceOf(Error.OriskamiInternalServerError)
     })
 
     it("Should have BadGatewayError (502) error", function(){
-      var err     = Error.UbivarError.generate({"type": "bad_gateway_error"})
-      expect(err).to.be.instanceOf(Error.UbivarBadGatewayError)
+      var err     = Error.OriskamiError.generate({"type": "bad_gateway_error"})
+      expect(err).to.be.instanceOf(Error.OriskamiBadGatewayError)
     })
   })
 })

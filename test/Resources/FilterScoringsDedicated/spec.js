@@ -1,22 +1,22 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , methods           = ["create", "retrieve", "update", "del", "list"]
 
 describe("FilterScoringsDedicated", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["FilterScoringsDedicated"]["path"]).to.exist
+      expect(oriskami["FilterScoringsDedicated"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["FilterScoringsDedicated"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["FilterScoringsDedicated"]["oriskami"]).to.exist
     })
 
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(ubivar["FilterScoringsDedicated"][method])){
+        if(!_.isFunction(oriskami["FilterScoringsDedicated"][method])){
           return done(new Error("Should have "+METHOD+" methods"))
         }
         done()
@@ -26,11 +26,11 @@ describe("FilterScoringsDedicated", function(){
 
   describe("Methods", function(){
     it("Should list", function(done){
-      ubivar["FilterScoringsDedicated"].list(done)
+      oriskami["FilterScoringsDedicated"].list(done)
     })
 
     it("Should create", function(done){
-      ubivar["FilterScoringsDedicated"].create({
+      oriskami["FilterScoringsDedicated"].create({
         "query_target"      : "sample:100" 
       , "query_base"        : "fr" 
       , "features"          : "all" 
@@ -38,15 +38,15 @@ describe("FilterScoringsDedicated", function(){
     })
 
     it("Should retrieve", function(done){
-      ubivar["FilterScoringsDedicated"].retrieve(0, done)
+      oriskami["FilterScoringsDedicated"].retrieve(0, done)
     })
 
     it("Should update status", function(done){
-      ubivar["FilterScoringsDedicated"].create({
+      oriskami["FilterScoringsDedicated"].create({
         "is_active": "false"
       }, function(err, res){
         if(!err && res.data && res.data.is_active === "false"){
-          ubivar["FilterScoringsDedicated"].create({
+          oriskami["FilterScoringsDedicated"].create({
             "is_active": "true"
           }, function(err, res){
             if(!err && res.data && res.data.is_active === "true"){

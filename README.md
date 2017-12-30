@@ -1,29 +1,29 @@
-# Ubivar node.js bindings 
-[![npm version](https://badge.fury.io/js/ubivar.svg)](http://badge.fury.io/js/ubivar)
-[![Build Status](https://travis-ci.org/ubivar/ubivar-node.png?branch=master)](https://travis-ci.org/ubivar/ubivar-node)
-[![Inline docs](http://inch-ci.org/github/ubivar/ubivar-node.svg?branch=master)](http://inch-ci.org/github/ubivar/ubivar-node)
+# Oriskami node.js bindings 
+[![npm version](https://badge.fury.io/js/oriskami.svg)](http://badge.fury.io/js/oriskami)
+[![Build Status](https://travis-ci.org/oriskami/oriskami-node.png?branch=master)](https://travis-ci.org/oriskami/oriskami-node)
+[![Inline docs](http://inch-ci.org/github/oriskami/oriskami-node.svg?branch=master)](http://inch-ci.org/github/oriskami/oriskami-node)
  
 
-The Ubivar Node.js library provides access to the Ubivar API from applications
+The Oriskami Node.js library provides access to the Oriskami API from applications
 written in the Node.js language. It includes a pre-defined set of classes for
 API resources.
 
 ## Quick Start
 
-Install the nodejs binding of `ubivar` from npm.
+Install the nodejs binding of `oriskami` from npm.
 
-`npm install ubivar`
+`npm install oriskami`
 
 Initialize the binding with your API access token:
 
 ```js
-var Ubivar    = require("ubivar")
-  , ubivar    = new Ubivar("YOUR_API_ACCESS_TOKEN", "API_VERSION")
+var Oriskami    = require("oriskami")
+  , oriskami    = new Oriskami("YOUR_API_ACCESS_TOKEN", "API_VERSION")
 ```
 
 ### Send event 
 ```js
-ubivar.events.create({
+oriskami.events.create({
   "parameters"  :{
     "id": 16646,
     "email": "abc@gmail.com",
@@ -87,7 +87,7 @@ ubivar.events.create({
 ```
 
 ```js
-ubivar.events.retrieve("16646", function(err, res){
+oriskami.events.retrieve("16646", function(err, res){
   if(err){ 
     console.log(err)
     return err
@@ -96,47 +96,47 @@ ubivar.events.retrieve("16646", function(err, res){
 ```
 
 ## Resources, actions, and arguments 
-Every resource is accessed via your `ubivar` instance and accepts an optional
+Every resource is accessed via your `oriskami` instance and accepts an optional
 callback as the last argument. In the matrix below we list the resources
 (rows), the actions (columns) and the arguments (cells). The full documentation
-is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs). 
+is available at [https://oriskami.com/docs/nodejs](https://oriskami.com/docs/nodejs). 
 
 
 |               | Resource                | C | R | U | D | L     | Test Specs |
 |--------------:| ----------------------- |:-:|:-:|:-:|:-:|:-----:|:-------:|
 | **Settings**  | Auth, Credentials       |   |   |   |   |       | | 
-| **Router**    | Router                  |   | [`123`](https://ubivar.com/docs/nodejs#retrieve_router) |  |  |  | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Router/spec.js) | 
-|               | RouterParameter         |   |   | [`123, {}`](https://ubivar.com/docs/nodejs#update_routerparameter) |  | [`{}`](https://ubivar.com/docs/nodejs#list_routerparameter) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/RouterParameter/spec.js) | 
-|               | RouterData              |   |   | [`123, {}`](https://ubivar.com/docs/nodejs#update_routerdata) |  | [`{}`](https://ubivar.com/docs/nodejs#list_routerdata) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/RouterData/spec.js) | 
-|               | RouterDataGeocoding     |   |  | |  | [`{}`](https://ubivar.com/docs/nodejs#list_routerdatageocoding) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/RouterDataGeocoding/spec.js) | 
-|               | RouterDataGeoip         |   |   | [`123, {}`](https://ubivar.com/docs/nodejs#update_routerdatageoip) |  | [`{}`](https://ubivar.com/docs/nodejs#list_routerdata) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/RouterDataGeoip/spec.js) | 
-|               | RouterDataPhone         |   |   | [`123, {}`](https://ubivar.com/docs/nodejs#update_routerdataphone) |  | [`{}`](https://ubivar.com/docs/nodejs#list_routerdata) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/RouterDataPhone/spec.js) | 
-|               | RouterDataBlacklist     |   |   | [`123, {}`](https://ubivar.com/docs/nodejs#update_routerdatablacklist) |  | [`{}`](https://ubivar.com/docs/nodejs#list_routerdata) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/RouterDataBlacklist/spec.js) | 
-|               | RouterDataBin           |   |   | [`123, {}`](https://ubivar.com/docs/nodejs#update_routerdatabin) |  | [`{}`](https://ubivar.com/docs/nodejs#list_routerdata) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/RouterDataBin/spec.js) | 
-|               | RouterDataFeature       |   |   |   |   | [`{}`](https://ubivar.com/docs/nodejs#list_routerdatafeature) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/RouterDataFeature/spec.js) | 
-|               | RouterFlow              | [`{}`](https://ubivar.com/docs/nodejs#create_routerflow) |  | [`123, {}`](https://ubivar.com/docs/nodejs#update_routerflow) | [`{}`](https://ubivar.com/docs/nodejs#delete_routerflow) | [`{}`](https://ubivar.com/docs/nodejs#list_routerflow) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/RouterFlow/spec.js)| 
-|               | RouterFlowBackup        | [`{}`](https://ubivar.com/docs/nodejs#create_routerflowbackup) | [`{}`](https://ubivar.com/docs/nodejs#retrieve_routerflowbackup) |  | [`{}`](https://ubivar.com/docs/nodejs#delete_routerflowbackup) | [`{}`](https://ubivar.com/docs/nodejs#list_routerflowbackup) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/RouterFlowBackup/spec.js)| 
+| **Router**    | Router                  |   | [`123`](https://oriskami.com/docs/nodejs#retrieve_router) |  |  |  | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/Router/spec.js) | 
+|               | RouterParameter         |   |   | [`123, {}`](https://oriskami.com/docs/nodejs#update_routerparameter) |  | [`{}`](https://oriskami.com/docs/nodejs#list_routerparameter) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/RouterParameter/spec.js) | 
+|               | RouterData              |   |   | [`123, {}`](https://oriskami.com/docs/nodejs#update_routerdata) |  | [`{}`](https://oriskami.com/docs/nodejs#list_routerdata) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/RouterData/spec.js) | 
+|               | RouterDataGeocoding     |   |  | |  | [`{}`](https://oriskami.com/docs/nodejs#list_routerdatageocoding) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/RouterDataGeocoding/spec.js) | 
+|               | RouterDataGeoip         |   |   | [`123, {}`](https://oriskami.com/docs/nodejs#update_routerdatageoip) |  | [`{}`](https://oriskami.com/docs/nodejs#list_routerdata) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/RouterDataGeoip/spec.js) | 
+|               | RouterDataPhone         |   |   | [`123, {}`](https://oriskami.com/docs/nodejs#update_routerdataphone) |  | [`{}`](https://oriskami.com/docs/nodejs#list_routerdata) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/RouterDataPhone/spec.js) | 
+|               | RouterDataBlacklist     |   |   | [`123, {}`](https://oriskami.com/docs/nodejs#update_routerdatablacklist) |  | [`{}`](https://oriskami.com/docs/nodejs#list_routerdata) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/RouterDataBlacklist/spec.js) | 
+|               | RouterDataBin           |   |   | [`123, {}`](https://oriskami.com/docs/nodejs#update_routerdatabin) |  | [`{}`](https://oriskami.com/docs/nodejs#list_routerdata) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/RouterDataBin/spec.js) | 
+|               | RouterDataFeature       |   |   |   |   | [`{}`](https://oriskami.com/docs/nodejs#list_routerdatafeature) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/RouterDataFeature/spec.js) | 
+|               | RouterFlow              | [`{}`](https://oriskami.com/docs/nodejs#create_routerflow) |  | [`123, {}`](https://oriskami.com/docs/nodejs#update_routerflow) | [`{}`](https://oriskami.com/docs/nodejs#delete_routerflow) | [`{}`](https://oriskami.com/docs/nodejs#list_routerflow) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/RouterFlow/spec.js)| 
+|               | RouterFlowBackup        | [`{}`](https://oriskami.com/docs/nodejs#create_routerflowbackup) | [`{}`](https://oriskami.com/docs/nodejs#retrieve_routerflowbackup) |  | [`{}`](https://oriskami.com/docs/nodejs#delete_routerflowbackup) | [`{}`](https://oriskami.com/docs/nodejs#list_routerflowbackup) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/RouterFlowBackup/spec.js)| 
 |               | RouterTest              |   | - |  |  | - | - | 
-| **Event data**| Event                   | [`{}`](https://ubivar.com/docs/nodejs#create_event)| [`123`](https://ubivar.com/docs/nodejs#retrieve_event) | [`123, {}`](https://ubivar.com/docs/nodejs#update_event) | [`123`](https://ubivar.com/docs/nodejs#delete_event) | [`{}`](https://ubivar.com/docs/nodejs#list_event) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Event/spec.js) | 
-|               | EventPast               | [`{}`](https://ubivar.com/docs/nodejs#create_eventpast)|  |  |  | [`{}`](https://ubivar.com/docs/nodejs#list_eventpast) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/EventPast/spec.js) | 
-|               | EventNotification       |  | [`123`](https://ubivar.com/docs/nodejs#retrieve_eventnotification) |  |  | [`{}`](https://ubivar.com/docs/nodejs#list_eventnotification) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/EventNotification/spec.js)| 
-|               | EventLastId             |  |  |  |  | [`{}`](https://ubivar.com/docs/nodejs#list_eventlastid) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/EventLastId/spec.js)| 
-|               | EventLabel              | | [`123`](https://ubivar.com/docs/nodejs#retrieve_eventlabel) | [`123, {}`](https://ubivar.com/docs/nodejs#update_eventlabel) | [`123`](https://ubivar.com/docs/nodejs#delete_eventlabel) | [`{}`](https://ubivar.com/docs/nodejs#list_eventlabel) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/EventLabel/spec.js)| 
-|               | EventQueue              | | [`123`](https://ubivar.com/docs/nodejs#retrieve_eventqueue) | [`123, {}`](https://ubivar.com/docs/nodejs#update_eventqueue) | [`123`](https://ubivar.com/docs/nodejs#delete_eventqueue) | [`{}`](https://ubivar.com/docs/nodejs#list_eventqueue) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/EventQueue/spec.js)| 
-|               | EventReview             | | [`123`](https://ubivar.com/docs/nodejs#retrieve_eventreview) | [`123, {}`](https://ubivar.com/docs/nodejs#update_eventreview) | [`123`](https://ubivar.com/docs/nodejs#delete_eventreview) | [`{}`](https://ubivar.com/docs/nodejs#list_eventreview) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/EventReview/spec.js)| 
-|  **Flow filters** | Filter         | | | [`123, {}`](https://ubivar.com/docs/nodejs#update_filter) |  | [`{}`](https://ubivar.com/docs/nodejs#list_filter) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Filter/spec.js)| 
-|               | FilterWhitelist        | [`{}`](https://ubivar.com/docs/nodejs#create_filterwhitelist)| | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterwhitelist) | [`123`](https://ubivar.com/docs/nodejs#delete_filterwhitelist) | [`{}`](https://ubivar.com/docs/nodejs#list_filterwhitelist) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/FilterWhitelist/spec.js)| 
-|               | FilterBlacklist        |   |  | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterblacklist) |  | [`{}`](https://ubivar.com/docs/nodejs#list_filterblacklist) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/FilterBlacklist/spec.js)| 
-|               | FilterRulesCustom      | [`{}`](https://ubivar.com/docs/nodejs#create_filterrulescustom)|  |  [`123, {}`](https://ubivar.com/docs/nodejs#update_filterrulescustom)| [`123`](https://ubivar.com/docs/nodejs#delete_filterrulescustom) | [`{}`](https://ubivar.com/docs/nodejs#list_filterrulescustom) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/FilterRulesCustom/spec.js)| 
-|               | FilterRulesBase         |   |  | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterrulesbase) |  | [`{}`](https://ubivar.com/docs/nodejs#list_filterrulesbase) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/FilterRulesBase/spec.js)| 
-|               | FilterRulesAI           |   |  | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterrulesai) | [`123`](https://ubivar.com/docs/nodejs#delete_filterrulesai) | [`{}`](https://ubivar.com/docs/nodejs#list_filterrulesai) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/FilterRulesAI/spec.js)| 
-|               | FilterScoringsDedicated |   |  | [`123, {}`](https://ubivar.com/docs/nodejs#update_filterscoringsdedicated) |  | [`{}`](https://ubivar.com/docs/nodejs#list_filterscoringsdedicated) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/FilterScoringsDedicated/spec.js)| 
-| **Flow notifiers**   | Notifier | | | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifier) |  | [`{}`](https://ubivar.com/docs/nodejs#list_notifier) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/Notifier/spec.js)| 
-|                 | NotifierEmail      | [`{}`](https://ubivar.com/docs/nodejs#create_notifieremail)|  | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifieremail) | [`123`](https://ubivar.com/docs/nodejs#delete_notifieremail) | [`{}`](https://ubivar.com/docs/nodejs#list_notifieremail) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/NotifierEmail/spec.js)| 
-|               | NotifierSms             | [`{}`](https://ubivar.com/docs/nodejs#create_notifiersms)|  | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifiersms) | [`123`](https://ubivar.com/docs/nodejs#delete_notifiersms) | [`{}`](https://ubivar.com/docs/nodejs#list_notifiersms) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/NotifierSms/spec.js)| 
-|               | NotifierSlack             | [`{}`](https://ubivar.com/docs/nodejs#create_notifierslack)|  | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifierslack) | [`123`](https://ubivar.com/docs/nodejs#delete_notifierslack) | [`{}`](https://ubivar.com/docs/nodejs#list_notifierslack) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/NotifierSlack/spec.js)| 
-|               | NotifierWebhook         | [`{}`](https://ubivar.com/docs/nodejs#create_notifierwebhook)|  | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifierwebhook) | [`123`](https://ubivar.com/docs/nodejs#delete_notifierwebhook) | [`{}`](https://ubivar.com/docs/nodejs#list_notifierwebhook) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/NotifierWebhook/spec.js)| 
-|               | NotifierECommerce       |   |  | [`123, {}`](https://ubivar.com/docs/nodejs#update_notifierecommerce) |  | [`{}`](https://ubivar.com/docs/nodejs#list_notifierecommerce) | [See on github](https://github.com/ubivar/ubivar-node/blob/master/test/Resources/NotifierECommerce/spec.js)| 
+| **Event data**| Event                   | [`{}`](https://oriskami.com/docs/nodejs#create_event)| [`123`](https://oriskami.com/docs/nodejs#retrieve_event) | [`123, {}`](https://oriskami.com/docs/nodejs#update_event) | [`123`](https://oriskami.com/docs/nodejs#delete_event) | [`{}`](https://oriskami.com/docs/nodejs#list_event) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/Event/spec.js) | 
+|               | EventPast               | [`{}`](https://oriskami.com/docs/nodejs#create_eventpast)|  |  |  | [`{}`](https://oriskami.com/docs/nodejs#list_eventpast) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/EventPast/spec.js) | 
+|               | EventNotification       |  | [`123`](https://oriskami.com/docs/nodejs#retrieve_eventnotification) |  |  | [`{}`](https://oriskami.com/docs/nodejs#list_eventnotification) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/EventNotification/spec.js)| 
+|               | EventLastId             |  |  |  |  | [`{}`](https://oriskami.com/docs/nodejs#list_eventlastid) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/EventLastId/spec.js)| 
+|               | EventLabel              | | [`123`](https://oriskami.com/docs/nodejs#retrieve_eventlabel) | [`123, {}`](https://oriskami.com/docs/nodejs#update_eventlabel) | [`123`](https://oriskami.com/docs/nodejs#delete_eventlabel) | [`{}`](https://oriskami.com/docs/nodejs#list_eventlabel) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/EventLabel/spec.js)| 
+|               | EventQueue              | | [`123`](https://oriskami.com/docs/nodejs#retrieve_eventqueue) | [`123, {}`](https://oriskami.com/docs/nodejs#update_eventqueue) | [`123`](https://oriskami.com/docs/nodejs#delete_eventqueue) | [`{}`](https://oriskami.com/docs/nodejs#list_eventqueue) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/EventQueue/spec.js)| 
+|               | EventReview             | | [`123`](https://oriskami.com/docs/nodejs#retrieve_eventreview) | [`123, {}`](https://oriskami.com/docs/nodejs#update_eventreview) | [`123`](https://oriskami.com/docs/nodejs#delete_eventreview) | [`{}`](https://oriskami.com/docs/nodejs#list_eventreview) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/EventReview/spec.js)| 
+|  **Flow filters** | Filter         | | | [`123, {}`](https://oriskami.com/docs/nodejs#update_filter) |  | [`{}`](https://oriskami.com/docs/nodejs#list_filter) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/Filter/spec.js)| 
+|               | FilterWhitelist        | [`{}`](https://oriskami.com/docs/nodejs#create_filterwhitelist)| | [`123, {}`](https://oriskami.com/docs/nodejs#update_filterwhitelist) | [`123`](https://oriskami.com/docs/nodejs#delete_filterwhitelist) | [`{}`](https://oriskami.com/docs/nodejs#list_filterwhitelist) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/FilterWhitelist/spec.js)| 
+|               | FilterBlacklist        |   |  | [`123, {}`](https://oriskami.com/docs/nodejs#update_filterblacklist) |  | [`{}`](https://oriskami.com/docs/nodejs#list_filterblacklist) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/FilterBlacklist/spec.js)| 
+|               | FilterRulesCustom      | [`{}`](https://oriskami.com/docs/nodejs#create_filterrulescustom)|  |  [`123, {}`](https://oriskami.com/docs/nodejs#update_filterrulescustom)| [`123`](https://oriskami.com/docs/nodejs#delete_filterrulescustom) | [`{}`](https://oriskami.com/docs/nodejs#list_filterrulescustom) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/FilterRulesCustom/spec.js)| 
+|               | FilterRulesBase         |   |  | [`123, {}`](https://oriskami.com/docs/nodejs#update_filterrulesbase) |  | [`{}`](https://oriskami.com/docs/nodejs#list_filterrulesbase) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/FilterRulesBase/spec.js)| 
+|               | FilterRulesAI           |   |  | [`123, {}`](https://oriskami.com/docs/nodejs#update_filterrulesai) | [`123`](https://oriskami.com/docs/nodejs#delete_filterrulesai) | [`{}`](https://oriskami.com/docs/nodejs#list_filterrulesai) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/FilterRulesAI/spec.js)| 
+|               | FilterScoringsDedicated |   |  | [`123, {}`](https://oriskami.com/docs/nodejs#update_filterscoringsdedicated) |  | [`{}`](https://oriskami.com/docs/nodejs#list_filterscoringsdedicated) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/FilterScoringsDedicated/spec.js)| 
+| **Flow notifiers**   | Notifier | | | [`123, {}`](https://oriskami.com/docs/nodejs#update_notifier) |  | [`{}`](https://oriskami.com/docs/nodejs#list_notifier) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/Notifier/spec.js)| 
+|                 | NotifierEmail      | [`{}`](https://oriskami.com/docs/nodejs#create_notifieremail)|  | [`123, {}`](https://oriskami.com/docs/nodejs#update_notifieremail) | [`123`](https://oriskami.com/docs/nodejs#delete_notifieremail) | [`{}`](https://oriskami.com/docs/nodejs#list_notifieremail) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/NotifierEmail/spec.js)| 
+|               | NotifierSms             | [`{}`](https://oriskami.com/docs/nodejs#create_notifiersms)|  | [`123, {}`](https://oriskami.com/docs/nodejs#update_notifiersms) | [`123`](https://oriskami.com/docs/nodejs#delete_notifiersms) | [`{}`](https://oriskami.com/docs/nodejs#list_notifiersms) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/NotifierSms/spec.js)| 
+|               | NotifierSlack             | [`{}`](https://oriskami.com/docs/nodejs#create_notifierslack)|  | [`123, {}`](https://oriskami.com/docs/nodejs#update_notifierslack) | [`123`](https://oriskami.com/docs/nodejs#delete_notifierslack) | [`{}`](https://oriskami.com/docs/nodejs#list_notifierslack) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/NotifierSlack/spec.js)| 
+|               | NotifierWebhook         | [`{}`](https://oriskami.com/docs/nodejs#create_notifierwebhook)|  | [`123, {}`](https://oriskami.com/docs/nodejs#update_notifierwebhook) | [`123`](https://oriskami.com/docs/nodejs#delete_notifierwebhook) | [`{}`](https://oriskami.com/docs/nodejs#list_notifierwebhook) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/NotifierWebhook/spec.js)| 
+|               | NotifierECommerce       |   |  | [`123, {}`](https://oriskami.com/docs/nodejs#update_notifierecommerce) |  | [`{}`](https://oriskami.com/docs/nodejs#list_notifierecommerce) | [See on github](https://github.com/oriskami/oriskami-node/blob/master/test/Resources/NotifierECommerce/spec.js)| 
 
 
 + *C*: Create
@@ -160,25 +160,25 @@ is available at [https://ubivar.com/docs/nodejs](https://ubivar.com/docs/nodejs)
 ## Configuration
 
 
-Extend `this` `ubivar` instance with a new resource whose accessibility is
+Extend `this` `oriskami` instance with a new resource whose accessibility is
 controlled by access rights.
 ```js
-ubivar.extend("resourceName", "resourcePath") // extend with 
+oriskami.extend("resourceName", "resourcePath") // extend with 
 ```
 
 Change API access token dynamically: 
 ```js
-ubivar.set("auth", "your-api-token")
+oriskami.set("auth", "your-api-token")
 ```
 
 Define timeout of the binding:
 ```js
-ubivar.set("timeout", 20000) // in ms`, node's default is `120000ms`
+oriskami.set("timeout", 20000) // in ms`, node's default is `120000ms`
 ```
 
 ## Development
 
-To run the tests, you will need a Ubivar test API key (from your [Ubivar dashboard](https://my.ubivar.com))
+To run the tests, you will need a Oriskami test API key (from your [Oriskami dashboard](https://my.oriskami.com))
 
 ```
 export UBIVAR_TEST_TOKEN="your-test-api-key"
@@ -187,10 +187,10 @@ npm test
 ```
 *Note: on Windows, use `SET` instead of `export` for setting the `UBIVAR_TEST_TOKEN` environment variable.*
 
-### [Issues and feature requests](https://github.com/ubivar/ubivar-node/issues)
+### [Issues and feature requests](https://github.com/oriskami/oriskami-node/issues)
 
 ## Author
 
 
 - Inspired from [stripe-node](https://github.com/stripe/stripe-node). 
-- Developed and maintained by Fabrice Colas for [Ubivar](https://ubivar.com). 
+- Developed and maintained by Fabrice Colas for [Oriskami](https://www.oriskami.com). 

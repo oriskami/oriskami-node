@@ -1,6 +1,6 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , methods           = ["retrieve", "update", "del", "list"]
   , json              = { 
     "value"           : "https://some-url"
@@ -11,17 +11,17 @@ var _                 = require("lodash")
 describe("NotifierSlack", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["NotifierSlack"]["path"]).to.exist
+      expect(oriskami["NotifierSlack"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["NotifierSlack"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["NotifierSlack"]["oriskami"]).to.exist
     })
 
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(ubivar["NotifierSlack"][method])){
+        if(!_.isFunction(oriskami["NotifierSlack"][method])){
           return done(new Error("Should have "+METHOD+" methods"))
         }
         done()
@@ -31,7 +31,7 @@ describe("NotifierSlack", function(){
 
   describe("Methods", function(){
     it("Should create", function(done){
-      ubivar["NotifierSlack"].create(json 
+      oriskami["NotifierSlack"].create(json 
       , function(err, res){
         if(err){ done(new Error("Did not create")) }
 
@@ -48,8 +48,8 @@ describe("NotifierSlack", function(){
 
     it("Should update", function(done){
       var ruleId = "0"
-      ubivar.set("timeout", 20000)
-      ubivar["NotifierSlack"].update(ruleId
+      oriskami.set("timeout", 20000)
+      oriskami["NotifierSlack"].update(ruleId
       , {"value": "https://another-url"}
       , function(err, res){
         if(err){ done(new Error("Did not create")) }
@@ -57,7 +57,7 @@ describe("NotifierSlack", function(){
         var rule = res.data[ruleId]
         if(rule.value === "https://another-url"){
           // roll back
-          ubivar["NotifierSlack"].update(ruleId
+          oriskami["NotifierSlack"].update(ruleId
           , {"value": "https://some-url"}
           , done)
         } else {
@@ -68,11 +68,11 @@ describe("NotifierSlack", function(){
     })
 
     it("Should delete", function(done){
-      ubivar.set("timeout", 20000)
-      ubivar["NotifierSlack"].list(function(err, res){
+      oriskami.set("timeout", 20000)
+      oriskami["NotifierSlack"].list(function(err, res){
         if(err){ done(new Error("Did not list"))}
         var ruleId = res.data.length - 1
-        ubivar["NotifierSlack"].del(ruleId, function(err, res){
+        oriskami["NotifierSlack"].del(ruleId, function(err, res){
           if(!err && res.data.length === 2){ return done() }
           done(err)
         })

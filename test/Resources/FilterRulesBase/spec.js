@@ -1,6 +1,6 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
   , ids               = _.map(examples, function(x){return x.id})
@@ -11,17 +11,17 @@ var _                 = require("lodash")
 describe("FilterRulesBase", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["FilterRulesBase"]["path"]).to.exist
+      expect(oriskami["FilterRulesBase"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["FilterRulesBase"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["FilterRulesBase"]["oriskami"]).to.exist
     })
 
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(ubivar["FilterRulesBase"][method])){
+        if(!_.isFunction(oriskami["FilterRulesBase"][method])){
           return done(new Error("Should have "+METHOD+" methods"))
         }
         done()
@@ -32,12 +32,12 @@ describe("FilterRulesBase", function(){
 
   describe("Methods", function(){
     it("Should list", function(done){
-      ubivar["FilterRulesBase"].list(done)
+      oriskami["FilterRulesBase"].list(done)
     })
 
     it("Should update", function(done){
       var ruleId = "0"
-      ubivar["FilterRulesBase"].update(ruleId
+      oriskami["FilterRulesBase"].update(ruleId
       , {"is_active": "true"}
       , function(err, res){
         if(err){ done(new Error("Did not create")) }
@@ -45,7 +45,7 @@ describe("FilterRulesBase", function(){
         var rule = res.data[ruleId]
         if(rule.is_active === "true"){
           // roll back
-          ubivar["FilterRulesBase"].update(ruleId
+          oriskami["FilterRulesBase"].update(ruleId
           , {"is_active": "false"}
           , done)
         } else {

@@ -1,6 +1,6 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
   , ids               = _.map(examples, function(x){return x.id})
@@ -17,17 +17,17 @@ var _                 = require("lodash")
 describe("FilterWhitelist", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["FilterWhitelist"]["path"]).to.exist
+      expect(oriskami["FilterWhitelist"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["FilterWhitelist"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["FilterWhitelist"]["oriskami"]).to.exist
     })
 
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(ubivar["FilterWhitelist"][method])){
+        if(!_.isFunction(oriskami["FilterWhitelist"][method])){
           return done(new Error("Should have "+METHOD+" methods"))
         }
         done()
@@ -37,7 +37,7 @@ describe("FilterWhitelist", function(){
 
   describe("Methods", function(){
     it("Should create", function(done){
-      ubivar["FilterWhitelist"].create(json 
+      oriskami["FilterWhitelist"].create(json 
       , function(err, res){
         if(err){ done(new Error("Did not create")) }
 
@@ -54,7 +54,7 @@ describe("FilterWhitelist", function(){
 
     it("Should update", function(done){
       var whitelistId = "0"
-      ubivar["FilterWhitelist"].update(whitelistId
+      oriskami["FilterWhitelist"].update(whitelistId
       , {"value": "yahoo.com"}
       , function(err, res){
         if(err){ done(new Error("Did not create")) }
@@ -62,7 +62,7 @@ describe("FilterWhitelist", function(){
         var whitelist = res.data[whitelistId]
         if(whitelist.value === "yahoo.com"){
           // roll back
-          ubivar["FilterWhitelist"].update(whitelistId
+          oriskami["FilterWhitelist"].update(whitelistId
           , {"value": "gmail.com"}
           , done)
         } else {
@@ -73,10 +73,10 @@ describe("FilterWhitelist", function(){
     })
 
     it("Should delete", function(done){
-      ubivar["FilterWhitelist"].list(function(err, res){
+      oriskami["FilterWhitelist"].list(function(err, res){
         if(err){ done(new Error("Did not list"))}
         var whitelistId = res.data.length - 1
-        ubivar["FilterWhitelist"].del(whitelistId, function(err, res){
+        oriskami["FilterWhitelist"].del(whitelistId, function(err, res){
           if(!err && res.data.length === 2){ return done() }
           done(err)
         })

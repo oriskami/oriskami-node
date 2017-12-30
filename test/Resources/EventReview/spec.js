@@ -1,6 +1,6 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
   , ids               = _.map(examples, function(x){return x.id})
@@ -11,17 +11,17 @@ var _                 = require("lodash")
 describe("EventReview", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["EventReview"]["path"]).to.exist
+      expect(oriskami["EventReview"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["EventReview"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["EventReview"]["oriskami"]).to.exist
     })
 
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(ubivar["EventReview"][method])){
+        if(!_.isFunction(oriskami["EventReview"][method])){
           return done(new Error("Should have "+METHOD+" methods"))
         }
         done()
@@ -34,7 +34,7 @@ describe("EventReview", function(){
       , idResource  = json.id
 
     it("Should retrieve", function(done){
-      ubivar["EventReview"].retrieve(idResource, function(err, res){
+      oriskami["EventReview"].retrieve(idResource, function(err, res){
         var isStatusOk = res.statusCode >= 200 && res.statusCode <= 204
         if(!err && res.data.length >= 0){
           done()
@@ -47,7 +47,7 @@ describe("EventReview", function(){
 
     it("Should create", function(done){
       var now       = (new Date()).toISOString().slice(0,16)
-      ubivar["EventReview"].update(idResource
+      oriskami["EventReview"].update(idResource
       , {"message": now, "reviewer_id": "123"}
       , function(err, res){
         if(err){ 
@@ -70,7 +70,7 @@ describe("EventReview", function(){
 
     it("Should update", function(done){
       var reviewId  = 0
-      ubivar["EventReview"].update(idResource
+      oriskami["EventReview"].update(idResource
       , {"review_id": reviewId, "reviewer_id": "124"}
       , function(err, res){
         if(err){ done(new Error("Did not create")) }
@@ -87,7 +87,7 @@ describe("EventReview", function(){
 
     it("Should update", function(done){
       var reviewId  = 0
-      ubivar["EventReview"].update(idResource
+      oriskami["EventReview"].update(idResource
       , {"review_id": reviewId, "reviewer_id": "123"}
       , function(err, res){
         if(err){ 
@@ -107,9 +107,9 @@ describe("EventReview", function(){
     })
 
     it("Should delete", function(done){
-      ubivar["EventReview"].retrieve(idResource, function(err, res){
+      oriskami["EventReview"].retrieve(idResource, function(err, res){
         var nReviews = res.data.length
-        ubivar["EventReview"].del(idResource
+        oriskami["EventReview"].del(idResource
         , {"review_id": 0}
         , function(err, res){
           if(err){ 
@@ -126,14 +126,14 @@ describe("EventReview", function(){
     })
 
     it("Should list", function(done){
-      ubivar.set("timeout", 20000)
-      ubivar["EventReview"].list(function(err, res){
+      oriskami.set("timeout", 20000)
+      oriskami["EventReview"].list(function(err, res){
         if(!err && res.data.length === 3 && _.contains(_.keys(res.data[0]), "reviews")) {
           // cleanup
           _.each(res.data, function(event){
             if(event.id === idResource){
               var nReviews = event.reviews.length 
-              ubivar["EventReview"].del(idResource, {"review_id": nReviews - 1}, done)
+              oriskami["EventReview"].del(idResource, {"review_id": nReviews - 1}, done)
             }
           })
         } else {

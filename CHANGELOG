@@ -1,3 +1,6 @@
+1.12.0 December 29, 2017
+ - Switch Ubivar/Oriskami. 
+
 1.11.0 July 19, 2017
  - Add error subtypes for status codes 402, 405, 429 (PaymentRequired,
  MethodNotAllowed, and TooManyRequests), and 500, 502 (InternalServer,

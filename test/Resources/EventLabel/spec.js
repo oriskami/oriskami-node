@@ -1,6 +1,6 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
   , ids               = _.map(examples, function(x){return x.id})
@@ -11,17 +11,17 @@ var _                 = require("lodash")
 describe("EventLabel", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["EventLabel"]["path"]).to.exist
+      expect(oriskami["EventLabel"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["EventLabel"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["EventLabel"]["oriskami"]).to.exist
     })
 
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(ubivar["EventLabel"][method])){
+        if(!_.isFunction(oriskami["EventLabel"][method])){
           return done(new Error("Should have "+METHOD+" methods"))
         }
         done()
@@ -34,7 +34,7 @@ describe("EventLabel", function(){
       , idResource  = json.id
 
     it("Should retrieve", function(done){
-      ubivar["EventLabel"].retrieve(idResource, function(err, res){
+      oriskami["EventLabel"].retrieve(idResource, function(err, res){
         var isStatusOk = res.statusCode >= 200 && res.statusCode <= 204
         if(!err && res.data.length >= 0){
           done()
@@ -46,7 +46,7 @@ describe("EventLabel", function(){
     })
 
     it("Should update to 'false'", function(done){
-      ubivar["EventLabel"].update(idResource
+      oriskami["EventLabel"].update(idResource
       , {"id": idResource, "label": "is_loss", "value": "false"}
       , function(err, res){
         if(!err && res.data.length === 1 && res.data[0].labels.is_loss === "false"){
@@ -59,7 +59,7 @@ describe("EventLabel", function(){
     })
 
     it("Should update to 'true'", function(done){
-      ubivar["EventLabel"].update(idResource
+      oriskami["EventLabel"].update(idResource
       , {"id": idResource, "label": "is_loss", "value": "true"}
       , function(err, res){
         if(!err && res.data.length === 1 && res.data[0].labels.is_loss === "true"){
@@ -72,7 +72,7 @@ describe("EventLabel", function(){
     })
 
     it("Should delete", function(done){
-      ubivar["EventLabel"].del(idResource
+      oriskami["EventLabel"].del(idResource
       , function(err, res){
         if(!err && res.data.length === 1 && res.data[0].labels.is_loss === undefined){
           done()
@@ -84,7 +84,7 @@ describe("EventLabel", function(){
     })
 
     it("Should list", function(done){
-      ubivar["EventLabel"].list(function(err, res){
+      oriskami["EventLabel"].list(function(err, res){
         if(!err && res.data.length === 3 && _.contains(_.keys(res.data[0]), "labels")) {
           done()
         } else {

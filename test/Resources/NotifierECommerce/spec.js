@@ -1,6 +1,6 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
   , ids               = _.map(examples, function(x){return x.id})
@@ -11,17 +11,17 @@ var _                 = require("lodash")
 describe("NotifierECommerce", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["NotifierECommerce"]["path"]).to.exist
+      expect(oriskami["NotifierECommerce"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["NotifierECommerce"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["NotifierECommerce"]["oriskami"]).to.exist
     })
 
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(ubivar["NotifierECommerce"][method])){
+        if(!_.isFunction(oriskami["NotifierECommerce"][method])){
           return done(new Error("Should have "+METHOD+" methods"))
         }
         done()
@@ -32,8 +32,8 @@ describe("NotifierECommerce", function(){
   describe("Methods", function(){
     it("Should update", function(done){
       var ruleId = "0"
-      ubivar.set("timeout", 20000)
-      ubivar["NotifierECommerce"].update(ruleId
+      oriskami.set("timeout", 20000)
+      oriskami["NotifierECommerce"].update(ruleId
       , {"is_active": "false"}
       , function(err, res){
         if(err){ done(new Error("Did not create")) }
@@ -41,7 +41,7 @@ describe("NotifierECommerce", function(){
         var rule = res.data[ruleId]
         if(rule.is_active === "false"){
           // roll back
-          ubivar["NotifierECommerce"].update(ruleId, {"value": "true"}, done)
+          oriskami["NotifierECommerce"].update(ruleId, {"value": "true"}, done)
         } else {
           console.log(err, res)
           done(new Error("Did not update"))
@@ -50,7 +50,7 @@ describe("NotifierECommerce", function(){
     })
 
     it("Should list", function(done){
-      ubivar["NotifierECommerce"].list(done)
+      oriskami["NotifierECommerce"].list(done)
     })
   })
 })

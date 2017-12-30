@@ -1,6 +1,6 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
   , ids               = _.map(examples, function(x){return x.id})
@@ -11,17 +11,17 @@ var _                 = require("lodash")
 describe("EventNotification", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["EventNotification"]["path"]).to.exist
+      expect(oriskami["EventNotification"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["EventNotification"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["EventNotification"]["oriskami"]).to.exist
     })
 
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(ubivar["EventNotification"][method])){
+        if(!_.isFunction(oriskami["EventNotification"][method])){
           return done(new Error("Should have "+METHOD+" methods"))
         }
         done()
@@ -34,7 +34,7 @@ describe("EventNotification", function(){
       , idResource  = json.id
 
     it("Should retrieve", function(done){
-      ubivar["EventNotification"].retrieve(idResource, function(err, res){
+      oriskami["EventNotification"].retrieve(idResource, function(err, res){
         var isStatusOk = res.statusCode >= 200 && res.statusCode <= 204
         if(!err && res.data.length >= 0){
           done()
@@ -46,7 +46,7 @@ describe("EventNotification", function(){
     })
 
     it("Should list", function(done){
-      ubivar["EventNotification"].list(function(err, res){
+      oriskami["EventNotification"].list(function(err, res){
         if(!err && res.data.length === 3 && _.contains(_.keys(res.data[0]), "notifications")) {
           done()
         } else {

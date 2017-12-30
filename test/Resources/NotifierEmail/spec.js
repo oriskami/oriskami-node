@@ -1,6 +1,6 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
   , ids               = _.map(examples, function(x){return x.id})
@@ -16,17 +16,17 @@ var _                 = require("lodash")
 describe("NotifierEmail", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["NotifierEmail"]["path"]).to.exist
+      expect(oriskami["NotifierEmail"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["NotifierEmail"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["NotifierEmail"]["oriskami"]).to.exist
     })
 
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(ubivar["NotifierEmail"][method])){
+        if(!_.isFunction(oriskami["NotifierEmail"][method])){
           return done(new Error("Should have "+METHOD+" methods"))
         }
         done()
@@ -36,7 +36,7 @@ describe("NotifierEmail", function(){
 
   describe("Methods", function(){
     it("Should create", function(done){
-      ubivar["NotifierEmail"].create(json 
+      oriskami["NotifierEmail"].create(json 
       , function(err, res){
         if(err){ done(new Error("Did not create")) }
 
@@ -53,8 +53,8 @@ describe("NotifierEmail", function(){
 
     it("Should update", function(done){
       var ruleId = "0"
-      ubivar.set("timeout", 20000)
-      ubivar["NotifierEmail"].update(ruleId
+      oriskami.set("timeout", 20000)
+      oriskami["NotifierEmail"].update(ruleId
       , {"value": "yahoo.com"}
       , function(err, res){
         if(err){ done(new Error("Did not create")) }
@@ -62,7 +62,7 @@ describe("NotifierEmail", function(){
         var rule = res.data[ruleId]
         if(rule.value === "yahoo.com"){
           // roll back
-          ubivar["NotifierEmail"].update(ruleId
+          oriskami["NotifierEmail"].update(ruleId
           , {"value": "gmail.com"}
           , done)
         } else {
@@ -73,11 +73,11 @@ describe("NotifierEmail", function(){
     })
 
     it("Should delete", function(done){
-      ubivar.set("timeout", 20000)
-      ubivar["NotifierEmail"].list(function(err, res){
+      oriskami.set("timeout", 20000)
+      oriskami["NotifierEmail"].list(function(err, res){
         if(err){ done(new Error("Did not list"))}
         var ruleId = res.data.length - 1
-        ubivar["NotifierEmail"].del(ruleId, function(err, res){
+        oriskami["NotifierEmail"].del(ruleId, function(err, res){
           if(!err && res.data.length === 2){ return done() }
           done(err)
         })

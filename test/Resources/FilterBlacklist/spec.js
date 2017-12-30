@@ -1,6 +1,6 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
   , ids               = _.map(examples, function(x){return x.id})
@@ -11,17 +11,17 @@ var _                 = require("lodash")
 describe("FilterBlacklist", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["FilterBlacklist"]["path"]).to.exist
+      expect(oriskami["FilterBlacklist"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["FilterBlacklist"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["FilterBlacklist"]["oriskami"]).to.exist
     })
 
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(ubivar["FilterBlacklist"][method])){
+        if(!_.isFunction(oriskami["FilterBlacklist"][method])){
           return done(new Error("Should have "+METHOD+" methods"))
         }
         done()
@@ -31,12 +31,12 @@ describe("FilterBlacklist", function(){
 
   describe("Methods", function(){
     it("Should list", function(done){
-      ubivar["FilterBlacklist"].list(done)
+      oriskami["FilterBlacklist"].list(done)
     })
 
     it("Should update", function(done){
       var blacklistId = "0"
-      ubivar["FilterBlacklist"].update(blacklistId
+      oriskami["FilterBlacklist"].update(blacklistId
       , {"is_active": "true"}
       , function(err, res){
         if(err){ done(new Error("Did not create")) }
@@ -44,7 +44,7 @@ describe("FilterBlacklist", function(){
         var blacklist = res.data[blacklistId]
         if(blacklist.is_active === "true"){
           // roll back
-          ubivar["FilterBlacklist"].update(blacklistId
+          oriskami["FilterBlacklist"].update(blacklistId
           , {"is_active": "false"}
           , done)
         } else {

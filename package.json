@@ -1,25 +1,25 @@
 {
-  "name"        : "ubivar",
+  "name"        : "oriskami",
   "version"     : "1.11.0",
-  "description" : "API wrapper to Ubivar",
+  "description" : "API wrapper to Oriskami",
   "main"        : "lib/index.js",
   "scripts"     : {
     "test"      : "mocha"
   },
   "repository"  : {
     "type"      : "git",
-    "url"       : "https://github.com/ubivar/ubivar-node.git"
+    "url"       : "https://github.com/oriskami/oriskami-node.git"
   },
   "keywords"    : [
     "finance"
   , "api"
-  , "risk"
-  , "analytics"
+  , "risk management"
+  , "intelligence"
   ],
-  "author"      : "Fabrice Colas <fcolas@ubivar.com>",
+  "author"      : "Fabrice Colas <fcolas@oriskami.com>",
   "license"     : "MIT",
-  "bugs"        : "https://github.com/ubivar/ubivar-node/issues",
-  "homepage"    : "https://github.com/ubivar/ubivar-node",
+  "bugs"        : "https://github.com/oriskami/oriskami-node/issues",
+  "homepage"    : "https://github.com/oriskami/oriskami-node",
   "devDependencies": {
     "chai"      : "^2.1.0",
     "mocha"     : "^2.1.0"

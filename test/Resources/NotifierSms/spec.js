@@ -1,6 +1,6 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , ubivar            = require("../../ubivar")
+  , oriskami            = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
   , ids               = _.map(examples, function(x){return x.id})
@@ -16,17 +16,17 @@ var _                 = require("lodash")
 describe("NotifierSms", function(){
   describe("Properties", function(){
     it("Should have a name and path attribute", function() {
-      expect(ubivar["NotifierSms"]["path"]).to.exist
+      expect(oriskami["NotifierSms"]["path"]).to.exist
     })
 
-    it("Should link to parent (ubivar)", function() {
-      expect(ubivar["NotifierSms"]["ubivar"]).to.exist
+    it("Should link to parent (oriskami)", function() {
+      expect(oriskami["NotifierSms"]["oriskami"]).to.exist
     })
 
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(ubivar["NotifierSms"][method])){
+        if(!_.isFunction(oriskami["NotifierSms"][method])){
           return done(new Error("Should have "+METHOD+" methods"))
         }
         done()
@@ -36,7 +36,7 @@ describe("NotifierSms", function(){
 
   describe("Methods", function(){
     it("Should create", function(done){
-      ubivar["NotifierSms"].create(json 
+      oriskami["NotifierSms"].create(json 
       , function(err, res){
         if(err){ done(new Error("Did not create")) }
 
@@ -53,8 +53,8 @@ describe("NotifierSms", function(){
 
     it("Should update", function(done){
       var ruleId = "0"
-      ubivar.set("timeout", 20000)
-      ubivar["NotifierSms"].update(ruleId
+      oriskami.set("timeout", 20000)
+      oriskami["NotifierSms"].update(ruleId
       , {"value": "+1 987 654 321"}
       , function(err, res){
         if(err){ done(new Error("Did not create")) }
@@ -62,7 +62,7 @@ describe("NotifierSms", function(){
         var rule = res.data[ruleId]
         if(rule.value === "+1 987 654 321"){
           // roll back
-          ubivar["NotifierSms"].update(ruleId
+          oriskami["NotifierSms"].update(ruleId
           , {"value": "+1 123 456 789"}
           , done)
         } else {
@@ -73,11 +73,11 @@ describe("NotifierSms", function(){
     })
 
     it("Should delete", function(done){
-      ubivar.set("timeout", 20000)
-      ubivar["NotifierSms"].list(function(err, res){
+      oriskami.set("timeout", 20000)
+      oriskami["NotifierSms"].list(function(err, res){
         if(err){ done(new Error("Did not list"))}
         var ruleId = res.data.length - 1
-        ubivar["NotifierSms"].del(ruleId, function(err, res){
+        oriskami["NotifierSms"].del(ruleId, function(err, res){
           if(!err && res.data.length === 2){ return done() }
           done(err)
         })
