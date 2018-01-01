@@ -1,5 +1,5 @@
 # Oriskami node.js bindings 
-[![npm version](https://badge.fury.io/js/oriskami.svg)](http://badge.fury.io/js/oriskami)
+[![npm version](https://badge.fury.io/js/oriskami.svg)](https://badge.fury.io/js/oriskami)
 [![Build Status](https://travis-ci.org/oriskami/oriskami-node.png?branch=master)](https://travis-ci.org/oriskami/oriskami-node)
 [![Inline docs](http://inch-ci.org/github/oriskami/oriskami-node.svg?branch=master)](http://inch-ci.org/github/oriskami/oriskami-node)
  
