@@ -76,6 +76,7 @@ describe("EventReview", function(){
         if(err){ done(new Error("Did not create")) }
 
         var reviews = res.data
+        console.log(reviews)
         if(!err && reviews[reviewId].review.reviewer_id === "124"){
           done()
         } else {
