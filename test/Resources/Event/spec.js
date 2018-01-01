@@ -2,8 +2,8 @@ var _                 = require("lodash")
   , expect            = require("chai").expect
   , oriskami            = require("../../oriskami")
   , examples          = require("../../data/Event")
-  , jsons             = _.map(examples, function(x){return {"id": x.order_id, "parameters": x}})
-  , ids               = _.map(examples, function(x){return x.order_id})
+  , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
+  , ids               = _.map(examples, function(x){return x.id})
   , rootProps         = ["log","_api"]
   , subProps          = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
   , methods           = ["create", "retrieve", "update", "del", "list"]
@@ -33,8 +33,8 @@ describe("Event", function(){
         if(err){
           console.log(err, res)
           done(err)
-        } else if(!!res.data && !!res.data[0] && !!res.data[0].order_id){
-          idResource = res.data[0].order_id
+        } else if(!!res.data && !!res.data[0] && !!res.data[0].id){
+          idResource = res.data[0].id
           done()
         } else {
           console.log(err, res)
@@ -51,7 +51,7 @@ describe("Event", function(){
           console.log(err, res)
           done(err)
         } else if(!!res.data && res.data.length === nExamples){
-          idResource = res.data[0].order_id
+          idResource = res.data[0].id
           done()
         } else {
           console.log("Expected ", nExamples, " Returned ", res.data.length)
@@ -66,10 +66,10 @@ describe("Event", function(){
         if(err){
           console.log(err, res)
           done(err)
-        } else if(res.data.length === 1 && res.data[0].order_id === idResource){
+        } else if(res.data.length === 1 && res.data[0].id === idResource){
           done()
         } else {
-          console.log("Expected ", idResource, " Returned ", res.data[0].order_id)
+          console.log("Expected ", idResource, " Returned ", res.data[0].id)
           done((new Error("Did not return the resource with id = "+idResource)))
         }
       })
@@ -79,18 +79,21 @@ describe("Event", function(){
       var newEmail  = "abc@gmail.com"
 
       oriskami["Event"].update(idResource, {
-          "id"        : jsons[1].order_id 
+          "id"        : jsons[1].id
         , "parameters": {"email": newEmail}
       }, function(err, res){
-        if(!err && res.data.length === 1){
+        if(err){
+          console.log(err, res)
+          done(err)
+        } else if(res.data.length === 1){
           if(res.data[0].parameters.email !== newEmail){
             done(new Error("Updated resource is not equal to submitted resource"))
             console.log(err, sentData, newData)
           }
           done()
-        } else {
-          console.log(err, res)
-          done(new Error("Non-200 status code, or data length !== 1 when updating"))
+        } else if(res.data.length !== 1){
+          console.log("Data:", res.data)
+          done(new Error("Data length !== 1 when updating"))
         }
       })
     })

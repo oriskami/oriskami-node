@@ -1,6 +1,6 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , oriskami          = require("../../oriskami")
   , methods           = ["list", "update"]
 
 describe("RouterDataBin", function(){
@@ -54,7 +54,7 @@ describe("RouterDataBin", function(){
           , {"is_active": "false"}
           , done)
         } else {
-          console.log(err, res)
+          console.log(err, rule)
           done(new Error("Did not update"))
         }
       })

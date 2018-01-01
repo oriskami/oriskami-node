@@ -35,7 +35,7 @@ describe("Event", function(){
           idResource = res.data[0].id
           done()
         } else {
-          console.log(err, res)
+          console.log(res)
           done(new Error("Did not return an id"))
         }
       })
