@@ -58,8 +58,10 @@ describe("EventReview", function(){
           done(new Error("Did not create (empty result)")) 
         } else  {
           var reviews = res.data.reverse()
-          if(reviews[0].review.message !== now){
-            console.log(json)
+          if(reviews[0].message !== now){
+            console.log(res.data)
+            console.log(reviews[0].message)
+            console.log(now)
             done(new Error("Did not create (now !=)"))
           } else {
             done()
@@ -70,35 +72,37 @@ describe("EventReview", function(){
 
     it("Should update", function(done){
       var reviewId  = 0
+        , reviewerId= "124"
       oriskami["EventReview"].update(idResource
-      , {"review_id": reviewId, "reviewer_id": "124"}
+      , {"review_id": reviewId, "reviewer_id": reviewerId}
       , function(err, res){
-        if(err){ done(new Error("Did not create")) }
-
         var reviews = res.data
-        console.log(reviews)
-        if(!err && reviews[reviewId].review.reviewer_id === "124"){
+        if(err){
+          console.log(err)
+          done(new Error("Error updating"))
+        } else if(reviews[reviewId].reviewer.id === reviewerId){
           done()
-        } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
+        } else { 
+          console.log(reviews)
+          console.log(reviews[reviewId])
+          console.log("reviewer_id", reviewerId)
+          done(new Error("Did not update")) 
         }
       })
     })
 
     it("Should update", function(done){
       var reviewId  = 0
+        , reviewerId= "123"
       oriskami["EventReview"].update(idResource
-      , {"review_id": reviewId, "reviewer_id": "123"}
+      , {"review_id": reviewId, "reviewer_id": reviewerId}
       , function(err, res){
         if(err){ 
           console.log(err, res)
           done(new Error("Did not create")) 
         }
-
-        var reviews = res.data
-        
-        if(!err && reviews[reviewId].review.reviewer_id === "123"){
+        var review = res.data[reviewId]
+        if(review.reviewer.id === reviewerId){
           done()
         } else {
           console.log(err, res)
@@ -126,14 +130,14 @@ describe("EventReview", function(){
       })
     })
 
-    it("Should list", function(done){
+    xit("Should list", function(done){
       oriskami.set("timeout", 20000)
       oriskami["EventReview"].list(function(err, res){
-        if(!err && res.data.length === 3 && _.contains(_.keys(res.data[0]), "reviews")) {
+        if(!err && res.data.length > 0 && _.contains(_.keys(res.data[0]), "message")) {
           // cleanup
-          _.each(res.data, function(event){
-            if(event.id === idResource){
-              var nReviews = event.reviews.length 
+          _.each(res.data, function(eventReview){
+            if(eventReview.id === idResource){
+              var nReviews = res.data.length 
               oriskami["EventReview"].del(idResource, {"review_id": nReviews - 1}, done)
             }
           })
