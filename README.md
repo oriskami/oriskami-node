@@ -181,11 +181,11 @@ oriskami.set("timeout", 20000) // in ms`, node's default is `120000ms`
 To run the tests, you will need a Oriskami test API key (from your [Oriskami dashboard](https://my.oriskami.com))
 
 ```
-export UBIVAR_TEST_TOKEN="your-test-api-key"
+export ORISKAMI_TEST_TOKEN="your-test-api-key"
 npm install -g mocha
 npm test
 ```
-*Note: on Windows, use `SET` instead of `export` for setting the `UBIVAR_TEST_TOKEN` environment variable.*
+*Note: on Windows, use `SET` instead of `export` for setting the `ORISKAMI_TEST_TOKEN` environment variable.*
 
 ### [Issues and feature requests](https://github.com/oriskami/oriskami-node/issues)
 
