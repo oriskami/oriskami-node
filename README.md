@@ -13,26 +13,26 @@ to detect and manage transactions having a risk. Oriskami works by:
 For a quick start see below, otherwise here are few links:
 - [**Browse product details**](https://www.oriskami.com/shop)
 - [**Sign up**](https://www.oriskami.com/signup)
+- [**Get an access token**](https://my.oriskami.com/)
 - [**Schedule a demo**](https://www.oriskami.com/shop/schedule-demo)
 - [**See the docs**](https://www.oriskami.com/docs)
 
-## Quick Start 
+## Quick Start: Five steps 
 
-Install the nodejs binding of `oriskami` from npm.
+1. **Install** the binding:
 ```js
 npm install --save oriskami
 ```
 
-Initialize the binding with your API access token:
+2. **Setup** your access token:
 ```js
 var Oriskami    = require("oriskami")
   , oriskami    = new Oriskami("YOUR_API_ACCESS_TOKEN", "API_VERSION")
 ```
 
-And then simply send `event` to the API and process the usual callback. 
-
+3. **Bootstrap** your account with historical data (`EventPast`; *not* analyzed): 
 ```js
-oriskami.events.create({
+oriskami.EventsPast.create({
   "parameters"  :{
     "id": 16646 
   , "email": "abc@gmail.com"
@@ -93,13 +93,25 @@ oriskami.events.create({
   , "amount_total": 30.00
   , "amount_cur": "EUR"
   }
+
+}, (err, res) => /* callback */)
+```
+
+4. **Label** events for which the risk (`is_loss`) has materialized: 
+```js
+oriskami.EventLabel.update({
+  "id" : "1"
+, "label": "is_loss"
+, "value": "false" 
 }, (err, res) => /* process results */)
 ```
 
-Later you can retrieve an `event` via its `id`. 
+5. **Send** live `Events`:
 ```js
-oriskami.events.retrieve("16646", (err, res) => /* process results */)
+oriskami.events.create({ }, (err, res) => /* process results */)
 ```
+Then you will get notified when a risk is detected.
+
 ## Events API: Open Beta (public preview) 
 
 |               | Resource                | C | R | U | D | L     | Test Specs |
