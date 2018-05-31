@@ -4,30 +4,33 @@
 [![Inline docs](http://inch-ci.org/github/oriskami/oriskami-node.svg?branch=master)](http://inch-ci.org/github/oriskami/oriskami-node)
  
 
-The Oriskami Node.js library provides access to the Oriskami API from applications
-written in the Node.js language. It includes a pre-defined set of classes for
-API resources.
+This library helps interact with Oriskami's API, a *risk management intelligence* 
+to detect and manage transactions having a risk. Oriskami works by:
+1. fusioning your transaction data with external data providers; 
+2. applying filters like whitelists, blacklists, rules, or risk scores trained with machine learning; and
+3. triggering notifications when a risk is detected (e-mail, slack, signed webhooks, etc.). 
 
-## Quick Start
+For a quick start see below, otherwise here are few links:
+- [**Browse product details**](https://www.oriskami.com/shop)
+- [**Sign up**](https://www.oriskami.com/docs)
+- [**Schedule a demo**](https://www.oriskami.com/shop/schedule-demo)
+- [**See the docs**](https://www.oriskami.com/docs)
+
+## Quick Start 
 
 Install the nodejs binding of `oriskami` from npm.
-
-`npm install oriskami`
+```js
+npm install oriskami
+```
 
 Initialize the binding with your API access token:
-
 ```js
 var Oriskami    = require("oriskami")
   , oriskami    = new Oriskami("YOUR_API_ACCESS_TOKEN", "API_VERSION")
 ```
 
-| Other code snippets | Code |
-|:------------|:-----|
-| 1. Change token | `oriskami.set("auth", "your-api-token")` | 
-| 2. Add new `resource` | `oriskami.extend("resourceName", "resourcePath")` | 
-| 3. Change timeout | `oriskami.set("timeout", 20000) // in ms` | 
+And then simply send `event` to the API and process the usual callback. 
 
-### Send event 
 ```js
 oriskami.events.create({
   "parameters"  :{
@@ -93,17 +96,11 @@ oriskami.events.create({
 }, (err, res) => /* process results */)
 ```
 
+Later you can retrieve an `event` via the `id`. 
 ```js
 oriskami.events.retrieve("16646", (err, res) => /* process results */)
 ```
-
-## Resources, actions, and arguments 
-Every resource is accessed via your `oriskami` instance and accepts an optional
-callback as the last argument. In the matrix below we list the resources
-(rows), the actions (columns) and the arguments (cells). The full documentation
-is available at [https://oriskami.com/docs/nodejs](https://oriskami.com/docs/nodejs). 
-
-### Events API: Open Beta (public preview) 
+## Events API: Open Beta (public preview) 
 
 |               | Resource                | C | R | U | D | L     | Test Specs |
 |--------------:| ----------------------- |:-:|:-:|:-:|:-:|:-----:|:-------:|
@@ -120,11 +117,17 @@ is available at [https://oriskami.com/docs/nodejs](https://oriskami.com/docs/nod
 + `123`: resource id 
 + `{}`: JSON with query parameters
 
-### Integration API: Alpha (unstable)
+## Code snippets and filter parameters
 
-See the [API documentation](https://www.oriskami.com/docs/nodejs#/integration/1.0.0/nodejs)
+A few code snippets:
 
-### Filter parameters
+| Action | Code snippet |
+|:------------|:-----|
+| 1. Change token | `oriskami.set("auth", "your-api-token")` | 
+| 2. Add new `resource` | `oriskami.extend("resourceName", "resourcePath")` | 
+| 3. Change timeout | `oriskami.set("timeout", 20000) // in ms` | 
+
+Filters available for most resources (`list`).
 
 | Filter        | Default | Example             | Description                   |
 | ------------- |:-------:|:--------------------|:------------------------------|
