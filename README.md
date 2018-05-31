@@ -12,7 +12,7 @@ to detect and manage transactions having a risk. Oriskami works by:
 
 For a quick start see below, otherwise here are few links:
 - [**Browse product details**](https://www.oriskami.com/shop)
-- [**Sign up**](https://www.oriskami.com/docs)
+- [**Sign up**](https://www.oriskami.com/signup)
 - [**Schedule a demo**](https://www.oriskami.com/shop/schedule-demo)
 - [**See the docs**](https://www.oriskami.com/docs)
 
@@ -20,7 +20,7 @@ For a quick start see below, otherwise here are few links:
 
 Install the nodejs binding of `oriskami` from npm.
 ```js
-npm install oriskami
+npm install --save oriskami
 ```
 
 Initialize the binding with your API access token:
@@ -96,7 +96,7 @@ oriskami.events.create({
 }, (err, res) => /* process results */)
 ```
 
-Later you can retrieve an `event` via the `id`. 
+Later you can retrieve an `event` via its `id`. 
 ```js
 oriskami.events.retrieve("16646", (err, res) => /* process results */)
 ```
