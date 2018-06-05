@@ -3,7 +3,9 @@
   "version": "1.16.0",
   "description": "API wrapper to Oriskami",
   "main": "lib/index.js",
-  "scripts": { "test": "mocha" },
+  "scripts": {
+    "test": "mocha"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/oriskami/oriskami-node.git"
@@ -23,6 +25,7 @@
     "mocha": "^2.1.0"
   },
   "dependencies": {
+    "all": "0.0.0",
     "lodash": "^3.3.1"
   }
 }

@@ -131,20 +131,30 @@ describe("EventReview", function(){
     })
 
     xit("Should list", function(done){
+      var reviewId  = 0
+        , reviewerId= "124"
       oriskami.set("timeout", 20000)
-      oriskami["EventReview"].list(function(err, res){
-        if(!err && res.data.length > 0 && _.contains(_.keys(res.data[0]), "message")) {
-          // cleanup
-          _.each(res.data, function(eventReview){
-            if(eventReview.id === idResource){
-              var nReviews = res.data.length 
-              oriskami["EventReview"].del(idResource, {"review_id": nReviews - 1}, done)
-            }
-          })
-        } else {
+      oriskami["EventReview"].update(idResource
+      , {"review_id": reviewId, "reviewer_id": reviewerId}
+      , function(err, res){
+        if(err){
           console.log(res)
-          done(new Error("Should have only one returned element")) 
+          return done(new Error("Should have only one returned element")) 
         }
+        oriskami["EventReview"].list(function(err, res){
+          if(!err && res.data.length > 0 && _.contains(_.keys(res.data[0]), "message")) {
+            // cleanup
+            _.each(res.data, function(eventReview){
+              if(eventReview.id === idResource){
+                var nReviews = res.data.length 
+                oriskami["EventReview"].del(idResource, {"review_id": nReviews - 1}, done)
+              }
+            })
+          } else {
+            console.log(res)
+            done(new Error("Should have only one returned element")) 
+          }
+        })
       })
     })
   })

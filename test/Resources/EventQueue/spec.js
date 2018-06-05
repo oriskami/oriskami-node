@@ -83,23 +83,31 @@ describe("EventQueue", function(){
       })
     })
 
-    it("Should list", function(done){
-      oriskami["EventQueue"].list(function(err, res){
-        if(err){
+    it("Should create one and list", function(done){
+      oriskami["EventQueue"].update(idResource
+      , {"id": idResource, "active": "rules_base"}
+      , function(err, res){
+        if(err) {
           console.log(err, res)
-          done(new Error("Should have no error")) 
-        } else if(res.data.length !== 1){
-          console.log(res)
-          done(new Error("Should return only one element for this dataset")) 
-        } else if(!_.contains(_.keys(res.data[0]), "queue")){
-          console.log(res)
-          done(new Error("Should have an attribute named 'queue' in 'data'")) 
-        } else if(!_.contains(_.keys(res), "summary")){
-          console.log(res)
-          done(new Error("Should have an attribute named 'summary'")) 
-        } else {
-          done()
+          done(new Error("Did not update"))
         }
+        oriskami["EventQueue"].list(function(err, res){
+          if(err){
+            console.log(err, res)
+            done(new Error("Should have no error")) 
+          } else if(res.data.length !== 1){
+            console.log(res)
+            done(new Error("Should return only one element for this dataset")) 
+          } else if(!_.contains(_.keys(res.data[0]), "queue")){
+            console.log(res)
+            done(new Error("Should have an attribute named 'queue' in 'data'")) 
+          } else if(!_.contains(_.keys(res), "summary")){
+            console.log(res)
+            done(new Error("Should have an attribute named 'summary'")) 
+          } else {
+            done()
+          }
+        })
       })
     })
   })

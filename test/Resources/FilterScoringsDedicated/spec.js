@@ -45,6 +45,7 @@ describe("FilterScoringsDedicated", function(){
       oriskami["FilterScoringsDedicated"].create({
         "is_active": "false"
       }, function(err, res){
+        console.log(err, res)
         if(!err && res.data && res.data.is_active === "false"){
           oriskami["FilterScoringsDedicated"].create({
             "is_active": "true"
