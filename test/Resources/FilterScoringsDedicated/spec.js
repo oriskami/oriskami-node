@@ -26,7 +26,14 @@ describe("FilterScoringsDedicated", function(){
 
   describe("Methods", function(){
     it("Should list", function(done){
-      oriskami["FilterScoringsDedicated"].list(done)
+      oriskami["FilterScoringsDedicated"].list(function(err, res){
+        if(err){
+          console.log(err)
+          return done(new Error("Failed to list filter scorings dedicated"))
+        }
+        console.log(res)
+        done()
+      })
     })
 
     it("Should create", function(done){
@@ -41,7 +48,7 @@ describe("FilterScoringsDedicated", function(){
       oriskami["FilterScoringsDedicated"].retrieve(0, done)
     })
 
-    it("Should update status", function(done){
+    xit("Should update status", function(done){
       oriskami["FilterScoringsDedicated"].create({
         "is_active": "false"
       }, function(err, res){
