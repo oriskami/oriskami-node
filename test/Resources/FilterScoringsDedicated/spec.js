@@ -31,7 +31,7 @@ describe("FilterScoringsDedicated", function(){
           console.log(err)
           return done(new Error("Failed to list filter scorings dedicated"))
         }
-        console.log(res)
+        console.log(__dirname,_.keys(res))
         done()
       })
     })
@@ -41,7 +41,13 @@ describe("FilterScoringsDedicated", function(){
         "query_target"      : "sample:100" 
       , "query_base"        : "fr" 
       , "features"          : "all" 
-      }, done)
+      }, (err, res) => {
+        if(err) {
+          console.log(err)
+          done(new Error("Failed to create scoring"))
+        }
+        console.log(__dirname,_.keys(res))
+      })
     })
 
     it("Should retrieve", function(done){
@@ -52,7 +58,6 @@ describe("FilterScoringsDedicated", function(){
       oriskami["FilterScoringsDedicated"].create({
         "is_active": "false"
       }, function(err, res){
-        console.log(err, res)
         if(!err && res.data && res.data.is_active === "false"){
           oriskami["FilterScoringsDedicated"].create({
             "is_active": "true"
