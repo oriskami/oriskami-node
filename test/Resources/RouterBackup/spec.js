@@ -28,9 +28,17 @@ describe("RouterBackup", function(){
     it("Should create, list, and delete a flow backup", function(done){ 
       var now = (new Date()).toISOString()
       oriskami["RouterBackup"].create({"name": now}, function(err, res){
-        if(err){ console.log(err, res); done(new Error("Did not create")) }
+        if(err){ 
+          console.log(err, res)
+          done(new Error("Did not create")) 
+        }
+
         oriskami["RouterBackup"].list(function(err, res){
-          if(err){ done(new Error("Did not list")) }
+          if(err){ 
+            console.log(err, res)
+            done(new Error("Did not list")) 
+          }
+
           var backups   = res.data
             , backupId
             , isBackedup= _.reduce(_.keys(backups), function(isBackedup, k){
@@ -41,7 +49,10 @@ describe("RouterBackup", function(){
 
           if(!isBackedup){ done(new Error("Did not find the created RouterBackup")) } 
           oriskami["RouterBackup"].del(backupId, function(err, res){
-            if(err){ return done(new Error("Did not delete")) }
+            if(err){ 
+              console.log(err, res)
+              return done(new Error("Did not delete")) 
+            }
             done()
           })
         })

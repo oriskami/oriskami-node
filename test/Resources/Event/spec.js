@@ -26,6 +26,14 @@ describe("Event", function(){
   })
 
   describe("Methods", function(){
+    before(function(done){
+      var defaultId = 0
+      oriskami["RouterData"].update(defaultId, {"is_active": "true"}, function(err, res){
+        if(err){ console.log(err, res) ; done(new Error("Did not update")) }
+        done()
+      })
+    })
+
     var json        = jsons[0] 
       , idResource
     it("Should create and return a resource", function(done){
