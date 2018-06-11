@@ -31,7 +31,6 @@ describe("FilterScoringsDedicated", function(){
           console.log(err)
           return done(new Error("Failed to list filter scorings dedicated"))
         }
-        console.log(__dirname,_.keys(res))
         done()
       })
     })
@@ -44,14 +43,33 @@ describe("FilterScoringsDedicated", function(){
       }, (err, res) => {
         if(err) {
           console.log(err)
-          done(new Error("Failed to create scoring"))
+          return done(new Error("Failed to create scoring"))
         }
-        console.log(__dirname,_.keys(res))
+        done()
       })
     })
 
     it("Should retrieve", function(done){
-      oriskami["FilterScoringsDedicated"].retrieve(0, done)
+      oriskami["FilterScoringsDedicated"].create({
+        "query_target"      : "sample:100" 
+      , "query_base"        : "fr" 
+      , "features"          : "all" 
+      }, (err, res0) => {
+        if(err){
+          console.log(err)
+          return done(new Error("Failed to create / retrieve score"))
+        }
+        var expectedScoreId = res0.model_id
+        oriskami["FilterScoringsDedicated"].retrieve(res0.model_id, (err, res1) => {
+          if(err){
+            console.log(err)
+            console.log("Expected score id", expectedScoreId)
+            return done(new Error("Failed to retrieve the created score"))
+          }
+          console.log(res0, res1)
+          done()
+        })
+      })
     })
 
     xit("Should update status", function(done){
