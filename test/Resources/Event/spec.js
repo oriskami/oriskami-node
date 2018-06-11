@@ -28,7 +28,7 @@ describe("Event", function(){
   describe("Methods", function(){
     var json        = jsons[0] 
       , idResource
-    it("Should create and return a single resource", function(done){
+    it("Should create and return a resource", function(done){
       oriskami["Event"].create(json, function(err, res){
         if(err){
           console.log(err, res)
@@ -39,23 +39,6 @@ describe("Event", function(){
         } else {
           console.log(err, res)
           done(new Error("Did not return an id"))
-        }
-      })
-    })
-
-    it("Should create and return several resources", function(done){
-      var nExamples     = examples.length 
-
-      oriskami["Event"].create(jsons, function(err, res){
-        if(err){
-          console.log(err, res)
-          done(err)
-        } else if(!!res.data && res.data.length === nExamples){
-          idResource = res.data[0].id
-          done()
-        } else {
-          console.log("Expected ", nExamples, " Returned ", res.data.length)
-          done((new Error("Did not return the several resources")))
         }
       })
     })
@@ -120,12 +103,14 @@ describe("Event", function(){
     oriskami.set("timeout", 20000)
 
     before(function(done){
-      oriskami["Event"].create(jsons, function(err, res){
-        if(err) {
-          console.log(err)
-          return done(err)
-        }
-        done()
+      oriskami["Event"].create(jsons[0], function(err, res){
+        if(err) return done(err) 
+        oriskami["Event"].create(jsons[1], function(err, res){
+          if(err) return done(err) 
+          oriskami["Event"].create(jsons[2], function(err, res){
+            done(err)
+          })
+        })
       })
     })
 
