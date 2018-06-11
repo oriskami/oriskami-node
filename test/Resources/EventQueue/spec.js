@@ -1,6 +1,6 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , oriskami          = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
   , ids               = _.map(examples, function(x){return x.id})
@@ -32,6 +32,18 @@ describe("EventQueue", function(){
   describe("Methods", function(){
     var json        = jsons[0] 
       , idResource  = json.id
+
+    before(function(done){
+      oriskami["Event"].create(jsons[0], function(err, res){
+        if(err) return done(err) 
+        oriskami["Event"].create(jsons[1], function(err, res){
+          if(err) return done(err) 
+          oriskami["Event"].create(jsons[2], function(err, res){
+            done(err)
+          })
+        })
+      })
+    })
 
     it("Should retrieve", function(done){
       oriskami["EventQueue"].retrieve(idResource, function(err, res){

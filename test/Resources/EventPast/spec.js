@@ -40,5 +40,60 @@ describe("EventPast", function(){
         }
       })
     })
+
+    it("Should retrieve via its id the created resource", function(done){
+      oriskami["EventPast"].retrieve(idResource, function(err, res){
+        var isStatusOk = res.statusCode >= 200 && res.statusCode <= 204
+        if(err){
+          console.log(err, res)
+          done(err)
+        } else if(res.data.length === 1 && res.data[0].id === idResource){
+          done()
+        } else {
+          console.log("Expected ", idResource, " Returned ", res.data[0].id)
+          done((new Error("Did not return the resource with id = "+idResource)))
+        }
+      })
+    })
+
+    it("Should update the created resource", function(done){
+      var newEmail  = "abc@gmail.com"
+
+      oriskami["EventPast"].update(idResource, {
+          "id"        : jsons[1].id
+        , "parameters": {"email": newEmail}
+      }, function(err, res){
+        if(err){
+          console.log(err, res)
+          done(err)
+        } else if(res.data.length === 1){
+          if(res.data[0].parameters.email !== newEmail){
+            done(new Error("Updated resource is not equal to submitted resource"))
+            console.log(err, sentData, newData)
+          }
+          done()
+        } else if(res.data.length !== 1){
+          console.log("Data:", res.data)
+          done(new Error("Data length !== 1 when updating"))
+        }
+      })
+    })
+
+    it("Should delete the created resource", function(done){
+      oriskami["EventPast"].del(idResource, function(err, res){
+        if(!err && res.data.length === 1){
+          oriskami["EventPast"].retrieve(idResource, function(err, res){
+            if(err || res.data.length > 0){
+              console.log(err, res)
+              done((new Error("Should have deleted resource id = "+idResource)))
+            }
+            done()
+          })
+        } else {
+          console.log(err, res)
+          done((new Error("Did not return the deleted resource with id = "+idResource)))
+        }
+      })
+    })
   })
 })
