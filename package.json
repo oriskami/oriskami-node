@@ -1,6 +1,6 @@
 {
   "name": "oriskami",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "description": "API wrapper to Oriskami",
   "main": "lib/index.js",
   "scripts": {
@@ -22,10 +22,10 @@
   "homepage": "https://github.com/oriskami/oriskami-node",
   "devDependencies": {
     "chai": "^2.1.0",
-    "mocha": "^2.1.0"
+    "mocha": "^2.1.0",
+    "lodash": "^3.3.1"
   },
   "dependencies": {
-    "all": "0.0.0",
-    "lodash": "^3.3.1"
+    "all": "0.0.0"
   }
 }

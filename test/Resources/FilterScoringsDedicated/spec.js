@@ -40,7 +40,7 @@ describe("FilterScoringsDedicated", function(){
         "query_target"      : "sample:100" 
       , "query_base"        : "fr" 
       , "features"          : "all" 
-      }, (err, res) => {
+      }, function(err, res) {
         if(err) {
           console.log(err)
           return done(new Error("Failed to create scoring"))
@@ -54,13 +54,13 @@ describe("FilterScoringsDedicated", function(){
         "query_target"      : "sample:100" 
       , "query_base"        : "fr" 
       , "features"          : "all" 
-      }, (err, res0) => {
+      }, function(err, res0) {
         if(err){
           console.log(err)
           return done(new Error("Failed to create / retrieve score"))
         }
         var expectedScoreId = res0.model_id
-        oriskami["FilterScoringsDedicated"].retrieve(res0.model_id, (err, res1) => {
+        oriskami["FilterScoringsDedicated"].retrieve(res0.model_id, function(err, res1) {
           if(err){
             console.log(err)
             console.log("Expected score id", expectedScoreId)

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source $HOME/.nvm/nvm.sh
+
+for i in `cat .travis.yml | grep v[0-9] | sed 's/[- "]//g' | tr '\n' ' '`; do 
+  nvm use $i 
+  npm test 
+done ;
+
+exit 0
