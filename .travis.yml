@@ -1,7 +1,13 @@
 branches:
   only:
     - master
+matrix:
+  allow_failures:
+    - os: osx
 language: node_js
+os:
+  - linux
+  - osx
 node_js:
   - "v0.10"
   - "v0.11"
