@@ -66,7 +66,6 @@ describe("FilterScoringsDedicated", function(){
             console.log("Expected score id", expectedScoreId)
             return done(new Error("Failed to retrieve the created score"))
           }
-          console.log(res0, res1)
           done()
         })
       })
