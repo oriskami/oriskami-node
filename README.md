@@ -32,7 +32,7 @@ var Oriskami    = require("oriskami")
 
 3. **Bootstrap** your account with historical data (`EventPast`; *not* analyzed): 
 ```js
-oriskami.EventsPast.create({
+oriskami.EventPast.create({
   "parameters"  :{
     "id": 16646 
   , "email": "abc@gmail.com"
