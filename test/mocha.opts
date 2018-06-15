@@ -1,3 +1,4 @@
 --bail
 --recursive
 -R spec
+--timeout 10000
