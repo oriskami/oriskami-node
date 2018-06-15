@@ -1,58 +1,34 @@
 var _                 = require("lodash")
+  , async             = require("async")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , oriskami          = require("../../oriskami")
   , examples          = require("../../data/Event")
-  , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
-  , ids               = _.map(examples, function(x){return x.id})
-  , rootProps         = ["log","_api"]
-  , subProps          = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
-  , methods           = ["retrieve", "update", "del", "list"]
+  , L                 = require("../../L")
+  , methods           = ["retrieve", "update", "list"]
+  , resourceName      = "FilterRulesBase"
 
-describe("FilterRulesBase", function(){
+describe(resourceName, function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["FilterRulesBase"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["FilterRulesBase"]["oriskami"]).to.exist
-    })
-
+    it("Should have a name and path attribute", function() { expect(oriskami[resourceName]["path"]).to.exist})
+    it("Should link to parent (oriskami)"     , function() { expect(oriskami[resourceName]["oriskami"]).to.exist })
     _.each(methods, function(method){
-      var METHOD      = method.toUpperCase()
-      it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["FilterRulesBase"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+      it("should have " + method + " methods", function(done) {
+        _.isFunction(oriskami[resourceName][method])? done() : done(new error("err_missing_" + method))
       })
     })
   })
 
-
   describe("Methods", function(){
-    it("Should list", function(done){
-      oriskami["FilterRulesBase"].list(done)
-    })
-
+    it("Should list"  , function(done){oriskami[resourceName].list(done) })
     it("Should update", function(done){
       var ruleId = "0"
-      oriskami["FilterRulesBase"].update(ruleId
-      , {"is_active": "true"}
-      , function(err, res){
-        if(err){ done(new Error("Did not create")) }
-
+      async.waterfall([
+        function(     next){ oriskami[resourceName].update(ruleId, {"is_active": "true"}, next) }
+      , function(res, next){ 
         var rule = res.data[ruleId]
-        if(rule.is_active === "true"){
-          // roll back
-          oriskami["FilterRulesBase"].update(ruleId
-          , {"is_active": "false"}
-          , done)
-        } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
-        }
-      })
+        rule && rule.is_active == "true" ? next(null, ruleId) : next(new Error("err_updating_1")) 
+      }, function(res, next){ oriskami[resourceName].update(ruleId, {"is_active": "false"}, next)}
+      ], L.logError(done))
     })
   })
 })

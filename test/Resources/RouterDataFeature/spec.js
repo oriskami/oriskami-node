@@ -1,40 +1,24 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , async             = require("async")
+  , oriskami          = require("../../oriskami")
+  , L                 = require("../../L")
   , methods           = ["list"]
+  , resourceName      = "RouterDataFeature"
 
-describe("RouterDataFeature", function(){
+describe(resourceName, function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["RouterDataFeature"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["RouterDataFeature"]["oriskami"]).to.exist
-    })
-
+    it("Should have a name and path attribute", function() { expect(oriskami[resourceName]["path"]).to.exist })
+    it("Should link to parent (oriskami)"     , function() { expect(oriskami[resourceName]["oriskami"]).to.exist })
     _.each(methods, function(method){
-      var METHOD      = method.toUpperCase()
-      it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["RouterDataFeature"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+      it("Should have "+method+" methods", function(done) {
+        var hasMethod = _.isFunction(oriskami[resourceName][method])
+        hasMethod ? done() : done(new Error("err_missing_router_data_feature_method_" + method))
       })
     })
   })
 
-
   describe("Methods", function(){
-    it("Should list", function(done){
-      oriskami["RouterDataFeature"].list(function(err, res){
-        if(err) {
-          console.log(err, res)
-          done(err) 
-        } else {
-          done()
-        }
-      })
-    })
+    it("Should list", function(done){ oriskami[resourceName].list(L.logError(done)) })
   })
 })

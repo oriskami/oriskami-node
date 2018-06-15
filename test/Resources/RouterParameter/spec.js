@@ -1,66 +1,34 @@
 var _                 = require("lodash")
+  , async             = require("async")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , oriskami          = require("../../oriskami")
+  , L                 = require("../../L")
   , methods           = ["update","list"]
+  , resourceName      = "RouterParameter"
 
-describe("RouterParameter", function(){
+describe(resourceName, function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["RouterParameter"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["RouterParameter"]["oriskami"]).to.exist
-    })
-
+    it("Should have a name and path attribute", function() { expect(oriskami[resourceName]["path"]).to.exist})
+    it("Should link to parent (oriskami)"     , function() { expect(oriskami[resourceName]["oriskami"]).to.exist})
     _.each(methods, function(method){
-      var METHOD      = method.toUpperCase()
-      it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["RouterParameter"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+      it("Should have "+ method +" method", function(done) {
+        var hasMethod = _.isFunction(oriskami[resourceName][method])
+        hasMethod ? done() :  done(new Error("err_missing_method_" + method))
       })
     })
   })
 
-
   describe("Methods", function(){
-
-    it("Should list", function(done){
-      oriskami["RouterParameter"].list(function(err, res){
-        if(err) {
-          console.log(err, res)
-          done(err) 
-        } else {
-          done()
-        }
-      })
-    })
-
-
+    it("Should list"  , function(done){ oriskami[resourceName].list(L.logError(done))})
     it("Should update", function(done){
-      oriskami.set("timeout", 20000)
-      var ruleId = "0"
-      oriskami["RouterParameter"].update(ruleId
-      , {"f_cogs": "0.25"}
-      , function(err, res){
-        if(err){ 
-          console.log(err, res)
-          done(new Error("Did not update")) 
-        }
-
-        var rule = res.data[ruleId]
-        if(rule.f_cogs === "0.25"){
-          // roll back
-          oriskami["RouterParameter"].update(ruleId
-          , {"f_cogs": "0.50"} 
-          , done)
-        } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
-        }
-      })
-    })
+      var ruleId      = "0"
+      async.waterfall([
+        function(     next){ oriskami[resourceName].update(ruleId, {"f_cogs": "0.25"}, next) }
+      , function(res, next){ 
+        var rule      = res.data[ruleId] 
+          , isValueOk = rule.f_cogs === "0.25"
+        isValueOk ? oriskami[resourceName].update(ruleId, {"f_cogs": "0.50"}, next) : next(new Error("err_invalid_router_parameter_value")) 
+      }], L.logError(done))
+    }).timeout(20000)
   })
 })

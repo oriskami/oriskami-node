@@ -1,12 +1,11 @@
 var _                 = require("lodash")
+  , async             = require("async")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , L                 = require("../../L")
+  , oriskami          = require("../../oriskami")
   , examples          = require("../../data/Event")
-  , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
-  , ids               = _.map(examples, function(x){return x.id})
-  , rootProps         = ["log","_api"]
-  , subProps          = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
   , methods           = ["retrieve", "update", "del", "list"]
+  , resourceName      = "FilterWhitelist"
   , json              = { 
     "value"           : "New Value"
   , "feature"         : "email_domain"
@@ -14,73 +13,44 @@ var _                 = require("lodash")
   , "is_active"       : "true"
   }
 
-describe("FilterWhitelist", function(){
+describe(resourceName, function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["FilterWhitelist"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["FilterWhitelist"]["oriskami"]).to.exist
-    })
-
+    it("Should have a name and path attribute", function() { expect(oriskami[resourceName]["path"]).to.exist})
+    it("Should link to parent (oriskami)"     , function() { expect(oriskami[resourceName]["oriskami"]).to.exist })
     _.each(methods, function(method){
-      var METHOD      = method.toUpperCase()
-      it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["FilterWhitelist"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+      it("Should have " + method + " methods", function(done) {
+        var hasMethod = _.isFunction(oriskami[resourceName][method])
+        hasMethod ? done() : done(new Error("err_missing_method_" + method)) 
       })
     })
   })
 
   describe("Methods", function(){
-    it("Should create", function(done){
-      oriskami["FilterWhitelist"].create(json 
-      , function(err, res){
-        if(err){ done(new Error("Did not create")) }
-
+    it("Should create, list, and delete", function(done){
+      var nWhitelists0
+      async.waterfall([
+        function(     next){ oriskami[resourceName].create(json, next) }
+      , function(res, next){ 
         var whitelist = res.data.reverse()[0]
-          , deepEqual = _.reduce(_.keys(json), function(memo, k){ return memo && json[k] === whitelist[k] }, true)
-        if(deepEqual){
-          done()
-        } else {
-          console.log(err, res)
-          done(new Error("Did not create"))
-        }
-      })
-    })
+          , isEqual   = _.reduce(_.keys(json), function(memo, k){ return memo && json[k] === whitelist[k] }, true)
+        isEqual ? next(null, true) : next(new Error("err_creating"))
+      },function(res, next){ oriskami[resourceName].list(next) } 
+      , function(res, next){  
+        nWhitelists0 = res.data.length 
+        oriskami[resourceName].del(nWhitelists0 - 1, next) 
+      }, function(res, next){ res.data.length == nWhitelists0 - 1 ? next(null, true) : next(new Error("err_deleting")) }
+      ], L.logError(done))
+    }).timeout(20000)
 
     it("Should update", function(done){
       var whitelistId = "0"
-      oriskami["FilterWhitelist"].update(whitelistId
-      , {"value": "yahoo.com"}
-      , function(err, res){
-        if(err){ done(new Error("Did not create")) }
-
+      async.waterfall([
+        function(     next){oriskami[resourceName].update(whitelistId, {"value": "yahoo.com"}, next)}
+      , function(res, next){ 
         var whitelist = res.data[whitelistId]
-        if(whitelist.value === "yahoo.com"){
-          // roll back
-          oriskami["FilterWhitelist"].update(whitelistId
-          , {"value": "gmail.com"}
-          , done)
-        } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
-        }
-      })
-    })
-
-    it("Should delete", function(done){
-      oriskami["FilterWhitelist"].list(function(err, res){
-        if(err){ done(new Error("Did not list"))}
-        var whitelistId = res.data.length - 1
-        oriskami["FilterWhitelist"].del(whitelistId, function(err, res){
-          if(!err && res.data.length === 2){ return done() }
-          done(err)
-        })
-      })
+        whitelist.value === "yahoo.com" ? next(null, true) : next(new Error("err_updating"))
+      }, function(res, next){  oriskami[resourceName].update(whitelistId, {"value": "gmail.com"}, next) 
+      }], L.logError(done))
     })
   })
 })

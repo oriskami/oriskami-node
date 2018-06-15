@@ -1,82 +1,61 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , async             = require("async")
+  , L                 = require("../../L")
+  , oriskami          = require("../../oriskami")
   , methods           = ["retrieve", "update", "del", "list"]
+  , resourceName      = "NotifierSlack"
   , json              = { 
     "value"           : "https://some-url"
   , "description"     : "New Description"
   , "is_active"       : "true"
   }
 
-describe("NotifierSlack", function(){
+describe(resourceName, function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["NotifierSlack"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["NotifierSlack"]["oriskami"]).to.exist
-    })
-
+    it("Should have a name and path attribute", function() { expect(oriskami[resourceName]["path"]).to.exist})
+    it("Should link to parent (oriskami)"     , function() { expect(oriskami[resourceName]["oriskami"]).to.exist })
     _.each(methods, function(method){
-      var METHOD      = method.toUpperCase()
-      it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["NotifierSlack"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+      it("Should have "+method+" methods", function(done) {
+        var hasMethod = _.isFunction(oriskami[resourceName][method])
+        hasMethod ? done() : done(new Error("err_missing_notifier_slack_method_" + method))
       })
     })
   })
 
   describe("Methods", function(){
     it("Should create", function(done){
-      oriskami["NotifierSlack"].create(json 
-      , function(err, res){
-        if(err){ done(new Error("Did not create")) }
-
-        var rule = res.data.reverse()[0]
-          , deepEqual = _.reduce(_.keys(json), function(memo, k){ return memo && json[k] === rule[k] }, true)
-        if(deepEqual){
-          done()
-        } else {
-          console.log(err, res)
-          done(new Error("Did not create"))
-        }
-      })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].create(json, next)}
+      , function(res, next){ 
+        var rule      = res.data.reverse()[0]
+          , isEqual   = _.reduce(_.keys(json), function(memo, k){ return memo && json[k] === rule[k] }, true)
+        isEqual ? next(null, true) : next(new Error("err_creating"))
+      }], L.logError(done))
     })
 
     it("Should update", function(done){
       var ruleId = "0"
-      oriskami.set("timeout", 20000)
-      oriskami["NotifierSlack"].update(ruleId
-      , {"value": "https://another-url"}
-      , function(err, res){
-        if(err){ done(new Error("Did not create")) }
-
-        var rule = res.data[ruleId]
-        if(rule.value === "https://another-url"){
-          // roll back
-          oriskami["NotifierSlack"].update(ruleId
-          , {"value": "https://some-url"}
-          , done)
-        } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
-        }
-      })
-    })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].update(ruleId, {"value": "https://another-url"}, next) }
+      , function(res, next){
+        var rule  = res.data[ruleId]
+          , isOk  = rule.value === "https://another-url"
+        isOk ? oriskami[resourceName].update(ruleId, {"value": "https://some-url"}, next) : next(new Error("err_updating"))
+      }], L.logError(done))
+    }).timeout(20000)
 
     it("Should delete", function(done){
-      oriskami.set("timeout", 20000)
-      oriskami["NotifierSlack"].list(function(err, res){
-        if(err){ done(new Error("Did not list"))}
-        var ruleId = res.data.length - 1
-        oriskami["NotifierSlack"].del(ruleId, function(err, res){
-          if(!err && res.data.length === 2){ return done() }
-          done(err)
-        })
-      })
-    })
+      var nRules0
+      async.waterfall([
+        function(     next){ oriskami[resourceName].list(next) }
+      , function(res, next){ 
+        nRules0   = res.data.length
+        oriskami[resourceName].del(nRules0 - 1, next)
+      }, function(res, next){ 
+        var isOk  = res.data.length === nRules0 - 1
+        isOk ? next(null, isOk) : next(new Error("err_deleting"))
+      }], L.logError(done))
+    }).timeout(20000)
   })
 })

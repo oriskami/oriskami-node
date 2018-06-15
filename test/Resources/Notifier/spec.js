@@ -1,62 +1,33 @@
 var _                 = require("lodash")
+  , async             = require("async")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , L                 = require("../../L") 
+  , oriskami          = require("../../oriskami")
   , methods           = ["update"]
 
 describe("Notifier", function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["Notifier"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["Notifier"]["oriskami"]).to.exist
-    })
-
+    it("Should have a name and path attribute", function() { expect(oriskami["Notifier"]["path"]).to.exist})
+    it("Should link to parent (oriskami)", function() { expect(oriskami["Notifier"]["oriskami"]).to.exist})
     _.each(methods, function(method){
-      var METHOD      = method.toUpperCase()
-      it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["Notifier"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+      it("Should have " + method + " methods", function(done) {
+        var hasMethod = _.isFunction(oriskami["Notifier"][method])
+        hasMethod ? done() : done(new Error("err_missing_notifier_email_method_" + method))
       })
     })
   })
 
-
   describe("Methods", function(){
-    it("Should list", function(done){
-      oriskami["Notifier"].list(function(err, res){
-        if(err) {
-          console.log(err, res)
-          done(err) 
-        } else {
-          done()
-        }
-      })
-    })
-
-
+    it("Should list"  , function(done){ oriskami["Notifier"].list(L.logError(done))})
     it("Should update", function(done){
-      oriskami.set("timeout", 20000)
       var ruleId = "0"
-      oriskami["Notifier"].update(ruleId
-      , {"is_active": "true"}
-      , function(err, res){
-        if(err){ done(new Error("Did not update")) }
-
-        var rule = res.data[ruleId]
-        if(rule.is_active === "true"){
-          // roll back
-          oriskami["Notifier"].update(ruleId
-          , {"is_active": "false"}
-          , done)
-        } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
-        }
-      })
-    })
+      async.waterfall([
+        function(     next){ oriskami["Notifier"].update(ruleId, {"is_active": "true"}, next) }
+      , function(res, next){
+        var rule  = res.data[ruleId]
+          , isOk  = rule.is_active === "true"
+        isOk ? oriskami["Notifier"].update(ruleId, {"is_active": "false"}, next) : next(new Error("err_invalid_notifier_is_active"))
+      }], L.logError(done))
+    }).timeout(20000)
   })
 })

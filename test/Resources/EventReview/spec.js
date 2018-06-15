@@ -1,30 +1,20 @@
 var _                 = require("lodash")
+  , async             = require("async")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , L                 = require("../../L")
+  , oriskami          = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
-  , ids               = _.map(examples, function(x){return x.id})
-  , rootProps         = ["log","_api"]
-  , subProps          = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
   , methods           = ["retrieve", "update", "del", "list"]
+  , resourceName      = "EventReview"
 
-describe("EventReview", function(){
+describe(resourceName, function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["EventReview"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["EventReview"]["oriskami"]).to.exist
-    })
-
+    it("Should have a name and path attribute", function() { expect(oriskami[resourceName]["path"]).to.exist })
+    it("Should link to parent (oriskami)"     , function() { expect(oriskami[resourceName]["oriskami"]).to.exist })
     _.each(methods, function(method){
-      var METHOD      = method.toUpperCase()
-      it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["EventReview"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+      it("Should have " + method + " methods", function(done) {
+        _.isFunction(oriskami[resourceName][method]) ? done() : done(new Error("err_missing_method_" + method))
       })
     })
   })
@@ -34,128 +24,72 @@ describe("EventReview", function(){
       , idResource  = json.id
 
     it("Should retrieve", function(done){
-      oriskami["EventReview"].retrieve(idResource, function(err, res){
-        var isStatusOk = res.statusCode >= 200 && res.statusCode <= 204
-        if(!err && res.data.length >= 0){
-          done()
-        } else {
-          console.log(err, res)
-          done((new Error("Did not retrieve")))
-        }
-      })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].retrieve(idResource, next) }
+      , function(res, next){ 
+        var isOk    = res.status_code >= 200 && res.status_code <= 204 && res.data.length >= 0
+        isOk ? next(null, true) : next(new Error("err_retrieving"))
+      }], L.logError(done))
     })
 
     it("Should create", function(done){
       var now       = (new Date()).toISOString().slice(0,16)
-      oriskami["EventReview"].update(idResource
-      , {"message": now, "reviewer_id": "123"}
-      , function(err, res){
-        if(err){ 
-          console.log(err, res)
-          done(new Error("Did not create (err)")) 
-        } else if(res.data.length <= 0){
-          console.log(res)
-          done(new Error("Did not create (empty result)")) 
-        } else  {
-          var reviews = res.data.reverse()
-          if(reviews[0].message !== now){
-            console.log(res.data)
-            console.log(reviews[0].message)
-            console.log(now)
-            done(new Error("Did not create (now !=)"))
-          } else {
-            done()
-          }
-        }
-      })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].update(idResource, {"message": now, "reviewer_id": "123"}, next) }
+      , function(res, next){ 
+        var isOk    = res.status_code >= 200 && res.status_code <= 204 && res.data.length >= 0
+        isOk  ? next(null, res) : next(new Error("err_creating"))
+      },function(res, next){ 
+        var reviews = res.data.reverse()
+          , isOk    = reviews[0].message == now
+        isOk  ? next(null, true) : next(new Error("err_creating_invalid_values")) 
+      }], L.logError(done)) 
     })
 
     it("Should update", function(done){
       var reviewId  = 0
-        , reviewerId= "124"
-      oriskami["EventReview"].update(idResource
-      , {"review_id": reviewId, "reviewer_id": reviewerId}
-      , function(err, res){
-        var reviews = res.data
-        if(err){
-          console.log(err)
-          done(new Error("Error updating"))
-        } else if(reviews[reviewId].reviewer.id === reviewerId){
-          done()
-        } else { 
-          console.log(reviews)
-          console.log(reviews[reviewId])
-          console.log("reviewer_id", reviewerId)
-          done(new Error("Did not update")) 
-        }
-      })
-    })
-
-    it("Should update", function(done){
-      var reviewId  = 0
-        , reviewerId= "123"
-      oriskami["EventReview"].update(idResource
-      , {"review_id": reviewId, "reviewer_id": reviewerId}
-      , function(err, res){
-        if(err){ 
-          console.log(err, res)
-          done(new Error("Did not create")) 
-        }
-        var review = res.data[reviewId]
-        if(review.reviewer.id === reviewerId){
-          done()
-        } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
-        }
-      })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].update(idResource, {"review_id": reviewId, "reviewer_id": "124"}, next) }
+      , function(res, next){ 
+        var isOk    = res.data[reviewId].reviewer.id === "124" 
+        isOk ? next(null, true) : next(new Error("err_updating_1"))
+      }, function(res, next){ oriskami[resourceName].update(idResource, {"review_id": reviewId, "reviewer_id": "123"}, next)} 
+      , function(res, next){ 
+        var isOk    = res.data[reviewId].reviewer.id === "123" 
+        isOk ? next(null, true) : next(new Error("err_updating_2"))
+      }], L.logError(done))
     })
 
     it("Should delete", function(done){
-      oriskami["EventReview"].retrieve(idResource, function(err, res){
-        var nReviews = res.data.length
-        oriskami["EventReview"].del(idResource
-        , {"review_id": 0}
-        , function(err, res){
-          if(err){ 
-            console.log(err, res)
-            return done(new Error("Did not delete")) 
-          } else if(res.data.length === nReviews - 1){
-            return done()
-          } else {
-            console.log(res.data.length, nReviews)
-            done(new Error("Did not delete"))
-          }
-        })
-      })
+      var nReviews    
+      async.waterfall([
+        function(     next){ oriskami[resourceName].retrieve(idResource, next) }
+      , function(res, next){ 
+        nReviews  = res.data.length
+        oriskami[resourceName].del(idResource, {"review_id": 0}, next)
+      }, function(res, next){ 
+        var isOk  = res.data.length === nReviews - 1
+        isOk ? next(null, true) : next(new Error("err_deleting"))
+      }], L.logError(done))
     })
 
     xit("Should list", function(done){
       var reviewId  = 0
         , reviewerId= "124"
-      oriskami.set("timeout", 20000)
-      oriskami["EventReview"].update(idResource
-      , {"review_id": reviewId, "reviewer_id": reviewerId}
-      , function(err, res){
-        if(err){
-          console.log(res)
-          return done(new Error("Should have only one returned element")) 
-        }
-        oriskami["EventReview"].list(function(err, res){
-          if(!err && res.data.length > 0 && _.contains(_.keys(res.data[0]), "message")) {
-            // cleanup
-            _.each(res.data, function(eventReview){
-              if(eventReview.id === idResource){
-                var nReviews = res.data.length 
-                oriskami["EventReview"].del(idResource, {"review_id": nReviews - 1}, done)
-              }
-            })
-          } else {
-            console.log(res)
-            done(new Error("Should have only one returned element")) 
+      async.waterfall([
+        function(     next){ oriskami[resourceName].update(idResource, {"review_id": reviewId, "reviewer_id": reviewerId}, next) }
+      , function(res, next){ oriskami[resourceName].list(next) }
+      , function(res, next){ 
+        var isOk =  res.data.length > 0 && _.contains(_.keys(res.data[0]), "message")
+        isOk ? next(null, res) : next(new Error("err_listing"))
+      }, function(res, next){ 
+        async.map(res.data, function(eventReview){
+          if(eventReview.id === idResource){
+            var nReviews = res.data.length 
+            oriskami[resourceName].del(idResource, {"review_id": nReviews - 1}, next)
           }
-        })
-      })
+        }, next)
+      }], L.logError(done))
     })
   })
 })

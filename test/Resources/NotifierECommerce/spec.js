@@ -1,30 +1,20 @@
 var _                 = require("lodash")
+  , async             = require("async")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , oriskami          = require("../../oriskami")
   , examples          = require("../../data/Event")
-  , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
-  , ids               = _.map(examples, function(x){return x.id})
-  , rootProps         = ["log","_api"]
-  , subProps          = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
+  , L                 = require("../../L")
   , methods           = ["retrieve", "update", "del", "list"]
+  , resourceName      = "NotifierECommerce"
 
-describe("NotifierECommerce", function(){
+describe(resourceName, function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["NotifierECommerce"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["NotifierECommerce"]["oriskami"]).to.exist
-    })
-
+    it("Should have a name and path attribute", function() {expect(oriskami[resourceName]["path"]).to.exist})
+    it("Should link to parent (oriskami)"     , function() { expect(oriskami[resourceName]["oriskami"]).to.exist})
     _.each(methods, function(method){
-      var METHOD      = method.toUpperCase()
-      it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["NotifierECommerce"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+      it("Should have " + method + " methods", function(done) {
+        var hasMethod = _.isFunction(oriskami[resourceName][method])
+        hasMethod ? done() : done(new Error("err_missing_notifier_email_method_" + method))
       })
     })
   })
@@ -32,25 +22,15 @@ describe("NotifierECommerce", function(){
   describe("Methods", function(){
     it("Should update", function(done){
       var ruleId = "0"
-      oriskami.set("timeout", 20000)
-      oriskami["NotifierECommerce"].update(ruleId
-      , {"is_active": "false"}
-      , function(err, res){
-        if(err){ done(new Error("Did not create")) }
+      async.waterfall([
+        function(     next){ oriskami[resourceName].update(ruleId, {"is_active": "false"}, next) }
+      , function(res, next){
+        var rule  = res.data[ruleId]
+          , isOk  = rule.is_active === "false"
+        isOk ? oriskami[resourceName].update(ruleId, {"is_active": "true"}, next) : next(new Error("err_invalid_notifier_ecommerce_value"))
+      }], L.logError(done))
+    }).timeout(20000)
 
-        var rule = res.data[ruleId]
-        if(rule.is_active === "false"){
-          // roll back
-          oriskami["NotifierECommerce"].update(ruleId, {"value": "true"}, done)
-        } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
-        }
-      })
-    })
-
-    it("Should list", function(done){
-      oriskami["NotifierECommerce"].list(done)
-    })
+    it("Should list", function(done){ oriskami[resourceName].list(L.logError(done))})
   })
 })

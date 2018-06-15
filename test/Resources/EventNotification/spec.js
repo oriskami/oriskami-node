@@ -1,30 +1,20 @@
 var _                 = require("lodash")
+  , async             = require("async")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , L                 = require("../../L")
+  , oriskami          = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
-  , ids               = _.map(examples, function(x){return x.id})
-  , rootProps         = ["log","_api"]
-  , subProps          = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
   , methods           = ["retrieve", "list"]
+  , resourceName      = "EventNotification"
 
-describe("EventNotification", function(){
+describe(resourceName, function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["EventNotification"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["EventNotification"]["oriskami"]).to.exist
-    })
-
+    it("Should have a name and path attribute", function(){ expect(oriskami[resourceName]["path"]).to.exist })
+    it("Should link to parent (oriskami)"     , function(){ expect(oriskami[resourceName]["oriskami"]).to.exist })
     _.each(methods, function(method){
-      var METHOD      = method.toUpperCase()
-      it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["EventNotification"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+      it("Should have " + method + " methods", function(done) {
+        _.isFunction(oriskami[resourceName][method]) ? done() :  done(new Error("err_missing_method_" + method))
       })
     })
   })
@@ -34,26 +24,21 @@ describe("EventNotification", function(){
       , idResource  = json.id
 
     it("Should retrieve", function(done){
-      oriskami["EventNotification"].retrieve(idResource, function(err, res){
-        var isStatusOk = res.statusCode >= 200 && res.statusCode <= 204
-        if(!err && res.data.length >= 0){
-          done()
-        } else {
-          console.log(err, res)
-          done((new Error("Did not retrieve")))
-        }
-      })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].retrieve(idResource, next) }
+      , function(res, next){
+        var isOk    = res.status_code >= 200 && res.status_code <= 204 && res.data.length >= 0
+        isOk ? next(null, true) : next(new Error("err_retrieving"))
+      }], L.logError(done))
     })
 
     it("Should list", function(done){
-      oriskami["EventNotification"].list(function(err, res){
-        if(!err && res.data.length === 3 && _.contains(_.keys(res.data[0]), "notifications")) {
-          done()
-        } else {
-          console.log(res)
-          done(new Error("Should have only one returned element")) 
-        }
-      })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].list(next)}
+      , function(res, next){ 
+        var isOk  = res.data.length === 3 && _.contains(_.keys(res.data[0]), "notifications")
+        isOk ? next(null, true) : next(new Error("err_list"))
+      }], L.logError(done))
     })
   })
 })

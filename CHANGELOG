@@ -1,3 +1,9 @@
+1.18 Current
+ - Add async method to retrieve Oriskami's current public key—oriskami.getPublicKey => '/public-key'
+ - Add method (oriskami.webhook ) to parse webhooks received from Oriskami—uses Json Web Token + Asymetric signing with public key 
+ - Add ability to change host target (for tests): oriskami.set('host', 'another-server.a-domain.com'))
+ - Tests: Async-ify and refactor all the test cases and add CRUD(L) tests for EventPast 
+
 1.17 June 12, 2018
  - Remove dependency for lodash.
  - Remove lambda functions from test cases—not suggested for mocha.

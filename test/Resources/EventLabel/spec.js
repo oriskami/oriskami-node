@@ -1,30 +1,23 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , async             = require("async")
+  , L                 = require("../../L")
+  , oriskami          = require("../../oriskami")
   , examples          = require("../../data/Event")
   , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
-  , ids               = _.map(examples, function(x){return x.id})
-  , rootProps         = ["log","_api"]
-  , subProps          = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
   , methods           = ["retrieve", "update", "del", "list"]
+  , resourceName      = "EventLabel" 
 
-describe("EventLabel", function(){
+describe(resourceName, function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["EventLabel"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["EventLabel"]["oriskami"]).to.exist
-    })
+    it("Should have a name and path attribute", function() { expect(oriskami[resourceName]["path"]).to.exist })
+    it("Should link to parent (oriskami)"     , function() { expect(oriskami[resourceName]["oriskami"]).to.exist })
 
     _.each(methods, function(method){
-      var METHOD      = method.toUpperCase()
-      it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["EventLabel"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+      it("Should have " + method + " methods", function(done) {
+        var hasMethod = _.isFunction(oriskami[resourceName][method])
+        if(!hasMethod)  done(new Error("err_missing_method_" + method )) 
+        else            done()
       })
     })
   })
@@ -34,64 +27,48 @@ describe("EventLabel", function(){
       , idResource  = json.id
 
     it("Should retrieve", function(done){
-      oriskami["EventLabel"].retrieve(idResource, function(err, res){
-        var isStatusOk = res.statusCode >= 200 && res.statusCode <= 204
-        if(!err && res.data.length >= 0){
-          done()
-        } else {
-          console.log(err, res)
-          done((new Error("Did not retrieve")))
-        }
-      })
+      async.waterfall([
+        function(next){ oriskami[resourceName].retrieve(idResource, next)}
+      , function(res, next){ 
+        var isOk    = res.status_code >= 200 && res.status_code <= 204 && res.data.length
+        isOk ? next(null, true) : next(new Error("err_retrieving"))
+      }], L.logError(done))
     })
 
     it("Should update to 'false'", function(done){
-      oriskami["EventLabel"].update(idResource
-      , {"id": idResource, "label": "is_loss", "value": "false"}
-      , function(err, res){
-        if(!err && res.data.length === 1 && res.data[0].labels.is_loss === "false"){
-          done()
-        } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
-        }
-      })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].update(idResource, {"id": idResource, "label": "is_loss", "value": "false"}, next)}
+      , function(res, next){ 
+        var isOk    = res.data.length === 1 && res.data[0].labels.is_loss === "false"
+        isOk ? next(null, true) : next(new Error("err_updating"))
+      }], L.logError(done))
     })
 
     it("Should update to 'true'", function(done){
-      oriskami["EventLabel"].update(idResource
-      , {"id": idResource, "label": "is_loss", "value": "true"}
-      , function(err, res){
-        if(!err && res.data.length === 1 && res.data[0].labels.is_loss === "true"){
-          done()
-        } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
-        }
-      })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].update(idResource, {"id": idResource, "label": "is_loss", "value": "true"}, next) }
+      , function(res, next){ 
+        var isOk    = res.data.length === 1 && res.data[0].labels.is_loss === "true"
+        isOk ? next(null, true) : next(new Error("err_updating"))
+      }], L.logError(done))
     })
 
     it("Should delete", function(done){
-      oriskami["EventLabel"].del(idResource
-      , function(err, res){
-        if(!err && res.data.length === 1 && res.data[0].labels.is_loss === undefined){
-          done()
-        } else {
-          console.log(err, res)
-          done((new Error("Did not delete")))
-        }
-      })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].del(idResource, next)  }
+      , function(res, next){ 
+        var isOk    = res.data.length === 1 && res.data[0].labels.is_loss === undefined
+        isOk ? next(null, true) : next(new Error("err_deleting"))
+      }], L.logError(done))
     })
 
     it("Should list", function(done){
-      oriskami["EventLabel"].list(function(err, res){
-        if(!err && res.data.length === 3 && _.contains(_.keys(res.data[0]), "labels")) {
-          done()
-        } else {
-          console.log(res)
-          done(new Error("Should have only one returned element")) 
-        }
-      })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].list(next) }
+      , function(res, next){ 
+        var isOk    = res.data.length === 3 && _.contains(_.keys(res.data[0]), "labels")
+        isOk ? next(null, true) : next(new Error("err_listing"))
+      }], L.logError(done))
     })
   })
 })

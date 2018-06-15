@@ -1,51 +1,33 @@
 var _                 = require("lodash")
+  , async             = require("async")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , L                 = require("../../L")
+  , oriskami          = require("../../oriskami")
   , examples          = require("../../data/Event")
-  , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
-  , ids               = _.map(examples, function(x){return x.id})
-  , rootProps         = ["log","_api"]
-  , subProps          = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
   , methods           = ["list"]
+  , resourceName      = "EventLastId"
 
-
-describe("EventLastId", function(){
+describe(resourceName, function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["EventLastId"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["EventLastId"]["oriskami"]).to.exist
-    })
-
+    it("Should have a name and path attribute", function(){ expect(oriskami[resourceName]["path"]    ).to.exist })
+    it("Should link to parent (oriskami)"     , function(){ expect(oriskami[resourceName]["oriskami"]).to.exist })
     _.each(methods, function(method){
-      var METHOD      = method.toUpperCase()
-      it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["EventLastId"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+      it("Should have " + method + " methods", function(done) {
+        var hasMethod = _.isFunction(oriskami[resourceName][method])
+        if(!hasMethod) done(new Error("err_missing_method_"+ method))
+        else done()
       })
     })
   })
 
   describe("Methods", function(){
-    var json        = jsons[0] 
-      , idResource
-
     it("Should list the last id", function(done){
-      oriskami["EventLastId"].list(function(err, res){
-        if(err) {
-          console.log(err, res)
-          done(err) 
-        } else if(res.data.length === 1 && res.data[0].id === "3") {
-          done()
-        } else {
-          console.log(res)
-          done(new Error("Should have only one returned element")) 
-        }
-      })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].list(next) }
+      , function(res, next){ 
+        var isOk    = res.data.length === 1 && res.data[0].id === "3"
+        isOk ? next(null, true) : next(new Error("err_invalid_number_of_rows")) 
+      }], L.logError(done))
     })
   })
 })

@@ -1,63 +1,33 @@
 var _                 = require("lodash")
+  , async             = require("async")
   , expect            = require("chai").expect
   , oriskami          = require("../../oriskami")
+  , L                 = require("../../L")
   , methods           = ["list", "update"]
+  , resourceName      = "RouterDataBin"
 
-describe("RouterDataBin", function(){
+describe(resourceName, function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["RouterDataBin"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["RouterDataBin"]["oriskami"]).to.exist
-    })
-
+    it("Should have a name and path attribute", function() { expect(oriskami[resourceName]["path"]).to.exist})
+    it("Should link to parent (oriskami)", function() { expect(oriskami[resourceName]["oriskami"]).to.exist})
     _.each(methods, function(method){
-      var METHOD      = method.toUpperCase()
-      it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["RouterDataBin"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+      it("Should have "+method+" methods", function(done) {
+        var hasMethod = _.isFunction(oriskami[resourceName][method])
+        hasMethod ? done() :  done(new Error("err_missing_router_data_bin_method_" + method))
       })
     })
   })
 
   describe("Methods", function(){
-    it("Should list", function(done){
-      oriskami["RouterDataBin"].list(function(err, res){
-        if(err) {
-          console.log(err, res)
-          done(err) 
-        } else {
-          done()
-        }
-      })
-    })
-
+    it("Should list", function(done){oriskami[resourceName].list(L.logError(done)) })
     it("Should update", function(done){
-      oriskami.set("timeout", 20000)
       var ruleId = "0"
-      oriskami["RouterDataBin"].update(ruleId
-      , {"is_active": "true"}
-      , function(err, res){
-        if(err){ 
-          console.log(err, res)
-          done(new Error("Did not update")) 
-        }
-
-        var rule = res.data
-        if(rule.is_active === "true"){
-          // roll back
-          oriskami["RouterDataBin"].update(ruleId
-          , {"is_active": "false"}
-          , done)
-        } else {
-          console.log(err, rule)
-          done(new Error("Did not update"))
-        }
-      })
-    })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].update(ruleId, {"is_active": "true"}, next) }
+      , function(res, next){ 
+        var isActive = res.data.is_active === "true"
+        oriskami[resourceName].update(ruleId, {"is_active": "false"}, done)
+      }], L.logError(done))
+    }).timeout(20000)
   })
 })

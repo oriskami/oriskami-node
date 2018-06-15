@@ -1,86 +1,52 @@
 var _                 = require("lodash")
+  , async             = require("async")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , oriskami          = require("../../oriskami")
+  , L                 = require("../../L")
   , methods           = ["create","update","del","list"]
+  , resourceName      = "RouterFlow"
 
-describe("RouterFlow", function(){
+describe(resourceName, function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["RouterFlow"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["RouterFlow"]["oriskami"]).to.exist
-    })
-
+    it("Should have a name and path attribute", function() { expect(oriskami[resourceName]["path"]).to.exist })
+    it("Should link to parent (oriskami)"     , function() { expect(oriskami[resourceName]["oriskami"]).to.exist})
     _.each(methods, function(method){
       var METHOD      = method.toUpperCase()
       it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["RouterFlow"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+        var hasMethod = _.isFunction(oriskami[resourceName][method])
+        hasMethod ? done() : done(new Error("err_missing_method_" + method))
       })
     })
   })
 
-
   describe("Methods", function(){
-    it("Should create and delete RouterFlow", function(done){ 
-      oriskami["RouterFlow"].list(function(err, res){
-        if(err){ return done(new Error("Did not list")) }
-        var nRouterFlows0 = res.data.length
-        oriskami["RouterFlow"].create({}, function(err, res){
-          if(err){ return done(new Error("Did not create")) }
-
-          var nRouterFlows1 = res.data.length
-          if(nRouterFlows1 <= nRouterFlows0){return done(new Error("Did not expand the set of RouterFlows"))} 
-
-          oriskami["RouterFlow"].del(nRouterFlows1 - 1, function(err, res){
-            if(err){ return done(new Error("Did not delete")) }
-
-            var nRouterFlows2 = res.data.length 
-            if(nRouterFlows2 !== nRouterFlows0){return done(new Error("Did not delete the created flow"))} 
-
-            done()
-          })
-        })
+    it("Should create and delete", function(done){ 
+      var nRouterFlows0
+        , nRouterFlows1
+      async.waterfall([
+        function(     next){ oriskami[resourceName].list(next)}
+      , function(res, next){ nRouterFlows0 = res.data.length; oriskami[resourceName].create({}, next) } 
+      , function(res, next){ nRouterFlows1 = res.data.length; oriskami[resourceName].del(nRouterFlows1 - 1, next) } 
+      ], function(err, res) {
+        var nRouterFlows2 = !err && res.data && res.data.length 
+        err && console.log(err)
+        if(nRouterFlows1 <= nRouterFlows0)  return done(new Error("err_creating_router_flow")) 
+        if(nRouterFlows2 !== nRouterFlows0) return done(new Error("err_deleting_created_flow"))
+        done(err)
       })
-    }).timeout(10000)
+    }).timeout(20000)
 
     it("Should update", function(done){
-      oriskami.set("timeout", 20000)
       var ruleId = "0"
-      oriskami["RouterFlow"].update(ruleId
-      , {"is_active": "true"}
-      , function(err, res){
-        if(err){ 
-          return done(new Error("Did not update")) 
-        }
+      async.waterfall([
+        function(     next){ oriskami[resourceName].update(ruleId, {"is_active": "true"}, next) }
+      , function(res, next){ 
+          var isActive    = res.data.is_active === "true" 
+          if(isActive)  return oriskami[resourceName].update(ruleId, {"is_active": "false"}, next)
+          else          return next(new Error("err_updating_router_flow"))
+      }], L.logError(done))
+    }).timeout(20000)
 
-        var flow = res.data
-        if(flow.is_active === "true"){
-          // roll back
-          oriskami["RouterFlow"].update(ruleId
-          , {"is_active": "false"}
-          , done)
-        } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
-        }
-      })
-    })
-
-    it("Should list", function(done){
-      oriskami["RouterFlow"].list(function(err, res){
-        if(err) {
-          console.log(err, res)
-          done(err) 
-        } else {
-          done()
-        }
-      })
-    })
-
+    it("Should list", function(done){ oriskami[resourceName].list(L.logError(done))})
   })
 })

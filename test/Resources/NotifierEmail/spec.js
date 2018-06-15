@@ -1,87 +1,61 @@
 var _                 = require("lodash")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , async             = require("async")
+  , L                 = require("../../L")
+  , oriskami          = require("../../oriskami")
   , examples          = require("../../data/Event")
-  , jsons             = _.map(examples, function(x){return {"id": x.id, "parameters": x}})
-  , ids               = _.map(examples, function(x){return x.id})
-  , rootProps         = ["log","_api"]
-  , subProps          = ["auth","protocol","timeout","resources","revokedCerts","headers","request"]
   , methods           = ["retrieve", "update", "del", "list"]
+  , resourceName      = "NotifierEmail"
   , json              = { 
     "value"           : "abc@gmail.com"
   , "description"     : "New Description"
   , "is_active"       : "true"
   }
 
-describe("NotifierEmail", function(){
+describe(resourceName, function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["NotifierEmail"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["NotifierEmail"]["oriskami"]).to.exist
-    })
-
+    it("Should have a name and path attribute", function() { expect(oriskami[resourceName]["path"]).to.exist})
+    it("Should link to parent (oriskami)", function() { expect(oriskami[resourceName]["oriskami"]).to.exist})
     _.each(methods, function(method){
-      var METHOD      = method.toUpperCase()
-      it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["NotifierEmail"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+      it("should have " + method + " methods", function(done) {
+        _.isFunction(oriskami[resourceName][method]) ? done() : done(new error("err_missing_method_" + method))
       })
     })
   })
 
   describe("Methods", function(){
     it("Should create", function(done){
-      oriskami["NotifierEmail"].create(json 
-      , function(err, res){
-        if(err){ done(new Error("Did not create")) }
-
-        var rule = res.data.reverse()[0]
-          , deepEqual = _.reduce(_.keys(json), function(memo, k){ return memo && json[k] === rule[k] }, true)
-        if(deepEqual){
-          done()
-        } else {
-          console.log(err, res)
-          done(new Error("Did not create"))
-        }
-      })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].create(json, next)}
+      , function(res, next){ 
+        var rule      = res.data.reverse()[0]
+          , isEqual   = _.reduce(_.keys(json), function(memo, k){ return memo && json[k] === rule[k] }, true)
+        isEqual ? next(null, true) : next(new Error("err_creating"))
+      }], L.logError(done))
     })
 
     it("Should update", function(done){
       var ruleId = "0"
-      oriskami.set("timeout", 20000)
-      oriskami["NotifierEmail"].update(ruleId
-      , {"value": "yahoo.com"}
-      , function(err, res){
-        if(err){ done(new Error("Did not create")) }
-
-        var rule = res.data[ruleId]
-        if(rule.value === "yahoo.com"){
-          // roll back
-          oriskami["NotifierEmail"].update(ruleId
-          , {"value": "gmail.com"}
-          , done)
-        } else {
-          console.log(err, res)
-          done(new Error("Did not update"))
-        }
-      })
-    })
+      async.waterfall([
+        function(     next){ oriskami[resourceName].update(ruleId, {"value": "yahoo.com"}, next) }
+      , function(res, next){
+        var rule  = res.data[ruleId]
+          , isOk  = rule.value === "yahoo.com"
+        isOk ? oriskami[resourceName].update(ruleId, {"value": "gmail.com"}, next) : next(new Error("err_updating"))
+      }], L.logError(done))
+    }).timeout(20000)
 
     it("Should delete", function(done){
-      oriskami.set("timeout", 20000)
-      oriskami["NotifierEmail"].list(function(err, res){
-        if(err){ done(new Error("Did not list"))}
-        var ruleId = res.data.length - 1
-        oriskami["NotifierEmail"].del(ruleId, function(err, res){
-          if(!err && res.data.length === 2){ return done() }
-          done(err)
-        })
-      })
+      var nRules0
+      async.waterfall([
+        function(     next){ oriskami[resourceName].list(next) }
+      , function(res, next){ 
+        nRules0   = res.data.length
+        oriskami[resourceName].del(nRules0 - 1, next)
+      }, function(res, next){ 
+        var isOk  = res.data.length === nRules0 - 1
+        isOk ? next(null, isOk) : next(new Error("err_deleting"))
+      }], L.logError(done))
     })
   })
 })

@@ -1,98 +1,57 @@
 var _                 = require("lodash")
+  , async             = require("async")
   , expect            = require("chai").expect
-  , oriskami            = require("../../oriskami")
+  , L                 = require("../../L")
+  , oriskami          = require("../../oriskami")
   , methods           = ["create", "retrieve", "update", "del", "list"]
+  , resourceName      = "FilterScoringsDedicated"
 
-describe("FilterScoringsDedicated", function(){
+describe(resourceName, function(){
   describe("Properties", function(){
-    it("Should have a name and path attribute", function() {
-      expect(oriskami["FilterScoringsDedicated"]["path"]).to.exist
-    })
-
-    it("Should link to parent (oriskami)", function() {
-      expect(oriskami["FilterScoringsDedicated"]["oriskami"]).to.exist
-    })
-
+    it("Should have a name and path attribute", function() { expect(oriskami[resourceName]["path"]).to.exist })
+    it("Should link to parent (oriskami)"     , function() { expect(oriskami[resourceName]["oriskami"]).to.exist })
     _.each(methods, function(method){
-      var METHOD      = method.toUpperCase()
-      it("Should have "+METHOD+" methods", function(done) {
-        if(!_.isFunction(oriskami["FilterScoringsDedicated"][method])){
-          return done(new Error("Should have "+METHOD+" methods"))
-        }
-        done()
+      it("Should have " + method + " methods", function(done) {
+        var hasMethod = _.isFunction(oriskami[resourceName][method])
+        hasMethod ? done() : done(new Error("err_missing_filter_scorings_dedicated_method_" + method))
       })
     })
   })
 
   describe("Methods", function(){
-    it("Should list", function(done){
-      oriskami["FilterScoringsDedicated"].list(function(err, res){
-        if(err){
-          console.log(err)
-          return done(new Error("Failed to list filter scorings dedicated"))
-        }
-        done()
-      })
-    })
-
+    it("Should list"  , function(done){ oriskami[resourceName].list(L.logError(done)) })
     it("Should create", function(done){
-      oriskami["FilterScoringsDedicated"].create({
+      oriskami[resourceName].create({
         "query_target"      : "sample:100" 
       , "query_base"        : "fr" 
       , "features"          : "all" 
-      }, function(err, res) {
-        if(err) {
-          console.log(err)
-          return done(new Error("Failed to create scoring"))
-        }
-        done()
-      })
+      }, L.logError(done))
     })
 
-    it("Should retrieve", function(done){
-      oriskami["FilterScoringsDedicated"].create({
-        "query_target"      : "sample:100" 
-      , "query_base"        : "fr" 
-      , "features"          : "all" 
-      }, function(err, res0) {
-        if(err){
-          console.log(err)
-          return done(new Error("Failed to create / retrieve score"))
-        }
-        var expectedScoreId = res0.model_id
-        oriskami["FilterScoringsDedicated"].retrieve(res0.model_id, function(err, res1) {
-          if(err){
-            console.log(err)
-            console.log("Expected score id", expectedScoreId)
-            return done(new Error("Failed to retrieve the created score"))
-          }
-          done()
-        })
-      })
+    it("Should create and retrieve", function(done){
+      var expectedScoreId 
+      async.waterfall([
+        function(next){ oriskami[resourceName].create({
+          "query_target"    : "sample:100" 
+        , "query_base"      : "fr" 
+        , "features"        : "all" 
+        }, next)
+      }, function(res, next) {
+        expectedScoreId = res.model_id
+        oriskami[resourceName].retrieve(expectedScoreId, next)
+      }], L.logError(done))
     })
 
-    xit("Should update status", function(done){
-      oriskami["FilterScoringsDedicated"].create({
-        "is_active": "false"
-      }, function(err, res){
-        if(!err && res.data && res.data.is_active === "false"){
-          oriskami["FilterScoringsDedicated"].create({
-            "is_active": "true"
-          }, function(err, res){
-            if(!err && res.data && res.data.is_active === "true"){
-              done()
-            } else if(!err){
-              done(new Error("Failed to roll back 'is_active'"))
-            } else {
-              done(err)
-            }
-          })
-        } else if(!err){
-          done(new Error("Failed to set 'is_active'"))
-        } else {
-          done(err)
-        }
-      })
+    xit("Should update status [TODO]", function(done){
+      async.waterfall([
+        function(     next){ oriskami[resourceName].create({"is_active": "false"}, next)}
+      , function(res, next){ 
+        var isOk  = res.data.is_active === "false" 
+        isOk ? oriskami[resourceName].update({"is_active": "true"}, next) : next(new Error("err_creating_filter_scorings_dedicated"))
+      }, function(res, next){
+        var isOk  = res.data.is_active === "true" 
+        isOk ? next() : next(new Error("err_updating"))
+      }], L.logError(done))
     })
   })
 })
