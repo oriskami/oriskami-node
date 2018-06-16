@@ -1,3 +1,6 @@
+1.21 June 16, 2018
+ - Fix issue with list method; arguments improperly parsed resulting in certain conditions in the callback being called twice.
+
 1.18-20 June 15, 2018 
  - Add async method to retrieve Oriskami's current public key—oriskami.getPublicKey => '/public-key'
  - Add method (oriskami.webhook ) to parse webhooks received from Oriskami—uses Json Web Token + Asymetric signing with public key 
