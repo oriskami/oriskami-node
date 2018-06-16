@@ -129,6 +129,24 @@ Then you will get notified when a risk is detected.
 + `123`: resource id 
 + `{}`: JSON with query parameters
 
+## Parsing incoming webhooks
+
+Oriskami signs its webhooks according to the Json Web Token standard [www](https://jwt.io/)—here is 
+how to parse incoming requests with express/restify: 
+
+```js
+var Oriskami  = require("oriskami")
+  , oriskami  = new Oriskami()
+
+oriskami.getPublicKey((err) => {  /* Retrieve public key (async)                */ 
+  app.post("/webhook/oriskami"    /* Endpoint defined as a notification         */
+  , oriskami.webhook()            /* Middleware that parses the Json Web Tokens */
+  , (req, res, next) => {
+    console.log(req.json)
+  })
+}
+```
+
 ## Code snippets and filter parameters
 
 A few code snippets:
