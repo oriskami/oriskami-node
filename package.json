@@ -1,6 +1,6 @@
 {
   "name": "oriskami",
-  "version": "1.21.0",
+  "version": "1.22.0",
   "description": "API wrapper to Oriskami",
   "main": "lib/index.js",
   "scripts": {

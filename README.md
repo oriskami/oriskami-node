@@ -156,6 +156,7 @@ A few code snippets:
 | 1. Change token | `oriskami.set("auth", "your-api-token")` | 
 | 2. Add new `resource` | `oriskami.extend("resourceName", "resourcePath")` | 
 | 3. Change timeout | `oriskami.set("timeout", 20000) // in ms` | 
+| 4. To disable signing of JSON payloads on `nodejs` >= v5 | `oriskami.set("unsigned", true)` | 
 
 Filters available for most resources (`list`).
 

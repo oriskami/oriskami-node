@@ -34,7 +34,7 @@ describe(resourceName, function(){
         isBackedUp  ? next(null, backupId) : next(new Error("err_router_backup_missing")) 
       }, function(res, next){oriskami[resourceName].del(backupId, next) 
       }], L.logError(done))
-    }).timeout(20000)
+    }).timeout(60000)
 
     it("Should retrieve (restore) a flow backup", function(done){ 
       var now = (new Date()).toISOString()
@@ -55,7 +55,7 @@ describe(resourceName, function(){
         hasWhitelist ? next(null, hasWhitelist) : next(new Error("err_retrieving_modified_rule_in_restored_backup"))
       }, function(res, next){ oriskami[resourceName].del(backupId, next) } 
       ], L.logError(done))
-    }).timeout(20000)
+    }).timeout(60000)
 
     it("Should list", function(done){ oriskami[resourceName].list(L.logError(done))})
   })
