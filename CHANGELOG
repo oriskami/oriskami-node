@@ -1,3 +1,6 @@
+1.22 June 25, 2018
+ - Also add Json Web Token parsing for responses when they are encoded.
+
 1.21 June 16, 2018
  - Fix issue with list method; arguments improperly parsed resulting in certain conditions in the callback being called twice.
 
