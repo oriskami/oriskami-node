@@ -1,3 +1,6 @@
+1.23 June 27, 2018 
+ - Fix error when setting status_code to an undefined response payload.
+ 
 1.22 June 25, 2018
  - Also add Json Web Token parsing for responses when they are encoded.
  - Signing of payload with JWT is optional—it's enabled for node >= v5 by default.
